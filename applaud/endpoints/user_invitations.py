@@ -124,6 +124,10 @@ class UserInvitationEndpoint(IDEndpoint):
     def visible_apps(self) -> VisibleAppsOfUserInvitationEndpoint:
         return VisibleAppsOfUserInvitationEndpoint(self.id, self.session)
         
+    @endpoint('/v1/userInvitations/{id}/relationships/visibleApps')
+    def visible_apps_linkages(self) -> VisibleAppsLinkagesOfUserInvitationEndpoint:
+        return VisibleAppsLinkagesOfUserInvitationEndpoint(self.id, self.session)
+        
     def fields(self, *, user_invitation: Union[UserInvitationField, list[UserInvitationField]]=None, app: Union[AppField, list[AppField]]=None) -> UserInvitationEndpoint:
         '''Fields to return for included related types.
 
@@ -185,6 +189,35 @@ class UserInvitationEndpoint(IDEndpoint):
         '''
         super()._perform_delete()
 
+class VisibleAppsLinkagesOfUserInvitationEndpoint(IDEndpoint):
+    path = '/v1/userInvitations/{id}/relationships/visibleApps'
+
+    def limit(self, number: int=None) -> VisibleAppsLinkagesOfUserInvitationEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.VisibleAppsLinkagesOfUserInvitationEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> UserInvitationVisibleAppsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: UserInvitationVisibleAppsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return UserInvitationVisibleAppsLinkagesResponse.parse_obj(json)
+
 class VisibleAppsOfUserInvitationEndpoint(IDEndpoint):
     path = '/v1/userInvitations/{id}/visibleApps'
 
@@ -215,14 +248,14 @@ class VisibleAppsOfUserInvitationEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> AppsResponse:
+    def get(self) -> AppsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: AppsResponse
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppsResponse.parse_obj(json)
+        return AppsWithoutIncludesResponse.parse_obj(json)
 

@@ -10,7 +10,7 @@ from ..schemas.enums import *
 class BetaTestersEndpoint(Endpoint):
     path = '/v1/betaTesters'
 
-    def fields(self, *, beta_tester: Union[BetaTesterField, list[BetaTesterField]]=None, app: Union[AppField, list[AppField]]=None, build: Union[BuildField, list[BuildField]]=None, beta_group: Union[BetaGroupField, list[BetaGroupField]]=None) -> BetaTestersEndpoint:
+    def fields(self, *, beta_tester: Union[BetaTesterField, list[BetaTesterField]]=None, app: Union[AppField, list[AppField]]=None, beta_group: Union[BetaGroupField, list[BetaGroupField]]=None, build: Union[BuildField, list[BuildField]]=None) -> BetaTestersEndpoint:
         '''Fields to return for included related types.
 
         :param beta_tester: the fields to include for returned resources of type betaTesters
@@ -19,19 +19,19 @@ class BetaTestersEndpoint(Endpoint):
         :param app: the fields to include for returned resources of type apps
         :type app: Union[AppField, list[AppField]] = None
 
-        :param build: the fields to include for returned resources of type builds
-        :type build: Union[BuildField, list[BuildField]] = None
-
         :param beta_group: the fields to include for returned resources of type betaGroups
         :type beta_group: Union[BetaGroupField, list[BetaGroupField]] = None
+
+        :param build: the fields to include for returned resources of type builds
+        :type build: Union[BuildField, list[BuildField]] = None
 
         :returns: self
         :rtype: applaud.endpoints.BetaTestersEndpoint
         '''
         if beta_tester: self._set_fields('betaTesters',beta_tester if type(beta_tester) is list else [beta_tester])
         if app: self._set_fields('apps',app if type(app) is list else [app])
-        if build: self._set_fields('builds',build if type(build) is list else [build])
         if beta_group: self._set_fields('betaGroups',beta_group if type(beta_group) is list else [beta_group])
+        if build: self._set_fields('builds',build if type(build) is list else [build])
         return self
         
     class Include(StringEnum):
@@ -39,20 +39,20 @@ class BetaTestersEndpoint(Endpoint):
         BETA_GROUPS = 'betaGroups'
         BUILDS = 'builds'
 
-    def filter(self, *, email: Union[str, list[str]]=None, first_name: Union[str, list[str]]=None, invite_type: Union[BetaInviteType, list[BetaInviteType]]=None, last_name: Union[str, list[str]]=None, apps: Union[str, list[str]]=None, beta_groups: Union[str, list[str]]=None, builds: Union[str, list[str]]=None, id: Union[str, list[str]]=None) -> BetaTestersEndpoint:
+    def filter(self, *, first_name: Union[str, list[str]]=None, last_name: Union[str, list[str]]=None, email: Union[str, list[str]]=None, invite_type: Union[BetaInviteType, list[BetaInviteType]]=None, apps: Union[str, list[str]]=None, beta_groups: Union[str, list[str]]=None, builds: Union[str, list[str]]=None, id: Union[str, list[str]]=None) -> BetaTestersEndpoint:
         '''Attributes, relationships, and IDs by which to filter.
-
-        :param email: filter by attribute 'email'
-        :type email: Union[str, list[str]] = None
 
         :param first_name: filter by attribute 'firstName'
         :type first_name: Union[str, list[str]] = None
 
-        :param invite_type: filter by attribute 'inviteType'
-        :type invite_type: Union[BetaInviteType, list[BetaInviteType]] = None
-
         :param last_name: filter by attribute 'lastName'
         :type last_name: Union[str, list[str]] = None
+
+        :param email: filter by attribute 'email'
+        :type email: Union[str, list[str]] = None
+
+        :param invite_type: filter by attribute 'inviteType'
+        :type invite_type: Union[BetaInviteType, list[BetaInviteType]] = None
 
         :param apps: filter by id(s) of related 'apps'
         :type apps: Union[str, list[str]] = None
@@ -69,13 +69,13 @@ class BetaTestersEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.BetaTestersEndpoint
         '''
-        if email: self._set_filter('email', email if type(email) is list else [email])
-        
         if first_name: self._set_filter('firstName', first_name if type(first_name) is list else [first_name])
         
-        if invite_type: self._set_filter('inviteType', invite_type if type(invite_type) is list else [invite_type])
-        
         if last_name: self._set_filter('lastName', last_name if type(last_name) is list else [last_name])
+        
+        if email: self._set_filter('email', email if type(email) is list else [email])
+        
+        if invite_type: self._set_filter('inviteType', invite_type if type(invite_type) is list else [invite_type])
         
         if apps: self._set_filter('apps', apps if type(apps) is list else [apps])
         
@@ -96,16 +96,17 @@ class BetaTestersEndpoint(Endpoint):
         if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
-    def sort(self, *, email: SortOrder=None, first_name: SortOrder=None, invite_type: SortOrder=None, last_name: SortOrder=None) -> BetaTestersEndpoint:
+    def sort(self, *, first_name: SortOrder=None, last_name: SortOrder=None, email: SortOrder=None, invite_type: SortOrder=None, state: SortOrder=None) -> BetaTestersEndpoint:
         '''Attributes by which to sort.
 
         :returns: self
         :rtype: applaud.endpoints.BetaTestersEndpoint
         '''
-        if email: self.sort_expressions.append('email' if email == SortOrder.ASC else '-email')
         if first_name: self.sort_expressions.append('firstName' if first_name == SortOrder.ASC else '-firstName')
-        if invite_type: self.sort_expressions.append('inviteType' if invite_type == SortOrder.ASC else '-inviteType')
         if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        if email: self.sort_expressions.append('email' if email == SortOrder.ASC else '-email')
+        if invite_type: self.sort_expressions.append('inviteType' if invite_type == SortOrder.ASC else '-inviteType')
+        if state: self.sort_expressions.append('state' if state == SortOrder.ASC else '-state')
         return self
         
     def limit(self, number: int=None, *, apps: int=None, beta_groups: int=None, builds: int=None) -> BetaTestersEndpoint:
@@ -183,6 +184,10 @@ class BetaTesterEndpoint(IDEndpoint):
     def builds(self) -> BuildsOfBetaTesterEndpoint:
         return BuildsOfBetaTesterEndpoint(self.id, self.session)
         
+    @endpoint('/v1/betaTesters/{id}/metrics/betaTesterUsages')
+    def beta_tester_usages(self) -> BetaTesterUsagesOfBetaTesterEndpoint:
+        return BetaTesterUsagesOfBetaTesterEndpoint(self.id, self.session)
+        
     @endpoint('/v1/betaTesters/{id}/relationships/apps')
     def apps_linkages(self) -> AppsLinkagesOfBetaTesterEndpoint:
         return AppsLinkagesOfBetaTesterEndpoint(self.id, self.session)
@@ -195,7 +200,7 @@ class BetaTesterEndpoint(IDEndpoint):
     def builds_linkages(self) -> BuildsLinkagesOfBetaTesterEndpoint:
         return BuildsLinkagesOfBetaTesterEndpoint(self.id, self.session)
         
-    def fields(self, *, beta_tester: Union[BetaTesterField, list[BetaTesterField]]=None, app: Union[AppField, list[AppField]]=None, build: Union[BuildField, list[BuildField]]=None, beta_group: Union[BetaGroupField, list[BetaGroupField]]=None) -> BetaTesterEndpoint:
+    def fields(self, *, beta_tester: Union[BetaTesterField, list[BetaTesterField]]=None, app: Union[AppField, list[AppField]]=None, beta_group: Union[BetaGroupField, list[BetaGroupField]]=None, build: Union[BuildField, list[BuildField]]=None) -> BetaTesterEndpoint:
         '''Fields to return for included related types.
 
         :param beta_tester: the fields to include for returned resources of type betaTesters
@@ -204,19 +209,19 @@ class BetaTesterEndpoint(IDEndpoint):
         :param app: the fields to include for returned resources of type apps
         :type app: Union[AppField, list[AppField]] = None
 
-        :param build: the fields to include for returned resources of type builds
-        :type build: Union[BuildField, list[BuildField]] = None
-
         :param beta_group: the fields to include for returned resources of type betaGroups
         :type beta_group: Union[BetaGroupField, list[BetaGroupField]] = None
+
+        :param build: the fields to include for returned resources of type builds
+        :type build: Union[BuildField, list[BuildField]] = None
 
         :returns: self
         :rtype: applaud.endpoints.BetaTesterEndpoint
         '''
         if beta_tester: self._set_fields('betaTesters',beta_tester if type(beta_tester) is list else [beta_tester])
         if app: self._set_fields('apps',app if type(app) is list else [app])
-        if build: self._set_fields('builds',build if type(build) is list else [build])
         if beta_group: self._set_fields('betaGroups',beta_group if type(beta_group) is list else [beta_group])
+        if build: self._set_fields('builds',build if type(build) is list else [build])
         return self
         
     class Include(StringEnum):
@@ -349,16 +354,16 @@ class AppsOfBetaTesterEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> AppsResponse:
+    def get(self) -> AppsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: AppsResponse
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppsResponse.parse_obj(json)
+        return AppsWithoutIncludesResponse.parse_obj(json)
 
 class BetaGroupsLinkagesOfBetaTesterEndpoint(IDEndpoint):
     path = '/v1/betaTesters/{id}/relationships/betaGroups'
@@ -439,16 +444,16 @@ class BetaGroupsOfBetaTesterEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> BetaGroupsResponse:
+    def get(self) -> BetaGroupsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: BetaGroupsResponse
+        :returns: List of BetaGroups with get
+        :rtype: BetaGroupsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return BetaGroupsResponse.parse_obj(json)
+        return BetaGroupsWithoutIncludesResponse.parse_obj(json)
 
 class BuildsLinkagesOfBetaTesterEndpoint(IDEndpoint):
     path = '/v1/betaTesters/{id}/relationships/builds'
@@ -529,14 +534,43 @@ class BuildsOfBetaTesterEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> BuildsResponse:
+    def get(self) -> BuildsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: BuildsResponse
+        :returns: List of Builds with get
+        :rtype: BuildsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return BuildsResponse.parse_obj(json)
+        return BuildsWithoutIncludesResponse.parse_obj(json)
+
+class BetaTesterUsagesOfBetaTesterEndpoint(IDEndpoint):
+    path = '/v1/betaTesters/{id}/metrics/betaTesterUsages'
+
+    def limit(self, number: int=None) -> BetaTesterUsagesOfBetaTesterEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum number of groups to return per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.BetaTesterUsagesOfBetaTesterEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> BetaTesterUsagesV1MetricResponse:
+        '''Get the resource.
+
+        :returns: Metrics data response
+        :rtype: BetaTesterUsagesV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BetaTesterUsagesV1MetricResponse.parse_obj(json)
 

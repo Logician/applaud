@@ -25,6 +25,7 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         
         return self
 
+    @deprecated
     def get(self) -> GameCenterEnabledVersionCompatibleVersionsLinkagesResponse:
         '''Get one or more resources.
 
@@ -36,6 +37,7 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterEnabledVersionCompatibleVersionsLinkagesResponse.parse_obj(json)
 
+    @deprecated
     def create(self, request: GameCenterEnabledVersionCompatibleVersionsLinkagesRequest):
         '''Create one or more related linkages.
 
@@ -46,6 +48,7 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         '''
         super()._perform_post(request)
 
+    @deprecated
     def update(self, request: GameCenterEnabledVersionCompatibleVersionsLinkagesRequest):
         '''Modify one or more related linkages.
 
@@ -56,6 +59,7 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         '''
         super()._perform_patch(request)
 
+    @deprecated
     def delete(self, request: GameCenterEnabledVersionCompatibleVersionsLinkagesRequest):
         '''Delete one or more related linkages.
 
@@ -69,20 +73,25 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
 class CompatibleVersionsOfGameCenterEnabledVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterEnabledVersions/{id}/compatibleVersions'
 
-    def fields(self, *, game_center_enabled_version: Union[GameCenterEnabledVersionField, list[GameCenterEnabledVersionField]]=None) -> CompatibleVersionsOfGameCenterEnabledVersionEndpoint:
+    def fields(self, *, game_center_enabled_version: Union[GameCenterEnabledVersionField, list[GameCenterEnabledVersionField]]=None, app: Union[AppField, list[AppField]]=None) -> CompatibleVersionsOfGameCenterEnabledVersionEndpoint:
         '''Fields to return for included related types.
 
         :param game_center_enabled_version: the fields to include for returned resources of type gameCenterEnabledVersions
         :type game_center_enabled_version: Union[GameCenterEnabledVersionField, list[GameCenterEnabledVersionField]] = None
 
+        :param app: the fields to include for returned resources of type apps
+        :type app: Union[AppField, list[AppField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.CompatibleVersionsOfGameCenterEnabledVersionEndpoint
         '''
         if game_center_enabled_version: self._set_fields('gameCenterEnabledVersions',game_center_enabled_version if type(game_center_enabled_version) is list else [game_center_enabled_version])
+        if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
     class Include(StringEnum):
         COMPATIBLE_VERSIONS = 'compatibleVersions'
+        APP = 'app'
 
     def filter(self, *, platform: Union[Platform, list[Platform]]=None, version_string: Union[str, list[str]]=None, app: Union[str, list[str]]=None, id: Union[str, list[str]]=None) -> CompatibleVersionsOfGameCenterEnabledVersionEndpoint:
         '''Attributes, relationships, and IDs by which to filter.
@@ -152,10 +161,11 @@ class CompatibleVersionsOfGameCenterEnabledVersionEndpoint(IDEndpoint):
 
         return self
 
+    @deprecated
     def get(self) -> GameCenterEnabledVersionsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of GameCenterEnabledVersions
         :rtype: GameCenterEnabledVersionsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

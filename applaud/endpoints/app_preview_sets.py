@@ -51,8 +51,10 @@ class AppPreviewSetEndpoint(IDEndpoint):
         return self
         
     class Include(StringEnum):
-        APP_PREVIEWS = 'appPreviews'
         APP_STORE_VERSION_LOCALIZATION = 'appStoreVersionLocalization'
+        APP_CUSTOM_PRODUCT_PAGE_LOCALIZATION = 'appCustomProductPageLocalization'
+        APP_STORE_VERSION_EXPERIMENT_TREATMENT_LOCALIZATION = 'appStoreVersionExperimentTreatmentLocalization'
+        APP_PREVIEWS = 'appPreviews'
 
     def include(self, relationship: Union[Include, list[Include]]) -> AppPreviewSetEndpoint:
         '''Relationship data to include in the response.
@@ -138,16 +140,32 @@ class AppPreviewsLinkagesOfAppPreviewSetEndpoint(IDEndpoint):
 class AppPreviewsOfAppPreviewSetEndpoint(IDEndpoint):
     path = '/v1/appPreviewSets/{id}/appPreviews'
 
-    def fields(self, *, app_preview: Union[AppPreviewField, list[AppPreviewField]]=None) -> AppPreviewsOfAppPreviewSetEndpoint:
+    def fields(self, *, app_preview: Union[AppPreviewField, list[AppPreviewField]]=None, app_preview_set: Union[AppPreviewSetField, list[AppPreviewSetField]]=None) -> AppPreviewsOfAppPreviewSetEndpoint:
         '''Fields to return for included related types.
 
         :param app_preview: the fields to include for returned resources of type appPreviews
         :type app_preview: Union[AppPreviewField, list[AppPreviewField]] = None
 
+        :param app_preview_set: the fields to include for returned resources of type appPreviewSets
+        :type app_preview_set: Union[AppPreviewSetField, list[AppPreviewSetField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.AppPreviewsOfAppPreviewSetEndpoint
         '''
         if app_preview: self._set_fields('appPreviews',app_preview if type(app_preview) is list else [app_preview])
+        if app_preview_set: self._set_fields('appPreviewSets',app_preview_set if type(app_preview_set) is list else [app_preview_set])
+        return self
+        
+    class Include(StringEnum):
+        APP_PREVIEW_SET = 'appPreviewSet'
+
+    def include(self, relationship: Union[Include, list[Include]]) -> AppPreviewsOfAppPreviewSetEndpoint:
+        '''Relationship data to include in the response.
+
+        :returns: self
+        :rtype: applaud.endpoints.AppPreviewsOfAppPreviewSetEndpoint
+        '''
+        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
     def limit(self, number: int=None) -> AppPreviewsOfAppPreviewSetEndpoint:
@@ -168,7 +186,7 @@ class AppPreviewsOfAppPreviewSetEndpoint(IDEndpoint):
     def get(self) -> AppPreviewsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of AppPreviews
         :rtype: AppPreviewsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

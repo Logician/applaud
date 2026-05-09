@@ -30,6 +30,10 @@ class EndUserLicenseAgreementEndpoint(IDEndpoint):
     def territories(self) -> TerritoriesOfEndUserLicenseAgreementEndpoint:
         return TerritoriesOfEndUserLicenseAgreementEndpoint(self.id, self.session)
         
+    @endpoint('/v1/endUserLicenseAgreements/{id}/relationships/territories')
+    def territories_linkages(self) -> TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint:
+        return TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint(self.id, self.session)
+        
     def fields(self, *, end_user_license_agreement: Union[EndUserLicenseAgreementField, list[EndUserLicenseAgreementField]]=None, territory: Union[TerritoryField, list[TerritoryField]]=None) -> EndUserLicenseAgreementEndpoint:
         '''Fields to return for included related types.
 
@@ -105,6 +109,35 @@ class EndUserLicenseAgreementEndpoint(IDEndpoint):
         '''
         super()._perform_delete()
 
+class TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
+    path = '/v1/endUserLicenseAgreements/{id}/relationships/territories'
+
+    def limit(self, number: int=None) -> TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> EndUserLicenseAgreementTerritoriesLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: EndUserLicenseAgreementTerritoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return EndUserLicenseAgreementTerritoriesLinkagesResponse.parse_obj(json)
+
 class TerritoriesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
     path = '/v1/endUserLicenseAgreements/{id}/territories'
 
@@ -135,14 +168,14 @@ class TerritoriesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> TerritoriesResponse:
+    def get(self) -> TerritoriesWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: TerritoriesResponse
+        :returns: List of Territories with get
+        :rtype: TerritoriesWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return TerritoriesResponse.parse_obj(json)
+        return TerritoriesWithoutIncludesResponse.parse_obj(json)
 

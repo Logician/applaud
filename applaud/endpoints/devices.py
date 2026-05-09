@@ -22,7 +22,7 @@ class DevicesEndpoint(Endpoint):
         if device: self._set_fields('devices',device if type(device) is list else [device])
         return self
         
-    def filter(self, *, name: Union[str, list[str]]=None, platform: Union[BundleIdPlatform, list[BundleIdPlatform]]=None, status: Union[DeviceStatus, list[DeviceStatus]]=None, udid: Union[str, list[str]]=None, id: Union[str, list[str]]=None) -> DevicesEndpoint:
+    def filter(self, *, name: Union[str, list[str]]=None, platform: Union[BundleIdPlatform, list[BundleIdPlatform]]=None, udid: Union[str, list[str]]=None, status: Union[DeviceStatus, list[DeviceStatus]]=None, id: Union[str, list[str]]=None) -> DevicesEndpoint:
         '''Attributes, relationships, and IDs by which to filter.
 
         :param name: filter by attribute 'name'
@@ -31,11 +31,11 @@ class DevicesEndpoint(Endpoint):
         :param platform: filter by attribute 'platform'
         :type platform: Union[BundleIdPlatform, list[BundleIdPlatform]] = None
 
-        :param status: filter by attribute 'status'
-        :type status: Union[DeviceStatus, list[DeviceStatus]] = None
-
         :param udid: filter by attribute 'udid'
         :type udid: Union[str, list[str]] = None
+
+        :param status: filter by attribute 'status'
+        :type status: Union[DeviceStatus, list[DeviceStatus]] = None
 
         :param id: filter by id(s)
         :type id: Union[str, list[str]] = None
@@ -47,25 +47,25 @@ class DevicesEndpoint(Endpoint):
         
         if platform: self._set_filter('platform', platform if type(platform) is list else [platform])
         
-        if status: self._set_filter('status', status if type(status) is list else [status])
-        
         if udid: self._set_filter('udid', udid if type(udid) is list else [udid])
+        
+        if status: self._set_filter('status', status if type(status) is list else [status])
         
         if id: self._set_filter('id', id if type(id) is list else [id])
         
         return self
         
-    def sort(self, *, id: SortOrder=None, name: SortOrder=None, platform: SortOrder=None, statu: SortOrder=None, udid: SortOrder=None) -> DevicesEndpoint:
+    def sort(self, *, name: SortOrder=None, platform: SortOrder=None, udid: SortOrder=None, statu: SortOrder=None, id: SortOrder=None) -> DevicesEndpoint:
         '''Attributes by which to sort.
 
         :returns: self
         :rtype: applaud.endpoints.DevicesEndpoint
         '''
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
         if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
         if platform: self.sort_expressions.append('platform' if platform == SortOrder.ASC else '-platform')
-        if statu: self.sort_expressions.append('status' if statu == SortOrder.ASC else '-status')
         if udid: self.sort_expressions.append('udid' if udid == SortOrder.ASC else '-udid')
+        if statu: self.sort_expressions.append('status' if statu == SortOrder.ASC else '-status')
+        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
         return self
         
     def limit(self, number: int=None) -> DevicesEndpoint:

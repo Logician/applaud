@@ -30,6 +30,10 @@ class AppStoreReviewDetailEndpoint(IDEndpoint):
     def app_store_review_attachments(self) -> AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint:
         return AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint(self.id, self.session)
         
+    @endpoint('/v1/appStoreReviewDetails/{id}/relationships/appStoreReviewAttachments')
+    def app_store_review_attachments_linkages(self) -> AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint:
+        return AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint(self.id, self.session)
+        
     def fields(self, *, app_store_review_detail: Union[AppStoreReviewDetailField, list[AppStoreReviewDetailField]]=None, app_store_review_attachment: Union[AppStoreReviewAttachmentField, list[AppStoreReviewAttachmentField]]=None) -> AppStoreReviewDetailEndpoint:
         '''Fields to return for included related types.
 
@@ -47,8 +51,8 @@ class AppStoreReviewDetailEndpoint(IDEndpoint):
         return self
         
     class Include(StringEnum):
-        APP_STORE_REVIEW_ATTACHMENTS = 'appStoreReviewAttachments'
         APP_STORE_VERSION = 'appStoreVersion'
+        APP_STORE_REVIEW_ATTACHMENTS = 'appStoreReviewAttachments'
 
     def include(self, relationship: Union[Include, list[Include]]) -> AppStoreReviewDetailEndpoint:
         '''Relationship data to include in the response.
@@ -98,19 +102,64 @@ class AppStoreReviewDetailEndpoint(IDEndpoint):
         json = super()._perform_patch(request)
         return AppStoreReviewDetailResponse.parse_obj(json)
 
+class AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint(IDEndpoint):
+    path = '/v1/appStoreReviewDetails/{id}/relationships/appStoreReviewAttachments'
+
+    def limit(self, number: int=None) -> AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse.parse_obj(json)
+
 class AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint(IDEndpoint):
     path = '/v1/appStoreReviewDetails/{id}/appStoreReviewAttachments'
 
-    def fields(self, *, app_store_review_attachment: Union[AppStoreReviewAttachmentField, list[AppStoreReviewAttachmentField]]=None) -> AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint:
+    def fields(self, *, app_store_review_attachment: Union[AppStoreReviewAttachmentField, list[AppStoreReviewAttachmentField]]=None, app_store_review_detail: Union[AppStoreReviewDetailField, list[AppStoreReviewDetailField]]=None) -> AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint:
         '''Fields to return for included related types.
 
         :param app_store_review_attachment: the fields to include for returned resources of type appStoreReviewAttachments
         :type app_store_review_attachment: Union[AppStoreReviewAttachmentField, list[AppStoreReviewAttachmentField]] = None
 
+        :param app_store_review_detail: the fields to include for returned resources of type appStoreReviewDetails
+        :type app_store_review_detail: Union[AppStoreReviewDetailField, list[AppStoreReviewDetailField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint
         '''
         if app_store_review_attachment: self._set_fields('appStoreReviewAttachments',app_store_review_attachment if type(app_store_review_attachment) is list else [app_store_review_attachment])
+        if app_store_review_detail: self._set_fields('appStoreReviewDetails',app_store_review_detail if type(app_store_review_detail) is list else [app_store_review_detail])
+        return self
+        
+    class Include(StringEnum):
+        APP_STORE_REVIEW_DETAIL = 'appStoreReviewDetail'
+
+    def include(self, relationship: Union[Include, list[Include]]) -> AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint:
+        '''Relationship data to include in the response.
+
+        :returns: self
+        :rtype: applaud.endpoints.AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint
+        '''
+        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
     def limit(self, number: int=None) -> AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint:
@@ -131,7 +180,7 @@ class AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint(IDEndpoint):
     def get(self) -> AppStoreReviewAttachmentsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of AppStoreReviewAttachments
         :rtype: AppStoreReviewAttachmentsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

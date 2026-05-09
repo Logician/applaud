@@ -78,6 +78,10 @@ class CiXcodeVersionEndpoint(IDEndpoint):
     def mac_os_versions(self) -> MacOsVersionsOfCiXcodeVersionEndpoint:
         return MacOsVersionsOfCiXcodeVersionEndpoint(self.id, self.session)
         
+    @endpoint('/v1/ciXcodeVersions/{id}/relationships/macOsVersions')
+    def mac_os_versions_linkages(self) -> MacOsVersionsLinkagesOfCiXcodeVersionEndpoint:
+        return MacOsVersionsLinkagesOfCiXcodeVersionEndpoint(self.id, self.session)
+        
     def fields(self, *, ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]]=None, ci_mac_os_version: Union[CiMacOsVersionField, list[CiMacOsVersionField]]=None) -> CiXcodeVersionEndpoint:
         '''Fields to return for included related types.
 
@@ -132,23 +136,52 @@ class CiXcodeVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiXcodeVersionResponse.parse_obj(json)
 
+class MacOsVersionsLinkagesOfCiXcodeVersionEndpoint(IDEndpoint):
+    path = '/v1/ciXcodeVersions/{id}/relationships/macOsVersions'
+
+    def limit(self, number: int=None) -> MacOsVersionsLinkagesOfCiXcodeVersionEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.MacOsVersionsLinkagesOfCiXcodeVersionEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> CiXcodeVersionMacOsVersionsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: CiXcodeVersionMacOsVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return CiXcodeVersionMacOsVersionsLinkagesResponse.parse_obj(json)
+
 class MacOsVersionsOfCiXcodeVersionEndpoint(IDEndpoint):
     path = '/v1/ciXcodeVersions/{id}/macOsVersions'
 
-    def fields(self, *, ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]]=None, ci_mac_os_version: Union[CiMacOsVersionField, list[CiMacOsVersionField]]=None) -> MacOsVersionsOfCiXcodeVersionEndpoint:
+    def fields(self, *, ci_mac_os_version: Union[CiMacOsVersionField, list[CiMacOsVersionField]]=None, ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]]=None) -> MacOsVersionsOfCiXcodeVersionEndpoint:
         '''Fields to return for included related types.
-
-        :param ci_xcode_version: the fields to include for returned resources of type ciXcodeVersions
-        :type ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]] = None
 
         :param ci_mac_os_version: the fields to include for returned resources of type ciMacOsVersions
         :type ci_mac_os_version: Union[CiMacOsVersionField, list[CiMacOsVersionField]] = None
 
+        :param ci_xcode_version: the fields to include for returned resources of type ciXcodeVersions
+        :type ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.MacOsVersionsOfCiXcodeVersionEndpoint
         '''
-        if ci_xcode_version: self._set_fields('ciXcodeVersions',ci_xcode_version if type(ci_xcode_version) is list else [ci_xcode_version])
         if ci_mac_os_version: self._set_fields('ciMacOsVersions',ci_mac_os_version if type(ci_mac_os_version) is list else [ci_mac_os_version])
+        if ci_xcode_version: self._set_fields('ciXcodeVersions',ci_xcode_version if type(ci_xcode_version) is list else [ci_xcode_version])
         return self
         
     class Include(StringEnum):
@@ -188,7 +221,7 @@ class MacOsVersionsOfCiXcodeVersionEndpoint(IDEndpoint):
     def get(self) -> CiMacOsVersionsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of CiMacOsVersions
         :rtype: CiMacOsVersionsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

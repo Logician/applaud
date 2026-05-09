@@ -102,6 +102,10 @@ class BetaAppLocalizationEndpoint(IDEndpoint):
     def app(self) -> AppOfBetaAppLocalizationEndpoint:
         return AppOfBetaAppLocalizationEndpoint(self.id, self.session)
         
+    @endpoint('/v1/betaAppLocalizations/{id}/relationships/app')
+    def app_linkage(self) -> AppLinkageOfBetaAppLocalizationEndpoint:
+        return AppLinkageOfBetaAppLocalizationEndpoint(self.id, self.session)
+        
     def fields(self, *, beta_app_localization: Union[BetaAppLocalizationField, list[BetaAppLocalizationField]]=None, app: Union[AppField, list[AppField]]=None) -> BetaAppLocalizationEndpoint:
         '''Fields to return for included related types.
 
@@ -161,6 +165,20 @@ class BetaAppLocalizationEndpoint(IDEndpoint):
         '''
         super()._perform_delete()
 
+class AppLinkageOfBetaAppLocalizationEndpoint(IDEndpoint):
+    path = '/v1/betaAppLocalizations/{id}/relationships/app'
+
+    def get(self) -> BetaAppLocalizationAppLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BetaAppLocalizationAppLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BetaAppLocalizationAppLinkageResponse.parse_obj(json)
+
 class AppOfBetaAppLocalizationEndpoint(IDEndpoint):
     path = '/v1/betaAppLocalizations/{id}/app'
 
@@ -176,14 +194,14 @@ class AppOfBetaAppLocalizationEndpoint(IDEndpoint):
         if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
-    def get(self) -> AppResponse:
+    def get(self) -> AppWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: AppResponse
+        :returns: Single App with get
+        :rtype: AppWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppResponse.parse_obj(json)
+        return AppWithoutIncludesResponse.parse_obj(json)
 

@@ -7,107 +7,31 @@ from ..schemas.responses import *
 from ..schemas.requests import *
 from ..schemas.enums import *
 
-class AppPricePointsEndpoint(Endpoint):
-    path = '/v1/appPricePoints'
-
-    def fields(self, *, app_price_point: Union[AppPricePointField, list[AppPricePointField]]=None, territory: Union[TerritoryField, list[TerritoryField]]=None) -> AppPricePointsEndpoint:
-        '''Fields to return for included related types.
-
-        :param app_price_point: the fields to include for returned resources of type appPricePoints
-        :type app_price_point: Union[AppPricePointField, list[AppPricePointField]] = None
-
-        :param territory: the fields to include for returned resources of type territories
-        :type territory: Union[TerritoryField, list[TerritoryField]] = None
-
-        :returns: self
-        :rtype: applaud.endpoints.AppPricePointsEndpoint
-        '''
-        if app_price_point: self._set_fields('appPricePoints',app_price_point if type(app_price_point) is list else [app_price_point])
-        if territory: self._set_fields('territories',territory if type(territory) is list else [territory])
-        return self
-        
-    class Include(StringEnum):
-        PRICE_TIER = 'priceTier'
-        TERRITORY = 'territory'
-
-    def filter(self, *, price_tier: Union[str, list[str]]=None, territory: Union[str, list[str]]=None) -> AppPricePointsEndpoint:
-        '''Attributes, relationships, and IDs by which to filter.
-
-        :param price_tier: filter by id(s) of related 'priceTier'
-        :type price_tier: Union[str, list[str]] = None
-
-        :param territory: filter by id(s) of related 'territory'
-        :type territory: Union[str, list[str]] = None
-
-        :returns: self
-        :rtype: applaud.endpoints.AppPricePointsEndpoint
-        '''
-        if price_tier: self._set_filter('priceTier', price_tier if type(price_tier) is list else [price_tier])
-        
-        if territory: self._set_filter('territory', territory if type(territory) is list else [territory])
-        
-        return self
-        
-    def include(self, relationship: Union[Include, list[Include]]) -> AppPricePointsEndpoint:
-        '''Relationship data to include in the response.
-
-        :returns: self
-        :rtype: applaud.endpoints.AppPricePointsEndpoint
-        '''
-        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
-        return self
-        
-    def limit(self, number: int=None) -> AppPricePointsEndpoint:
-        '''Number of resources to return.
-
-        :param number: maximum resources per page. The maximum limit is 200
-        :type number: int = None
-
-        :returns: self
-        :rtype: applaud.endpoints.AppPricePointsEndpoint
-        '''
-        if number and number > 200:
-            raise ValueError(f'The maximum limit of number is 200')
-        if number: self._set_limit(number)
-        
-        return self
-
-    def get(self) -> AppPricePointsResponse:
-        '''Get one or more resources.
-
-        :returns: List of AppPricePoints
-        :rtype: AppPricePointsResponse
-        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
-                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
-        '''
-        json = super()._perform_get()
-        return AppPricePointsResponse.parse_obj(json)
-
 class AppPricePointEndpoint(IDEndpoint):
-    path = '/v1/appPricePoints/{id}'
+    path = '/v3/appPricePoints/{id}'
 
-    @endpoint('/v1/appPricePoints/{id}/territory')
-    def territory(self) -> TerritoryOfAppPricePointEndpoint:
-        return TerritoryOfAppPricePointEndpoint(self.id, self.session)
+    @endpoint('/v3/appPricePoints/{id}/equalizations')
+    def equalizations(self) -> EqualizationsOfAppPricePointEndpoint:
+        return EqualizationsOfAppPricePointEndpoint(self.id, self.session)
         
-    def fields(self, *, app_price_point: Union[AppPricePointField, list[AppPricePointField]]=None, territory: Union[TerritoryField, list[TerritoryField]]=None) -> AppPricePointEndpoint:
+    @endpoint('/v3/appPricePoints/{id}/relationships/equalizations')
+    def equalizations_linkages(self) -> EqualizationsLinkagesOfAppPricePointEndpoint:
+        return EqualizationsLinkagesOfAppPricePointEndpoint(self.id, self.session)
+        
+    def fields(self, *, app_price_point: Union[AppPricePointField, list[AppPricePointField]]=None) -> AppPricePointEndpoint:
         '''Fields to return for included related types.
 
         :param app_price_point: the fields to include for returned resources of type appPricePoints
         :type app_price_point: Union[AppPricePointField, list[AppPricePointField]] = None
-
-        :param territory: the fields to include for returned resources of type territories
-        :type territory: Union[TerritoryField, list[TerritoryField]] = None
 
         :returns: self
         :rtype: applaud.endpoints.AppPricePointEndpoint
         '''
         if app_price_point: self._set_fields('appPricePoints',app_price_point if type(app_price_point) is list else [app_price_point])
-        if territory: self._set_fields('territories',territory if type(territory) is list else [territory])
         return self
         
     class Include(StringEnum):
-        PRICE_TIER = 'priceTier'
+        APP = 'app'
         TERRITORY = 'territory'
 
     def include(self, relationship: Union[Include, list[Include]]) -> AppPricePointEndpoint:
@@ -119,40 +43,118 @@ class AppPricePointEndpoint(IDEndpoint):
         if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
-    def get(self) -> AppPricePointResponse:
+    def get(self) -> AppPricePointV3Response:
         '''Get the resource.
 
         :returns: Single AppPricePoint
-        :rtype: AppPricePointResponse
+        :rtype: AppPricePointV3Response
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppPricePointResponse.parse_obj(json)
+        return AppPricePointV3Response.parse_obj(json)
 
-class TerritoryOfAppPricePointEndpoint(IDEndpoint):
-    path = '/v1/appPricePoints/{id}/territory'
+class EqualizationsLinkagesOfAppPricePointEndpoint(IDEndpoint):
+    path = '/v3/appPricePoints/{id}/relationships/equalizations'
 
-    def fields(self, *, territory: Union[TerritoryField, list[TerritoryField]]=None) -> TerritoryOfAppPricePointEndpoint:
+    def limit(self, number: int=None) -> EqualizationsLinkagesOfAppPricePointEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.EqualizationsLinkagesOfAppPricePointEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> AppPricePointV3EqualizationsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: AppPricePointV3EqualizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return AppPricePointV3EqualizationsLinkagesResponse.parse_obj(json)
+
+class EqualizationsOfAppPricePointEndpoint(IDEndpoint):
+    path = '/v3/appPricePoints/{id}/equalizations'
+
+    def fields(self, *, app_price_point: Union[AppPricePointField, list[AppPricePointField]]=None, app: Union[AppField, list[AppField]]=None, territory: Union[TerritoryField, list[TerritoryField]]=None) -> EqualizationsOfAppPricePointEndpoint:
         '''Fields to return for included related types.
+
+        :param app_price_point: the fields to include for returned resources of type appPricePoints
+        :type app_price_point: Union[AppPricePointField, list[AppPricePointField]] = None
+
+        :param app: the fields to include for returned resources of type apps
+        :type app: Union[AppField, list[AppField]] = None
 
         :param territory: the fields to include for returned resources of type territories
         :type territory: Union[TerritoryField, list[TerritoryField]] = None
 
         :returns: self
-        :rtype: applaud.endpoints.TerritoryOfAppPricePointEndpoint
+        :rtype: applaud.endpoints.EqualizationsOfAppPricePointEndpoint
         '''
+        if app_price_point: self._set_fields('appPricePoints',app_price_point if type(app_price_point) is list else [app_price_point])
+        if app: self._set_fields('apps',app if type(app) is list else [app])
         if territory: self._set_fields('territories',territory if type(territory) is list else [territory])
         return self
         
-    def get(self) -> TerritoryResponse:
-        '''Get the resource.
+    class Include(StringEnum):
+        APP = 'app'
+        TERRITORY = 'territory'
 
-        :returns: Related resource
-        :rtype: TerritoryResponse
+    def filter(self, *, territory: Union[str, list[str]]=None) -> EqualizationsOfAppPricePointEndpoint:
+        '''Attributes, relationships, and IDs by which to filter.
+
+        :param territory: filter by id(s) of related 'territory'
+        :type territory: Union[str, list[str]] = None
+
+        :returns: self
+        :rtype: applaud.endpoints.EqualizationsOfAppPricePointEndpoint
+        '''
+        if territory: self._set_filter('territory', territory if type(territory) is list else [territory])
+        
+        return self
+        
+    def include(self, relationship: Union[Include, list[Include]]) -> EqualizationsOfAppPricePointEndpoint:
+        '''Relationship data to include in the response.
+
+        :returns: self
+        :rtype: applaud.endpoints.EqualizationsOfAppPricePointEndpoint
+        '''
+        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
+        return self
+        
+    def limit(self, number: int=None) -> EqualizationsOfAppPricePointEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.EqualizationsOfAppPricePointEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> AppPricePointsV3Response:
+        '''Get one or more resources.
+
+        :returns: List of AppPricePoints
+        :rtype: AppPricePointsV3Response
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return TerritoryResponse.parse_obj(json)
+        return AppPricePointsV3Response.parse_obj(json)
 

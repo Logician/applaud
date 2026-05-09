@@ -51,8 +51,10 @@ class AppScreenshotSetEndpoint(IDEndpoint):
         return self
         
     class Include(StringEnum):
-        APP_SCREENSHOTS = 'appScreenshots'
         APP_STORE_VERSION_LOCALIZATION = 'appStoreVersionLocalization'
+        APP_CUSTOM_PRODUCT_PAGE_LOCALIZATION = 'appCustomProductPageLocalization'
+        APP_STORE_VERSION_EXPERIMENT_TREATMENT_LOCALIZATION = 'appStoreVersionExperimentTreatmentLocalization'
+        APP_SCREENSHOTS = 'appScreenshots'
 
     def include(self, relationship: Union[Include, list[Include]]) -> AppScreenshotSetEndpoint:
         '''Relationship data to include in the response.
@@ -138,16 +140,32 @@ class AppScreenshotsLinkagesOfAppScreenshotSetEndpoint(IDEndpoint):
 class AppScreenshotsOfAppScreenshotSetEndpoint(IDEndpoint):
     path = '/v1/appScreenshotSets/{id}/appScreenshots'
 
-    def fields(self, *, app_screenshot: Union[AppScreenshotField, list[AppScreenshotField]]=None) -> AppScreenshotsOfAppScreenshotSetEndpoint:
+    def fields(self, *, app_screenshot: Union[AppScreenshotField, list[AppScreenshotField]]=None, app_screenshot_set: Union[AppScreenshotSetField, list[AppScreenshotSetField]]=None) -> AppScreenshotsOfAppScreenshotSetEndpoint:
         '''Fields to return for included related types.
 
         :param app_screenshot: the fields to include for returned resources of type appScreenshots
         :type app_screenshot: Union[AppScreenshotField, list[AppScreenshotField]] = None
 
+        :param app_screenshot_set: the fields to include for returned resources of type appScreenshotSets
+        :type app_screenshot_set: Union[AppScreenshotSetField, list[AppScreenshotSetField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.AppScreenshotsOfAppScreenshotSetEndpoint
         '''
         if app_screenshot: self._set_fields('appScreenshots',app_screenshot if type(app_screenshot) is list else [app_screenshot])
+        if app_screenshot_set: self._set_fields('appScreenshotSets',app_screenshot_set if type(app_screenshot_set) is list else [app_screenshot_set])
+        return self
+        
+    class Include(StringEnum):
+        APP_SCREENSHOT_SET = 'appScreenshotSet'
+
+    def include(self, relationship: Union[Include, list[Include]]) -> AppScreenshotsOfAppScreenshotSetEndpoint:
+        '''Relationship data to include in the response.
+
+        :returns: self
+        :rtype: applaud.endpoints.AppScreenshotsOfAppScreenshotSetEndpoint
+        '''
+        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
     def limit(self, number: int=None) -> AppScreenshotsOfAppScreenshotSetEndpoint:
@@ -168,7 +186,7 @@ class AppScreenshotsOfAppScreenshotSetEndpoint(IDEndpoint):
     def get(self) -> AppScreenshotsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of AppScreenshots
         :rtype: AppScreenshotsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

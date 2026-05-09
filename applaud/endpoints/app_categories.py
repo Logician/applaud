@@ -23,8 +23,8 @@ class AppCategoriesEndpoint(Endpoint):
         return self
         
     class Include(StringEnum):
-        PARENT = 'parent'
         SUBCATEGORIES = 'subcategories'
+        PARENT = 'parent'
 
     def exists(self, *, parent: bool=None) -> AppCategoriesEndpoint:
         ''' Filter by existence or non-existence of related resource.
@@ -104,6 +104,14 @@ class AppCategoryEndpoint(IDEndpoint):
     def subcategories(self) -> SubcategoriesOfAppCategoryEndpoint:
         return SubcategoriesOfAppCategoryEndpoint(self.id, self.session)
         
+    @endpoint('/v1/appCategories/{id}/relationships/parent')
+    def parent_linkage(self) -> ParentLinkageOfAppCategoryEndpoint:
+        return ParentLinkageOfAppCategoryEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/appCategories/{id}/relationships/subcategories')
+    def subcategories_linkages(self) -> SubcategoriesLinkagesOfAppCategoryEndpoint:
+        return SubcategoriesLinkagesOfAppCategoryEndpoint(self.id, self.session)
+        
     def fields(self, *, app_category: Union[AppCategoryField, list[AppCategoryField]]=None) -> AppCategoryEndpoint:
         '''Fields to return for included related types.
 
@@ -117,8 +125,8 @@ class AppCategoryEndpoint(IDEndpoint):
         return self
         
     class Include(StringEnum):
-        PARENT = 'parent'
         SUBCATEGORIES = 'subcategories'
+        PARENT = 'parent'
 
     def include(self, relationship: Union[Include, list[Include]]) -> AppCategoryEndpoint:
         '''Relationship data to include in the response.
@@ -155,6 +163,20 @@ class AppCategoryEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppCategoryResponse.parse_obj(json)
 
+class ParentLinkageOfAppCategoryEndpoint(IDEndpoint):
+    path = '/v1/appCategories/{id}/relationships/parent'
+
+    def get(self) -> AppCategoryParentLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: AppCategoryParentLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return AppCategoryParentLinkageResponse.parse_obj(json)
+
 class ParentOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/parent'
 
@@ -170,16 +192,45 @@ class ParentOfAppCategoryEndpoint(IDEndpoint):
         if app_category: self._set_fields('appCategories',app_category if type(app_category) is list else [app_category])
         return self
         
-    def get(self) -> AppCategoryResponse:
+    def get(self) -> AppCategoryWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: AppCategoryResponse
+        :returns: Single AppCategory with get
+        :rtype: AppCategoryWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppCategoryResponse.parse_obj(json)
+        return AppCategoryWithoutIncludesResponse.parse_obj(json)
+
+class SubcategoriesLinkagesOfAppCategoryEndpoint(IDEndpoint):
+    path = '/v1/appCategories/{id}/relationships/subcategories'
+
+    def limit(self, number: int=None) -> SubcategoriesLinkagesOfAppCategoryEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.SubcategoriesLinkagesOfAppCategoryEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> AppCategorySubcategoriesLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: AppCategorySubcategoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return AppCategorySubcategoriesLinkagesResponse.parse_obj(json)
 
 class SubcategoriesOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/subcategories'
@@ -211,14 +262,14 @@ class SubcategoriesOfAppCategoryEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> AppCategoriesResponse:
+    def get(self) -> AppCategoriesWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: AppCategoriesResponse
+        :returns: List of AppCategories with get
+        :rtype: AppCategoriesWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppCategoriesResponse.parse_obj(json)
+        return AppCategoriesWithoutIncludesResponse.parse_obj(json)
 

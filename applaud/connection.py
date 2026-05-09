@@ -59,9 +59,97 @@ class Connection:
 
     # Shortcuts for root endpoints
 
+    @endpoint('/v1/accessibilityDeclarations')
+    def accessibility_declarations(self) -> AccessibilityDeclarationsEndpoint:
+        return AccessibilityDeclarationsEndpoint(self.session)
+    
+    @endpoint('/v1/accessibilityDeclarations/{id}')
+    def accessibility_declaration(self, id: str) -> AccessibilityDeclarationEndpoint:
+        return AccessibilityDeclarationEndpoint(id, self.session)
+    
+    @endpoint('/v1/actors')
+    def actors(self) -> ActorsEndpoint:
+        return ActorsEndpoint(self.session)
+    
+    @endpoint('/v1/actors/{id}')
+    def actor(self, id: str) -> ActorEndpoint:
+        return ActorEndpoint(id, self.session)
+    
     @endpoint('/v1/ageRatingDeclarations/{id}')
     def age_rating_declaration(self, id: str) -> AgeRatingDeclarationEndpoint:
         return AgeRatingDeclarationEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionDomains')
+    def alternative_distribution_domains(self) -> AlternativeDistributionDomainsEndpoint:
+        return AlternativeDistributionDomainsEndpoint(self.session)
+    
+    @endpoint('/v1/alternativeDistributionDomains/{id}')
+    def alternative_distribution_domain(self, id: str) -> AlternativeDistributionDomainEndpoint:
+        return AlternativeDistributionDomainEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionKeys')
+    def alternative_distribution_keys(self) -> AlternativeDistributionKeysEndpoint:
+        return AlternativeDistributionKeysEndpoint(self.session)
+    
+    @endpoint('/v1/alternativeDistributionKeys/{id}')
+    def alternative_distribution_key(self, id: str) -> AlternativeDistributionKeyEndpoint:
+        return AlternativeDistributionKeyEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionPackageDeltas/{id}')
+    def alternative_distribution_package_delta(self, id: str) -> AlternativeDistributionPackageDeltaEndpoint:
+        return AlternativeDistributionPackageDeltaEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionPackageVariants/{id}')
+    def alternative_distribution_package_variant(self, id: str) -> AlternativeDistributionPackageVariantEndpoint:
+        return AlternativeDistributionPackageVariantEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionPackageVersions/{id}')
+    def alternative_distribution_package_version(self, id: str) -> AlternativeDistributionPackageVersionEndpoint:
+        return AlternativeDistributionPackageVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/alternativeDistributionPackages')
+    def alternative_distribution_packages(self) -> AlternativeDistributionPackagesEndpoint:
+        return AlternativeDistributionPackagesEndpoint(self.session)
+    
+    @endpoint('/v1/alternativeDistributionPackages/{id}')
+    def alternative_distribution_package(self, id: str) -> AlternativeDistributionPackageEndpoint:
+        return AlternativeDistributionPackageEndpoint(id, self.session)
+    
+    @endpoint('/v1/analyticsReportInstances/{id}')
+    def analytics_report_instance(self, id: str) -> AnalyticsReportInstanceEndpoint:
+        return AnalyticsReportInstanceEndpoint(id, self.session)
+    
+    @endpoint('/v1/analyticsReportRequests')
+    def analytics_report_requests(self) -> AnalyticsReportRequestsEndpoint:
+        return AnalyticsReportRequestsEndpoint(self.session)
+    
+    @endpoint('/v1/analyticsReportRequests/{id}')
+    def analytics_report_request(self, id: str) -> AnalyticsReportRequestEndpoint:
+        return AnalyticsReportRequestEndpoint(id, self.session)
+    
+    @endpoint('/v1/analyticsReportSegments/{id}')
+    def analytics_report_segment(self, id: str) -> AnalyticsReportSegmentEndpoint:
+        return AnalyticsReportSegmentEndpoint(id, self.session)
+    
+    @endpoint('/v1/analyticsReports/{id}')
+    def analytics_report(self, id: str) -> AnalyticsReportEndpoint:
+        return AnalyticsReportEndpoint(id, self.session)
+    
+    @endpoint('/v1/androidToIosAppMappingDetails')
+    def android_to_ios_app_mapping_details(self) -> AndroidToIosAppMappingDetailsEndpoint:
+        return AndroidToIosAppMappingDetailsEndpoint(self.session)
+    
+    @endpoint('/v1/androidToIosAppMappingDetails/{id}')
+    def android_to_ios_app_mapping_detail(self, id: str) -> AndroidToIosAppMappingDetailEndpoint:
+        return AndroidToIosAppMappingDetailEndpoint(id, self.session)
+    
+    @endpoint('/v2/appAvailabilities')
+    def app_availabilities(self) -> AppAvailabilitiesEndpoint:
+        return AppAvailabilitiesEndpoint(self.session)
+    
+    @endpoint('/v2/appAvailabilities/{id}')
+    def app_availability(self, id: str) -> AppAvailabilityEndpoint:
+        return AppAvailabilityEndpoint(id, self.session)
     
     @endpoint('/v1/appCategories')
     def app_categories(self) -> AppCategoriesEndpoint:
@@ -123,6 +211,38 @@ class Connection:
     def app_clip(self, id: str) -> AppClipEndpoint:
         return AppClipEndpoint(id, self.session)
     
+    @endpoint('/v1/appCustomProductPageLocalizations')
+    def app_custom_product_page_localizations(self) -> AppCustomProductPageLocalizationsEndpoint:
+        return AppCustomProductPageLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/appCustomProductPageLocalizations/{id}')
+    def app_custom_product_page_localization(self, id: str) -> AppCustomProductPageLocalizationEndpoint:
+        return AppCustomProductPageLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/appCustomProductPageVersions')
+    def app_custom_product_page_versions(self) -> AppCustomProductPageVersionsEndpoint:
+        return AppCustomProductPageVersionsEndpoint(self.session)
+    
+    @endpoint('/v1/appCustomProductPageVersions/{id}')
+    def app_custom_product_page_version(self, id: str) -> AppCustomProductPageVersionEndpoint:
+        return AppCustomProductPageVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/appCustomProductPages')
+    def app_custom_product_pages(self) -> AppCustomProductPagesEndpoint:
+        return AppCustomProductPagesEndpoint(self.session)
+    
+    @endpoint('/v1/appCustomProductPages/{id}')
+    def app_custom_product_page(self, id: str) -> AppCustomProductPageEndpoint:
+        return AppCustomProductPageEndpoint(id, self.session)
+    
+    @endpoint('/v1/appEncryptionDeclarationDocuments')
+    def app_encryption_declaration_documents(self) -> AppEncryptionDeclarationDocumentsEndpoint:
+        return AppEncryptionDeclarationDocumentsEndpoint(self.session)
+    
+    @endpoint('/v1/appEncryptionDeclarationDocuments/{id}')
+    def app_encryption_declaration_document(self, id: str) -> AppEncryptionDeclarationDocumentEndpoint:
+        return AppEncryptionDeclarationDocumentEndpoint(id, self.session)
+    
     @endpoint('/v1/appEncryptionDeclarations')
     def app_encryption_declarations(self) -> AppEncryptionDeclarationsEndpoint:
         return AppEncryptionDeclarationsEndpoint(self.session)
@@ -130,6 +250,38 @@ class Connection:
     @endpoint('/v1/appEncryptionDeclarations/{id}')
     def app_encryption_declaration(self, id: str) -> AppEncryptionDeclarationEndpoint:
         return AppEncryptionDeclarationEndpoint(id, self.session)
+    
+    @endpoint('/v1/appEventLocalizations')
+    def app_event_localizations(self) -> AppEventLocalizationsEndpoint:
+        return AppEventLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/appEventLocalizations/{id}')
+    def app_event_localization(self, id: str) -> AppEventLocalizationEndpoint:
+        return AppEventLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/appEventScreenshots')
+    def app_event_screenshots(self) -> AppEventScreenshotsEndpoint:
+        return AppEventScreenshotsEndpoint(self.session)
+    
+    @endpoint('/v1/appEventScreenshots/{id}')
+    def app_event_screenshot(self, id: str) -> AppEventScreenshotEndpoint:
+        return AppEventScreenshotEndpoint(id, self.session)
+    
+    @endpoint('/v1/appEventVideoClips')
+    def app_event_video_clips(self) -> AppEventVideoClipsEndpoint:
+        return AppEventVideoClipsEndpoint(self.session)
+    
+    @endpoint('/v1/appEventVideoClips/{id}')
+    def app_event_video_clip(self, id: str) -> AppEventVideoClipEndpoint:
+        return AppEventVideoClipEndpoint(id, self.session)
+    
+    @endpoint('/v1/appEvents')
+    def app_events(self) -> AppEventsEndpoint:
+        return AppEventsEndpoint(self.session)
+    
+    @endpoint('/v1/appEvents/{id}')
+    def app_event(self, id: str) -> AppEventEndpoint:
+        return AppEventEndpoint(id, self.session)
     
     @endpoint('/v1/appInfoLocalizations')
     def app_info_localizations(self) -> AppInfoLocalizationsEndpoint:
@@ -142,14 +294,6 @@ class Connection:
     @endpoint('/v1/appInfos/{id}')
     def app_info(self, id: str) -> AppInfoEndpoint:
         return AppInfoEndpoint(id, self.session)
-    
-    @endpoint('/v1/appPreOrders')
-    def app_pre_orders(self) -> AppPreOrdersEndpoint:
-        return AppPreOrdersEndpoint(self.session)
-    
-    @endpoint('/v1/appPreOrders/{id}')
-    def app_pre_order(self, id: str) -> AppPreOrderEndpoint:
-        return AppPreOrderEndpoint(id, self.session)
     
     @endpoint('/v1/appPreviewSets')
     def app_preview_sets(self) -> AppPreviewSetsEndpoint:
@@ -167,25 +311,17 @@ class Connection:
     def app_preview(self, id: str) -> AppPreviewEndpoint:
         return AppPreviewEndpoint(id, self.session)
     
-    @endpoint('/v1/appPricePoints')
-    def app_price_points(self) -> AppPricePointsEndpoint:
-        return AppPricePointsEndpoint(self.session)
-    
-    @endpoint('/v1/appPricePoints/{id}')
+    @endpoint('/v3/appPricePoints/{id}')
     def app_price_point(self, id: str) -> AppPricePointEndpoint:
         return AppPricePointEndpoint(id, self.session)
     
-    @endpoint('/v1/appPriceTiers')
-    def app_price_tiers(self) -> AppPriceTiersEndpoint:
-        return AppPriceTiersEndpoint(self.session)
+    @endpoint('/v1/appPriceSchedules')
+    def app_price_schedules(self) -> AppPriceSchedulesEndpoint:
+        return AppPriceSchedulesEndpoint(self.session)
     
-    @endpoint('/v1/appPriceTiers/{id}')
-    def app_price_tier(self, id: str) -> AppPriceTierEndpoint:
-        return AppPriceTierEndpoint(id, self.session)
-    
-    @endpoint('/v1/appPrices/{id}')
-    def app_price(self, id: str) -> AppPriceEndpoint:
-        return AppPriceEndpoint(id, self.session)
+    @endpoint('/v1/appPriceSchedules/{id}')
+    def app_price_schedule(self, id: str) -> AppPriceScheduleEndpoint:
+        return AppPriceScheduleEndpoint(id, self.session)
     
     @endpoint('/v1/appScreenshotSets')
     def app_screenshot_sets(self) -> AppScreenshotSetsEndpoint:
@@ -219,6 +355,38 @@ class Connection:
     def app_store_review_detail(self, id: str) -> AppStoreReviewDetailEndpoint:
         return AppStoreReviewDetailEndpoint(id, self.session)
     
+    @endpoint('/v1/appStoreVersionExperimentTreatmentLocalizations')
+    def app_store_version_experiment_treatment_localizations(self) -> AppStoreVersionExperimentTreatmentLocalizationsEndpoint:
+        return AppStoreVersionExperimentTreatmentLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/appStoreVersionExperimentTreatmentLocalizations/{id}')
+    def app_store_version_experiment_treatment_localization(self, id: str) -> AppStoreVersionExperimentTreatmentLocalizationEndpoint:
+        return AppStoreVersionExperimentTreatmentLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/appStoreVersionExperimentTreatments')
+    def app_store_version_experiment_treatments(self) -> AppStoreVersionExperimentTreatmentsEndpoint:
+        return AppStoreVersionExperimentTreatmentsEndpoint(self.session)
+    
+    @endpoint('/v1/appStoreVersionExperimentTreatments/{id}')
+    def app_store_version_experiment_treatment(self, id: str) -> AppStoreVersionExperimentTreatmentEndpoint:
+        return AppStoreVersionExperimentTreatmentEndpoint(id, self.session)
+    
+    @endpoint('/v2/appStoreVersionExperiments')
+    def app_store_version_experiments(self) -> AppStoreVersionExperimentsEndpoint:
+        return AppStoreVersionExperimentsEndpoint(self.session)
+    
+    @endpoint('/v2/appStoreVersionExperiments/{id}')
+    def app_store_version_experiment(self, id: str) -> AppStoreVersionExperimentEndpoint:
+        return AppStoreVersionExperimentEndpoint(id, self.session)
+    
+    @endpoint('/v1/appStoreVersionExperiments')
+    def app_store_version_experiments(self) -> AppStoreVersionExperimentsEndpoint:
+        return AppStoreVersionExperimentsEndpoint(self.session)
+    
+    @endpoint('/v1/appStoreVersionExperiments/{id}')
+    def app_store_version_experiment(self, id: str) -> AppStoreVersionExperimentEndpoint:
+        return AppStoreVersionExperimentEndpoint(id, self.session)
+    
     @endpoint('/v1/appStoreVersionLocalizations')
     def app_store_version_localizations(self) -> AppStoreVersionLocalizationsEndpoint:
         return AppStoreVersionLocalizationsEndpoint(self.session)
@@ -235,13 +403,13 @@ class Connection:
     def app_store_version_phased_release(self, id: str) -> AppStoreVersionPhasedReleaseEndpoint:
         return AppStoreVersionPhasedReleaseEndpoint(id, self.session)
     
+    @endpoint('/v1/appStoreVersionPromotions')
+    def app_store_version_promotions(self) -> AppStoreVersionPromotionsEndpoint:
+        return AppStoreVersionPromotionsEndpoint(self.session)
+    
     @endpoint('/v1/appStoreVersionReleaseRequests')
     def app_store_version_release_requests(self) -> AppStoreVersionReleaseRequestsEndpoint:
         return AppStoreVersionReleaseRequestsEndpoint(self.session)
-    
-    @endpoint('/v1/appStoreVersionSubmissions')
-    def app_store_version_submissions(self) -> AppStoreVersionSubmissionsEndpoint:
-        return AppStoreVersionSubmissionsEndpoint(self.session)
     
     @endpoint('/v1/appStoreVersionSubmissions/{id}')
     def app_store_version_submission(self, id: str) -> AppStoreVersionSubmissionEndpoint:
@@ -255,6 +423,10 @@ class Connection:
     def app_store_version(self, id: str) -> AppStoreVersionEndpoint:
         return AppStoreVersionEndpoint(id, self.session)
     
+    @endpoint('/v1/appTags/{id}')
+    def app_tag(self, id: str) -> AppTagEndpoint:
+        return AppTagEndpoint(id, self.session)
+    
     @endpoint('/v1/apps')
     def apps(self) -> AppsEndpoint:
         return AppsEndpoint(self.session)
@@ -262,6 +434,42 @@ class Connection:
     @endpoint('/v1/apps/{id}')
     def app(self, id: str) -> AppEndpoint:
         return AppEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssetUploadFiles')
+    def background_asset_upload_files(self) -> BackgroundAssetUploadFilesEndpoint:
+        return BackgroundAssetUploadFilesEndpoint(self.session)
+    
+    @endpoint('/v1/backgroundAssetUploadFiles/{id}')
+    def background_asset_upload_file(self, id: str) -> BackgroundAssetUploadFileEndpoint:
+        return BackgroundAssetUploadFileEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssetVersionAppStoreReleases/{id}')
+    def background_asset_version_app_store_release(self, id: str) -> BackgroundAssetVersionAppStoreReleaseEndpoint:
+        return BackgroundAssetVersionAppStoreReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssetVersionExternalBetaReleases/{id}')
+    def background_asset_version_external_beta_release(self, id: str) -> BackgroundAssetVersionExternalBetaReleaseEndpoint:
+        return BackgroundAssetVersionExternalBetaReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssetVersionInternalBetaReleases/{id}')
+    def background_asset_version_internal_beta_release(self, id: str) -> BackgroundAssetVersionInternalBetaReleaseEndpoint:
+        return BackgroundAssetVersionInternalBetaReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssetVersions')
+    def background_asset_versions(self) -> BackgroundAssetVersionsEndpoint:
+        return BackgroundAssetVersionsEndpoint(self.session)
+    
+    @endpoint('/v1/backgroundAssetVersions/{id}')
+    def background_asset_version(self, id: str) -> BackgroundAssetVersionEndpoint:
+        return BackgroundAssetVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/backgroundAssets')
+    def background_assets(self) -> BackgroundAssetsEndpoint:
+        return BackgroundAssetsEndpoint(self.session)
+    
+    @endpoint('/v1/backgroundAssets/{id}')
+    def background_asset(self, id: str) -> BackgroundAssetEndpoint:
+        return BackgroundAssetEndpoint(id, self.session)
     
     @endpoint('/v1/betaAppClipInvocationLocalizations')
     def beta_app_clip_invocation_localizations(self) -> BetaAppClipInvocationLocalizationsEndpoint:
@@ -311,6 +519,18 @@ class Connection:
     def beta_build_localization(self, id: str) -> BetaBuildLocalizationEndpoint:
         return BetaBuildLocalizationEndpoint(id, self.session)
     
+    @endpoint('/v1/betaCrashLogs/{id}')
+    def beta_crash_log(self, id: str) -> BetaCrashLogEndpoint:
+        return BetaCrashLogEndpoint(id, self.session)
+    
+    @endpoint('/v1/betaFeedbackCrashSubmissions/{id}')
+    def beta_feedback_crash_submission(self, id: str) -> BetaFeedbackCrashSubmissionEndpoint:
+        return BetaFeedbackCrashSubmissionEndpoint(id, self.session)
+    
+    @endpoint('/v1/betaFeedbackScreenshotSubmissions/{id}')
+    def beta_feedback_screenshot_submission(self, id: str) -> BetaFeedbackScreenshotSubmissionEndpoint:
+        return BetaFeedbackScreenshotSubmissionEndpoint(id, self.session)
+    
     @endpoint('/v1/betaGroups')
     def beta_groups(self) -> BetaGroupsEndpoint:
         return BetaGroupsEndpoint(self.session)
@@ -326,6 +546,18 @@ class Connection:
     @endpoint('/v1/betaLicenseAgreements/{id}')
     def beta_license_agreement(self, id: str) -> BetaLicenseAgreementEndpoint:
         return BetaLicenseAgreementEndpoint(id, self.session)
+    
+    @endpoint('/v1/betaRecruitmentCriteria')
+    def beta_recruitment_criteria(self) -> BetaRecruitmentCriteriaEndpoint:
+        return BetaRecruitmentCriteriaEndpoint(self.session)
+    
+    @endpoint('/v1/betaRecruitmentCriteria/{id}')
+    def beta_recruitment_criteria(self, id: str) -> BetaRecruitmentCriteriaEndpoint:
+        return BetaRecruitmentCriteriaEndpoint(id, self.session)
+    
+    @endpoint('/v1/betaRecruitmentCriterionOptions')
+    def beta_recruitment_criterion_options(self) -> BetaRecruitmentCriterionOptionsEndpoint:
+        return BetaRecruitmentCriterionOptionsEndpoint(self.session)
     
     @endpoint('/v1/betaTesterInvitations')
     def beta_tester_invitations(self) -> BetaTesterInvitationsEndpoint:
@@ -350,6 +582,22 @@ class Connection:
     @endpoint('/v1/buildBetaNotifications')
     def build_beta_notifications(self) -> BuildBetaNotificationsEndpoint:
         return BuildBetaNotificationsEndpoint(self.session)
+    
+    @endpoint('/v1/buildUploadFiles')
+    def build_upload_files(self) -> BuildUploadFilesEndpoint:
+        return BuildUploadFilesEndpoint(self.session)
+    
+    @endpoint('/v1/buildUploadFiles/{id}')
+    def build_upload_file(self, id: str) -> BuildUploadFileEndpoint:
+        return BuildUploadFileEndpoint(id, self.session)
+    
+    @endpoint('/v1/buildUploads')
+    def build_uploads(self) -> BuildUploadsEndpoint:
+        return BuildUploadsEndpoint(self.session)
+    
+    @endpoint('/v1/buildUploads/{id}')
+    def build_upload(self, id: str) -> BuildUploadEndpoint:
+        return BuildUploadEndpoint(id, self.session)
     
     @endpoint('/v1/builds')
     def builds(self) -> BuildsEndpoint:
@@ -439,6 +687,18 @@ class Connection:
     def ci_xcode_version(self, id: str) -> CiXcodeVersionEndpoint:
         return CiXcodeVersionEndpoint(id, self.session)
     
+    @endpoint('/v1/customerReviewResponses')
+    def customer_review_responses(self) -> CustomerReviewResponsesEndpoint:
+        return CustomerReviewResponsesEndpoint(self.session)
+    
+    @endpoint('/v1/customerReviewResponses/{id}')
+    def customer_review_response(self, id: str) -> CustomerReviewResponseEndpoint:
+        return CustomerReviewResponseEndpoint(id, self.session)
+    
+    @endpoint('/v1/customerReviews/{id}')
+    def customer_review(self, id: str) -> CustomerReviewEndpoint:
+        return CustomerReviewEndpoint(id, self.session)
+    
     @endpoint('/v1/devices')
     def devices(self) -> DevicesEndpoint:
         return DevicesEndpoint(self.session)
@@ -446,6 +706,10 @@ class Connection:
     @endpoint('/v1/devices/{id}')
     def device(self, id: str) -> DeviceEndpoint:
         return DeviceEndpoint(id, self.session)
+    
+    @endpoint('/v1/endAppAvailabilityPreOrders')
+    def end_app_availability_pre_orders(self) -> EndAppAvailabilityPreOrdersEndpoint:
+        return EndAppAvailabilityPreOrdersEndpoint(self.session)
     
     @endpoint('/v1/endUserLicenseAgreements')
     def end_user_license_agreements(self) -> EndUserLicenseAgreementsEndpoint:
@@ -459,17 +723,477 @@ class Connection:
     def finance_reports(self) -> FinanceReportsEndpoint:
         return FinanceReportsEndpoint(self.session)
     
-    @endpoint('/v1/idfaDeclarations')
-    def idfa_declarations(self) -> IdfaDeclarationsEndpoint:
-        return IdfaDeclarationsEndpoint(self.session)
+    @endpoint('/v1/gameCenterAchievementImages')
+    def game_center_achievement_images(self) -> GameCenterAchievementImagesEndpoint:
+        return GameCenterAchievementImagesEndpoint(self.session)
     
-    @endpoint('/v1/idfaDeclarations/{id}')
-    def idfa_declaration(self, id: str) -> IdfaDeclarationEndpoint:
-        return IdfaDeclarationEndpoint(id, self.session)
+    @endpoint('/v1/gameCenterAchievementImages/{id}')
+    def game_center_achievement_image(self, id: str) -> GameCenterAchievementImageEndpoint:
+        return GameCenterAchievementImageEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterAchievementImages')
+    def game_center_achievement_images(self) -> GameCenterAchievementImagesEndpoint:
+        return GameCenterAchievementImagesEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterAchievementImages/{id}')
+    def game_center_achievement_image(self, id: str) -> GameCenterAchievementImageEndpoint:
+        return GameCenterAchievementImageEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterAchievementLocalizations')
+    def game_center_achievement_localizations(self) -> GameCenterAchievementLocalizationsEndpoint:
+        return GameCenterAchievementLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterAchievementLocalizations/{id}')
+    def game_center_achievement_localization(self, id: str) -> GameCenterAchievementLocalizationEndpoint:
+        return GameCenterAchievementLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterAchievementLocalizations')
+    def game_center_achievement_localizations(self) -> GameCenterAchievementLocalizationsEndpoint:
+        return GameCenterAchievementLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterAchievementLocalizations/{id}')
+    def game_center_achievement_localization(self, id: str) -> GameCenterAchievementLocalizationEndpoint:
+        return GameCenterAchievementLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterAchievementReleases')
+    def game_center_achievement_releases(self) -> GameCenterAchievementReleasesEndpoint:
+        return GameCenterAchievementReleasesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterAchievementReleases/{id}')
+    def game_center_achievement_release(self, id: str) -> GameCenterAchievementReleaseEndpoint:
+        return GameCenterAchievementReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterAchievementVersions')
+    def game_center_achievement_versions(self) -> GameCenterAchievementVersionsEndpoint:
+        return GameCenterAchievementVersionsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterAchievementVersions/{id}')
+    def game_center_achievement_version(self, id: str) -> GameCenterAchievementVersionEndpoint:
+        return GameCenterAchievementVersionEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterAchievements')
+    def game_center_achievements(self) -> GameCenterAchievementsEndpoint:
+        return GameCenterAchievementsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterAchievements/{id}')
+    def game_center_achievement(self, id: str) -> GameCenterAchievementEndpoint:
+        return GameCenterAchievementEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterAchievements')
+    def game_center_achievements(self) -> GameCenterAchievementsEndpoint:
+        return GameCenterAchievementsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterAchievements/{id}')
+    def game_center_achievement(self, id: str) -> GameCenterAchievementEndpoint:
+        return GameCenterAchievementEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterActivities')
+    def game_center_activities(self) -> GameCenterActivitiesEndpoint:
+        return GameCenterActivitiesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterActivities/{id}')
+    def game_center_activity(self, id: str) -> GameCenterActivityEndpoint:
+        return GameCenterActivityEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterActivityImages')
+    def game_center_activity_images(self) -> GameCenterActivityImagesEndpoint:
+        return GameCenterActivityImagesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterActivityImages/{id}')
+    def game_center_activity_image(self, id: str) -> GameCenterActivityImageEndpoint:
+        return GameCenterActivityImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterActivityLocalizations')
+    def game_center_activity_localizations(self) -> GameCenterActivityLocalizationsEndpoint:
+        return GameCenterActivityLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterActivityLocalizations/{id}')
+    def game_center_activity_localization(self, id: str) -> GameCenterActivityLocalizationEndpoint:
+        return GameCenterActivityLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterActivityVersionReleases')
+    def game_center_activity_version_releases(self) -> GameCenterActivityVersionReleasesEndpoint:
+        return GameCenterActivityVersionReleasesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterActivityVersionReleases/{id}')
+    def game_center_activity_version_release(self, id: str) -> GameCenterActivityVersionReleaseEndpoint:
+        return GameCenterActivityVersionReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterActivityVersions')
+    def game_center_activity_versions(self) -> GameCenterActivityVersionsEndpoint:
+        return GameCenterActivityVersionsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterActivityVersions/{id}')
+    def game_center_activity_version(self, id: str) -> GameCenterActivityVersionEndpoint:
+        return GameCenterActivityVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterAppVersions')
+    def game_center_app_versions(self) -> GameCenterAppVersionsEndpoint:
+        return GameCenterAppVersionsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterAppVersions/{id}')
+    def game_center_app_version(self, id: str) -> GameCenterAppVersionEndpoint:
+        return GameCenterAppVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterChallengeImages')
+    def game_center_challenge_images(self) -> GameCenterChallengeImagesEndpoint:
+        return GameCenterChallengeImagesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterChallengeImages/{id}')
+    def game_center_challenge_image(self, id: str) -> GameCenterChallengeImageEndpoint:
+        return GameCenterChallengeImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterChallengeLocalizations')
+    def game_center_challenge_localizations(self) -> GameCenterChallengeLocalizationsEndpoint:
+        return GameCenterChallengeLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterChallengeLocalizations/{id}')
+    def game_center_challenge_localization(self, id: str) -> GameCenterChallengeLocalizationEndpoint:
+        return GameCenterChallengeLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterChallengeVersionReleases')
+    def game_center_challenge_version_releases(self) -> GameCenterChallengeVersionReleasesEndpoint:
+        return GameCenterChallengeVersionReleasesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterChallengeVersionReleases/{id}')
+    def game_center_challenge_version_release(self, id: str) -> GameCenterChallengeVersionReleaseEndpoint:
+        return GameCenterChallengeVersionReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterChallengeVersions')
+    def game_center_challenge_versions(self) -> GameCenterChallengeVersionsEndpoint:
+        return GameCenterChallengeVersionsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterChallengeVersions/{id}')
+    def game_center_challenge_version(self, id: str) -> GameCenterChallengeVersionEndpoint:
+        return GameCenterChallengeVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterChallenges')
+    def game_center_challenges(self) -> GameCenterChallengesEndpoint:
+        return GameCenterChallengesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterChallenges/{id}')
+    def game_center_challenge(self, id: str) -> GameCenterChallengeEndpoint:
+        return GameCenterChallengeEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterDetails')
+    def game_center_details(self) -> GameCenterDetailsEndpoint:
+        return GameCenterDetailsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterDetails/{id}')
+    def game_center_detail(self, id: str) -> GameCenterDetailEndpoint:
+        return GameCenterDetailEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterGroups')
+    def game_center_groups(self) -> GameCenterGroupsEndpoint:
+        return GameCenterGroupsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterGroups/{id}')
+    def game_center_group(self, id: str) -> GameCenterGroupEndpoint:
+        return GameCenterGroupEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardEntrySubmissions')
+    def game_center_leaderboard_entry_submissions(self) -> GameCenterLeaderboardEntrySubmissionsEndpoint:
+        return GameCenterLeaderboardEntrySubmissionsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardImages')
+    def game_center_leaderboard_images(self) -> GameCenterLeaderboardImagesEndpoint:
+        return GameCenterLeaderboardImagesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardImages/{id}')
+    def game_center_leaderboard_image(self, id: str) -> GameCenterLeaderboardImageEndpoint:
+        return GameCenterLeaderboardImageEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardImages')
+    def game_center_leaderboard_images(self) -> GameCenterLeaderboardImagesEndpoint:
+        return GameCenterLeaderboardImagesEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardImages/{id}')
+    def game_center_leaderboard_image(self, id: str) -> GameCenterLeaderboardImageEndpoint:
+        return GameCenterLeaderboardImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardLocalizations')
+    def game_center_leaderboard_localizations(self) -> GameCenterLeaderboardLocalizationsEndpoint:
+        return GameCenterLeaderboardLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardLocalizations/{id}')
+    def game_center_leaderboard_localization(self, id: str) -> GameCenterLeaderboardLocalizationEndpoint:
+        return GameCenterLeaderboardLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardLocalizations')
+    def game_center_leaderboard_localizations(self) -> GameCenterLeaderboardLocalizationsEndpoint:
+        return GameCenterLeaderboardLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardLocalizations/{id}')
+    def game_center_leaderboard_localization(self, id: str) -> GameCenterLeaderboardLocalizationEndpoint:
+        return GameCenterLeaderboardLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardReleases')
+    def game_center_leaderboard_releases(self) -> GameCenterLeaderboardReleasesEndpoint:
+        return GameCenterLeaderboardReleasesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardReleases/{id}')
+    def game_center_leaderboard_release(self, id: str) -> GameCenterLeaderboardReleaseEndpoint:
+        return GameCenterLeaderboardReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetImages')
+    def game_center_leaderboard_set_images(self) -> GameCenterLeaderboardSetImagesEndpoint:
+        return GameCenterLeaderboardSetImagesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetImages/{id}')
+    def game_center_leaderboard_set_image(self, id: str) -> GameCenterLeaderboardSetImageEndpoint:
+        return GameCenterLeaderboardSetImageEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetImages')
+    def game_center_leaderboard_set_images(self) -> GameCenterLeaderboardSetImagesEndpoint:
+        return GameCenterLeaderboardSetImagesEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetImages/{id}')
+    def game_center_leaderboard_set_image(self, id: str) -> GameCenterLeaderboardSetImageEndpoint:
+        return GameCenterLeaderboardSetImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetLocalizations')
+    def game_center_leaderboard_set_localizations(self) -> GameCenterLeaderboardSetLocalizationsEndpoint:
+        return GameCenterLeaderboardSetLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetLocalizations/{id}')
+    def game_center_leaderboard_set_localization(self, id: str) -> GameCenterLeaderboardSetLocalizationEndpoint:
+        return GameCenterLeaderboardSetLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetLocalizations')
+    def game_center_leaderboard_set_localizations(self) -> GameCenterLeaderboardSetLocalizationsEndpoint:
+        return GameCenterLeaderboardSetLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetLocalizations/{id}')
+    def game_center_leaderboard_set_localization(self, id: str) -> GameCenterLeaderboardSetLocalizationEndpoint:
+        return GameCenterLeaderboardSetLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetMemberLocalizations')
+    def game_center_leaderboard_set_member_localizations(self) -> GameCenterLeaderboardSetMemberLocalizationsEndpoint:
+        return GameCenterLeaderboardSetMemberLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetMemberLocalizations/{id}')
+    def game_center_leaderboard_set_member_localization(self, id: str) -> GameCenterLeaderboardSetMemberLocalizationEndpoint:
+        return GameCenterLeaderboardSetMemberLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetReleases')
+    def game_center_leaderboard_set_releases(self) -> GameCenterLeaderboardSetReleasesEndpoint:
+        return GameCenterLeaderboardSetReleasesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSetReleases/{id}')
+    def game_center_leaderboard_set_release(self, id: str) -> GameCenterLeaderboardSetReleaseEndpoint:
+        return GameCenterLeaderboardSetReleaseEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetVersions')
+    def game_center_leaderboard_set_versions(self) -> GameCenterLeaderboardSetVersionsEndpoint:
+        return GameCenterLeaderboardSetVersionsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSetVersions/{id}')
+    def game_center_leaderboard_set_version(self, id: str) -> GameCenterLeaderboardSetVersionEndpoint:
+        return GameCenterLeaderboardSetVersionEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSets')
+    def game_center_leaderboard_sets(self) -> GameCenterLeaderboardSetsEndpoint:
+        return GameCenterLeaderboardSetsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardSets/{id}')
+    def game_center_leaderboard_set(self, id: str) -> GameCenterLeaderboardSetEndpoint:
+        return GameCenterLeaderboardSetEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSets')
+    def game_center_leaderboard_sets(self) -> GameCenterLeaderboardSetsEndpoint:
+        return GameCenterLeaderboardSetsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboardSets/{id}')
+    def game_center_leaderboard_set(self, id: str) -> GameCenterLeaderboardSetEndpoint:
+        return GameCenterLeaderboardSetEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardVersions')
+    def game_center_leaderboard_versions(self) -> GameCenterLeaderboardVersionsEndpoint:
+        return GameCenterLeaderboardVersionsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboardVersions/{id}')
+    def game_center_leaderboard_version(self, id: str) -> GameCenterLeaderboardVersionEndpoint:
+        return GameCenterLeaderboardVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboards')
+    def game_center_leaderboards(self) -> GameCenterLeaderboardsEndpoint:
+        return GameCenterLeaderboardsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterLeaderboards/{id}')
+    def game_center_leaderboard(self, id: str) -> GameCenterLeaderboardEndpoint:
+        return GameCenterLeaderboardEndpoint(id, self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboards')
+    def game_center_leaderboards(self) -> GameCenterLeaderboardsEndpoint:
+        return GameCenterLeaderboardsEndpoint(self.session)
+    
+    @endpoint('/v2/gameCenterLeaderboards/{id}')
+    def game_center_leaderboard(self, id: str) -> GameCenterLeaderboardEndpoint:
+        return GameCenterLeaderboardEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingQueues')
+    def game_center_matchmaking_queues(self) -> GameCenterMatchmakingQueuesEndpoint:
+        return GameCenterMatchmakingQueuesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingQueues/{id}')
+    def game_center_matchmaking_queue(self, id: str) -> GameCenterMatchmakingQueueEndpoint:
+        return GameCenterMatchmakingQueueEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingRuleSetTests')
+    def game_center_matchmaking_rule_set_tests(self) -> GameCenterMatchmakingRuleSetTestsEndpoint:
+        return GameCenterMatchmakingRuleSetTestsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingRuleSets')
+    def game_center_matchmaking_rule_sets(self) -> GameCenterMatchmakingRuleSetsEndpoint:
+        return GameCenterMatchmakingRuleSetsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingRuleSets/{id}')
+    def game_center_matchmaking_rule_set(self, id: str) -> GameCenterMatchmakingRuleSetEndpoint:
+        return GameCenterMatchmakingRuleSetEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingRules')
+    def game_center_matchmaking_rules(self) -> GameCenterMatchmakingRulesEndpoint:
+        return GameCenterMatchmakingRulesEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingRules/{id}')
+    def game_center_matchmaking_rule(self, id: str) -> GameCenterMatchmakingRuleEndpoint:
+        return GameCenterMatchmakingRuleEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingTeams')
+    def game_center_matchmaking_teams(self) -> GameCenterMatchmakingTeamsEndpoint:
+        return GameCenterMatchmakingTeamsEndpoint(self.session)
+    
+    @endpoint('/v1/gameCenterMatchmakingTeams/{id}')
+    def game_center_matchmaking_team(self, id: str) -> GameCenterMatchmakingTeamEndpoint:
+        return GameCenterMatchmakingTeamEndpoint(id, self.session)
+    
+    @endpoint('/v1/gameCenterPlayerAchievementSubmissions')
+    def game_center_player_achievement_submissions(self) -> GameCenterPlayerAchievementSubmissionsEndpoint:
+        return GameCenterPlayerAchievementSubmissionsEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseAppStoreReviewScreenshots')
+    def in_app_purchase_app_store_review_screenshots(self) -> InAppPurchaseAppStoreReviewScreenshotsEndpoint:
+        return InAppPurchaseAppStoreReviewScreenshotsEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseAppStoreReviewScreenshots/{id}')
+    def in_app_purchase_app_store_review_screenshot(self, id: str) -> InAppPurchaseAppStoreReviewScreenshotEndpoint:
+        return InAppPurchaseAppStoreReviewScreenshotEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseAvailabilities')
+    def in_app_purchase_availabilities(self) -> InAppPurchaseAvailabilitiesEndpoint:
+        return InAppPurchaseAvailabilitiesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseAvailabilities/{id}')
+    def in_app_purchase_availability(self, id: str) -> InAppPurchaseAvailabilityEndpoint:
+        return InAppPurchaseAvailabilityEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseContents/{id}')
+    def in_app_purchase_content(self, id: str) -> InAppPurchaseContentEndpoint:
+        return InAppPurchaseContentEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseImages')
+    def in_app_purchase_images(self) -> InAppPurchaseImagesEndpoint:
+        return InAppPurchaseImagesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseImages/{id}')
+    def in_app_purchase_image(self, id: str) -> InAppPurchaseImageEndpoint:
+        return InAppPurchaseImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseLocalizations')
+    def in_app_purchase_localizations(self) -> InAppPurchaseLocalizationsEndpoint:
+        return InAppPurchaseLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseLocalizations/{id}')
+    def in_app_purchase_localization(self, id: str) -> InAppPurchaseLocalizationEndpoint:
+        return InAppPurchaseLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodeCustomCodes')
+    def in_app_purchase_offer_code_custom_codes(self) -> InAppPurchaseOfferCodeCustomCodesEndpoint:
+        return InAppPurchaseOfferCodeCustomCodesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodeCustomCodes/{id}')
+    def in_app_purchase_offer_code_custom_code(self, id: str) -> InAppPurchaseOfferCodeCustomCodeEndpoint:
+        return InAppPurchaseOfferCodeCustomCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodeOneTimeUseCodes')
+    def in_app_purchase_offer_code_one_time_use_codes(self) -> InAppPurchaseOfferCodeOneTimeUseCodesEndpoint:
+        return InAppPurchaseOfferCodeOneTimeUseCodesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodeOneTimeUseCodes/{id}')
+    def in_app_purchase_offer_code_one_time_use_code(self, id: str) -> InAppPurchaseOfferCodeOneTimeUseCodeEndpoint:
+        return InAppPurchaseOfferCodeOneTimeUseCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodes')
+    def in_app_purchase_offer_codes(self) -> InAppPurchaseOfferCodesEndpoint:
+        return InAppPurchaseOfferCodesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchaseOfferCodes/{id}')
+    def in_app_purchase_offer_code(self, id: str) -> InAppPurchaseOfferCodeEndpoint:
+        return InAppPurchaseOfferCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchasePriceSchedules')
+    def in_app_purchase_price_schedules(self) -> InAppPurchasePriceSchedulesEndpoint:
+        return InAppPurchasePriceSchedulesEndpoint(self.session)
+    
+    @endpoint('/v1/inAppPurchasePriceSchedules/{id}')
+    def in_app_purchase_price_schedule(self, id: str) -> InAppPurchasePriceScheduleEndpoint:
+        return InAppPurchasePriceScheduleEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchaseSubmissions')
+    def in_app_purchase_submissions(self) -> InAppPurchaseSubmissionsEndpoint:
+        return InAppPurchaseSubmissionsEndpoint(self.session)
     
     @endpoint('/v1/inAppPurchases/{id}')
     def in_app_purchase(self, id: str) -> InAppPurchaseEndpoint:
         return InAppPurchaseEndpoint(id, self.session)
+    
+    @endpoint('/v2/inAppPurchases')
+    def in_app_purchases(self) -> InAppPurchasesEndpoint:
+        return InAppPurchasesEndpoint(self.session)
+    
+    @endpoint('/v2/inAppPurchases/{id}')
+    def in_app_purchase(self, id: str) -> InAppPurchaseEndpoint:
+        return InAppPurchaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/marketplaceSearchDetails')
+    def marketplace_search_details(self) -> MarketplaceSearchDetailsEndpoint:
+        return MarketplaceSearchDetailsEndpoint(self.session)
+    
+    @endpoint('/v1/marketplaceSearchDetails/{id}')
+    def marketplace_search_detail(self, id: str) -> MarketplaceSearchDetailEndpoint:
+        return MarketplaceSearchDetailEndpoint(id, self.session)
+    
+    @endpoint('/v1/marketplaceWebhooks')
+    def marketplace_webhooks(self) -> MarketplaceWebhooksEndpoint:
+        return MarketplaceWebhooksEndpoint(self.session)
+    
+    @endpoint('/v1/marketplaceWebhooks/{id}')
+    def marketplace_webhook(self, id: str) -> MarketplaceWebhookEndpoint:
+        return MarketplaceWebhookEndpoint(id, self.session)
+    
+    @endpoint('/v1/merchantIds')
+    def merchant_ids(self) -> MerchantIdsEndpoint:
+        return MerchantIdsEndpoint(self.session)
+    
+    @endpoint('/v1/merchantIds/{id}')
+    def merchant_id(self, id: str) -> MerchantIdEndpoint:
+        return MerchantIdEndpoint(id, self.session)
+    
+    @endpoint('/v1/nominations')
+    def nominations(self) -> NominationsEndpoint:
+        return NominationsEndpoint(self.session)
+    
+    @endpoint('/v1/nominations/{id}')
+    def nomination(self, id: str) -> NominationEndpoint:
+        return NominationEndpoint(id, self.session)
+    
+    @endpoint('/v1/passTypeIds')
+    def pass_type_ids(self) -> PassTypeIdsEndpoint:
+        return PassTypeIdsEndpoint(self.session)
+    
+    @endpoint('/v1/passTypeIds/{id}')
+    def pass_type_id(self, id: str) -> PassTypeIdEndpoint:
+        return PassTypeIdEndpoint(id, self.session)
     
     @endpoint('/v1/preReleaseVersions')
     def pre_release_versions(self) -> PreReleaseVersionsEndpoint:
@@ -487,6 +1211,30 @@ class Connection:
     def profile(self, id: str) -> ProfileEndpoint:
         return ProfileEndpoint(id, self.session)
     
+    @endpoint('/v1/promotedPurchases')
+    def promoted_purchases(self) -> PromotedPurchasesEndpoint:
+        return PromotedPurchasesEndpoint(self.session)
+    
+    @endpoint('/v1/promotedPurchases/{id}')
+    def promoted_purchase(self, id: str) -> PromotedPurchaseEndpoint:
+        return PromotedPurchaseEndpoint(id, self.session)
+    
+    @endpoint('/v1/reviewSubmissionItems')
+    def review_submission_items(self) -> ReviewSubmissionItemsEndpoint:
+        return ReviewSubmissionItemsEndpoint(self.session)
+    
+    @endpoint('/v1/reviewSubmissionItems/{id}')
+    def review_submission_item(self, id: str) -> ReviewSubmissionItemEndpoint:
+        return ReviewSubmissionItemEndpoint(id, self.session)
+    
+    @endpoint('/v1/reviewSubmissions')
+    def review_submissions(self) -> ReviewSubmissionsEndpoint:
+        return ReviewSubmissionsEndpoint(self.session)
+    
+    @endpoint('/v1/reviewSubmissions/{id}')
+    def review_submission(self, id: str) -> ReviewSubmissionEndpoint:
+        return ReviewSubmissionEndpoint(id, self.session)
+    
     @endpoint('/v1/routingAppCoverages')
     def routing_app_coverages(self) -> RoutingAppCoveragesEndpoint:
         return RoutingAppCoveragesEndpoint(self.session)
@@ -498,6 +1246,18 @@ class Connection:
     @endpoint('/v1/salesReports')
     def sales_reports(self) -> SalesReportsEndpoint:
         return SalesReportsEndpoint(self.session)
+    
+    @endpoint('/v2/sandboxTesters')
+    def sandbox_testers(self) -> SandboxTestersEndpoint:
+        return SandboxTestersEndpoint(self.session)
+    
+    @endpoint('/v2/sandboxTesters/{id}')
+    def sandbox_tester(self, id: str) -> SandboxTesterEndpoint:
+        return SandboxTesterEndpoint(id, self.session)
+    
+    @endpoint('/v2/sandboxTestersClearPurchaseHistoryRequest')
+    def sandbox_testers_clear_purchase_history_request(self) -> SandboxTestersClearPurchaseHistoryRequestEndpoint:
+        return SandboxTestersClearPurchaseHistoryRequestEndpoint(self.session)
     
     @endpoint('/v1/scmGitReferences/{id}')
     def scm_git_reference(self, id: str) -> ScmGitReferenceEndpoint:
@@ -523,9 +1283,133 @@ class Connection:
     def scm_repository(self, id: str) -> ScmRepositoryEndpoint:
         return ScmRepositoryEndpoint(id, self.session)
     
+    @endpoint('/v1/subscriptionAppStoreReviewScreenshots')
+    def subscription_app_store_review_screenshots(self) -> SubscriptionAppStoreReviewScreenshotsEndpoint:
+        return SubscriptionAppStoreReviewScreenshotsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionAppStoreReviewScreenshots/{id}')
+    def subscription_app_store_review_screenshot(self, id: str) -> SubscriptionAppStoreReviewScreenshotEndpoint:
+        return SubscriptionAppStoreReviewScreenshotEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionAvailabilities')
+    def subscription_availabilities(self) -> SubscriptionAvailabilitiesEndpoint:
+        return SubscriptionAvailabilitiesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionAvailabilities/{id}')
+    def subscription_availability(self, id: str) -> SubscriptionAvailabilityEndpoint:
+        return SubscriptionAvailabilityEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionGracePeriods/{id}')
+    def subscription_grace_period(self, id: str) -> SubscriptionGracePeriodEndpoint:
+        return SubscriptionGracePeriodEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionGroupLocalizations')
+    def subscription_group_localizations(self) -> SubscriptionGroupLocalizationsEndpoint:
+        return SubscriptionGroupLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionGroupLocalizations/{id}')
+    def subscription_group_localization(self, id: str) -> SubscriptionGroupLocalizationEndpoint:
+        return SubscriptionGroupLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionGroupSubmissions')
+    def subscription_group_submissions(self) -> SubscriptionGroupSubmissionsEndpoint:
+        return SubscriptionGroupSubmissionsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionGroups')
+    def subscription_groups(self) -> SubscriptionGroupsEndpoint:
+        return SubscriptionGroupsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionGroups/{id}')
+    def subscription_group(self, id: str) -> SubscriptionGroupEndpoint:
+        return SubscriptionGroupEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionImages')
+    def subscription_images(self) -> SubscriptionImagesEndpoint:
+        return SubscriptionImagesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionImages/{id}')
+    def subscription_image(self, id: str) -> SubscriptionImageEndpoint:
+        return SubscriptionImageEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionIntroductoryOffers')
+    def subscription_introductory_offers(self) -> SubscriptionIntroductoryOffersEndpoint:
+        return SubscriptionIntroductoryOffersEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionIntroductoryOffers/{id}')
+    def subscription_introductory_offer(self, id: str) -> SubscriptionIntroductoryOfferEndpoint:
+        return SubscriptionIntroductoryOfferEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionLocalizations')
+    def subscription_localizations(self) -> SubscriptionLocalizationsEndpoint:
+        return SubscriptionLocalizationsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionLocalizations/{id}')
+    def subscription_localization(self, id: str) -> SubscriptionLocalizationEndpoint:
+        return SubscriptionLocalizationEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodeCustomCodes')
+    def subscription_offer_code_custom_codes(self) -> SubscriptionOfferCodeCustomCodesEndpoint:
+        return SubscriptionOfferCodeCustomCodesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodeCustomCodes/{id}')
+    def subscription_offer_code_custom_code(self, id: str) -> SubscriptionOfferCodeCustomCodeEndpoint:
+        return SubscriptionOfferCodeCustomCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodeOneTimeUseCodes')
+    def subscription_offer_code_one_time_use_codes(self) -> SubscriptionOfferCodeOneTimeUseCodesEndpoint:
+        return SubscriptionOfferCodeOneTimeUseCodesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodeOneTimeUseCodes/{id}')
+    def subscription_offer_code_one_time_use_code(self, id: str) -> SubscriptionOfferCodeOneTimeUseCodeEndpoint:
+        return SubscriptionOfferCodeOneTimeUseCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodes')
+    def subscription_offer_codes(self) -> SubscriptionOfferCodesEndpoint:
+        return SubscriptionOfferCodesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionOfferCodes/{id}')
+    def subscription_offer_code(self, id: str) -> SubscriptionOfferCodeEndpoint:
+        return SubscriptionOfferCodeEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionPricePoints/{id}')
+    def subscription_price_point(self, id: str) -> SubscriptionPricePointEndpoint:
+        return SubscriptionPricePointEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionPrices')
+    def subscription_prices(self) -> SubscriptionPricesEndpoint:
+        return SubscriptionPricesEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionPrices/{id}')
+    def subscription_price(self, id: str) -> SubscriptionPriceEndpoint:
+        return SubscriptionPriceEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionPromotionalOffers')
+    def subscription_promotional_offers(self) -> SubscriptionPromotionalOffersEndpoint:
+        return SubscriptionPromotionalOffersEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptionPromotionalOffers/{id}')
+    def subscription_promotional_offer(self, id: str) -> SubscriptionPromotionalOfferEndpoint:
+        return SubscriptionPromotionalOfferEndpoint(id, self.session)
+    
+    @endpoint('/v1/subscriptionSubmissions')
+    def subscription_submissions(self) -> SubscriptionSubmissionsEndpoint:
+        return SubscriptionSubmissionsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptions')
+    def subscriptions(self) -> SubscriptionsEndpoint:
+        return SubscriptionsEndpoint(self.session)
+    
+    @endpoint('/v1/subscriptions/{id}')
+    def subscription(self, id: str) -> SubscriptionEndpoint:
+        return SubscriptionEndpoint(id, self.session)
+    
     @endpoint('/v1/territories')
     def territories(self) -> TerritoriesEndpoint:
         return TerritoriesEndpoint(self.session)
+    
+    @endpoint('/v1/territoryAvailabilities/{id}')
+    def territory_availability(self, id: str) -> TerritoryAvailabilityEndpoint:
+        return TerritoryAvailabilityEndpoint(id, self.session)
     
     @endpoint('/v1/userInvitations')
     def user_invitations(self) -> UserInvitationsEndpoint:
@@ -543,6 +1427,30 @@ class Connection:
     def user(self, id: str) -> UserEndpoint:
         return UserEndpoint(id, self.session)
     
+    @endpoint('/v1/webhookDeliveries')
+    def webhook_deliveries(self) -> WebhookDeliveriesEndpoint:
+        return WebhookDeliveriesEndpoint(self.session)
+    
+    @endpoint('/v1/webhookPings')
+    def webhook_pings(self) -> WebhookPingsEndpoint:
+        return WebhookPingsEndpoint(self.session)
+    
+    @endpoint('/v1/webhooks')
+    def webhooks(self) -> WebhooksEndpoint:
+        return WebhooksEndpoint(self.session)
+    
+    @endpoint('/v1/webhooks/{id}')
+    def webhook(self, id: str) -> WebhookEndpoint:
+        return WebhookEndpoint(id, self.session)
+    
+    @endpoint('/v1/winBackOffers')
+    def win_back_offers(self) -> WinBackOffersEndpoint:
+        return WinBackOffersEndpoint(self.session)
+    
+    @endpoint('/v1/winBackOffers/{id}')
+    def win_back_offer(self, id: str) -> WinBackOfferEndpoint:
+        return WinBackOfferEndpoint(id, self.session)
+    
     @endpoint('/v1/buildBundles/{id}')
     def build_bundle(self, id: str) -> BuildBundleEndpoint:
         return BuildBundleEndpoint(id, self.session)
@@ -554,4 +1462,8 @@ class Connection:
     @endpoint('/v1/gameCenterEnabledVersions/{id}')
     def game_center_enabled_version(self, id: str) -> GameCenterEnabledVersionEndpoint:
         return GameCenterEnabledVersionEndpoint(id, self.session)
+    
+    @endpoint('/v1/inAppPurchasePricePoints/{id}')
+    def in_app_purchase_price_point(self, id: str) -> InAppPurchasePricePointEndpoint:
+        return InAppPurchasePricePointEndpoint(id, self.session)
     

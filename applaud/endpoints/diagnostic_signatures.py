@@ -28,7 +28,7 @@ class LogsOfDiagnosticSignatureEndpoint(IDEndpoint):
     def get(self) -> DiagnosticLogsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of DiagnosticLogs
         :rtype: DiagnosticLogsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

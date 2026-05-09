@@ -74,7 +74,7 @@ class Endpoint:
     def __parse_response(self, response: requests.Response) -> Any:
         content_type = response.headers['Content-Type']
 
-        if content_type == 'application/json':
+        if content_type == 'application/json' or content_type == 'application/vnd.api+json':
             json = response.json()
 
             if response.ok:

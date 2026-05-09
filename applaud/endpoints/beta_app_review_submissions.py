@@ -102,6 +102,10 @@ class BetaAppReviewSubmissionEndpoint(IDEndpoint):
     def build(self) -> BuildOfBetaAppReviewSubmissionEndpoint:
         return BuildOfBetaAppReviewSubmissionEndpoint(self.id, self.session)
         
+    @endpoint('/v1/betaAppReviewSubmissions/{id}/relationships/build')
+    def build_linkage(self) -> BuildLinkageOfBetaAppReviewSubmissionEndpoint:
+        return BuildLinkageOfBetaAppReviewSubmissionEndpoint(self.id, self.session)
+        
     def fields(self, *, beta_app_review_submission: Union[BetaAppReviewSubmissionField, list[BetaAppReviewSubmissionField]]=None, build: Union[BuildField, list[BuildField]]=None) -> BetaAppReviewSubmissionEndpoint:
         '''Fields to return for included related types.
 
@@ -141,6 +145,20 @@ class BetaAppReviewSubmissionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaAppReviewSubmissionResponse.parse_obj(json)
 
+class BuildLinkageOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
+    path = '/v1/betaAppReviewSubmissions/{id}/relationships/build'
+
+    def get(self) -> BetaAppReviewSubmissionBuildLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BetaAppReviewSubmissionBuildLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BetaAppReviewSubmissionBuildLinkageResponse.parse_obj(json)
+
 class BuildOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
     path = '/v1/betaAppReviewSubmissions/{id}/build'
 
@@ -156,14 +174,14 @@ class BuildOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
         if build: self._set_fields('builds',build if type(build) is list else [build])
         return self
         
-    def get(self) -> BuildResponse:
+    def get(self) -> BuildWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: BuildResponse
+        :returns: Single Build with get
+        :rtype: BuildWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return BuildResponse.parse_obj(json)
+        return BuildWithoutIncludesResponse.parse_obj(json)
 

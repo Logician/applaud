@@ -30,6 +30,10 @@ class AppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
     def app_clip_header_image(self) -> AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint:
         return AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint(self.id, self.session)
         
+    @endpoint('/v1/appClipDefaultExperienceLocalizations/{id}/relationships/appClipHeaderImage')
+    def app_clip_header_image_linkage(self) -> AppClipHeaderImageLinkageOfAppClipDefaultExperienceLocalizationEndpoint:
+        return AppClipHeaderImageLinkageOfAppClipDefaultExperienceLocalizationEndpoint(self.id, self.session)
+        
     def fields(self, *, app_clip_default_experience_localization: Union[AppClipDefaultExperienceLocalizationField, list[AppClipDefaultExperienceLocalizationField]]=None, app_clip_header_image: Union[AppClipHeaderImageField, list[AppClipHeaderImageField]]=None) -> AppClipDefaultExperienceLocalizationEndpoint:
         '''Fields to return for included related types.
 
@@ -90,25 +94,55 @@ class AppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
         '''
         super()._perform_delete()
 
+class AppClipHeaderImageLinkageOfAppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
+    path = '/v1/appClipDefaultExperienceLocalizations/{id}/relationships/appClipHeaderImage'
+
+    def get(self) -> AppClipDefaultExperienceLocalizationAppClipHeaderImageLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: AppClipDefaultExperienceLocalizationAppClipHeaderImageLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return AppClipDefaultExperienceLocalizationAppClipHeaderImageLinkageResponse.parse_obj(json)
+
 class AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperienceLocalizations/{id}/appClipHeaderImage'
 
-    def fields(self, *, app_clip_header_image: Union[AppClipHeaderImageField, list[AppClipHeaderImageField]]=None) -> AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint:
+    def fields(self, *, app_clip_header_image: Union[AppClipHeaderImageField, list[AppClipHeaderImageField]]=None, app_clip_default_experience_localization: Union[AppClipDefaultExperienceLocalizationField, list[AppClipDefaultExperienceLocalizationField]]=None) -> AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint:
         '''Fields to return for included related types.
 
         :param app_clip_header_image: the fields to include for returned resources of type appClipHeaderImages
         :type app_clip_header_image: Union[AppClipHeaderImageField, list[AppClipHeaderImageField]] = None
 
+        :param app_clip_default_experience_localization: the fields to include for returned resources of type appClipDefaultExperienceLocalizations
+        :type app_clip_default_experience_localization: Union[AppClipDefaultExperienceLocalizationField, list[AppClipDefaultExperienceLocalizationField]] = None
+
         :returns: self
         :rtype: applaud.endpoints.AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint
         '''
         if app_clip_header_image: self._set_fields('appClipHeaderImages',app_clip_header_image if type(app_clip_header_image) is list else [app_clip_header_image])
+        if app_clip_default_experience_localization: self._set_fields('appClipDefaultExperienceLocalizations',app_clip_default_experience_localization if type(app_clip_default_experience_localization) is list else [app_clip_default_experience_localization])
+        return self
+        
+    class Include(StringEnum):
+        APP_CLIP_DEFAULT_EXPERIENCE_LOCALIZATION = 'appClipDefaultExperienceLocalization'
+
+    def include(self, relationship: Union[Include, list[Include]]) -> AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint:
+        '''Relationship data to include in the response.
+
+        :returns: self
+        :rtype: applaud.endpoints.AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint
+        '''
+        if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
     def get(self) -> AppClipHeaderImageResponse:
         '''Get the resource.
 
-        :returns: Related resource
+        :returns: Single AppClipHeaderImage
         :rtype: AppClipHeaderImageResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

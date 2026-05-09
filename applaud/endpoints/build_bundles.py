@@ -7,6 +7,20 @@ from ..schemas.responses import *
 from ..schemas.requests import *
 from ..schemas.enums import *
 
+class AppClipDomainCacheStatusLinkagesOfBuildBundleEndpoint(IDEndpoint):
+    path = '/v1/buildBundles/{id}/relationships/appClipDomainCacheStatus'
+
+    def get(self) -> BuildBundleAppClipDomainCacheStatusLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BuildBundleAppClipDomainCacheStatusLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BuildBundleAppClipDomainCacheStatusLinkageResponse.parse_obj(json)
+
 class AppClipDomainCacheStatusOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/appClipDomainCacheStatus'
 
@@ -25,13 +39,27 @@ class AppClipDomainCacheStatusOfBuildBundleEndpoint(IDEndpoint):
     def get(self) -> AppClipDomainStatusResponse:
         '''Get the resource.
 
-        :returns: Related resource
+        :returns: Single AppClipDomainStatus
         :rtype: AppClipDomainStatusResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
         return AppClipDomainStatusResponse.parse_obj(json)
+
+class AppClipDomainDebugStatusLinkagesOfBuildBundleEndpoint(IDEndpoint):
+    path = '/v1/buildBundles/{id}/relationships/appClipDomainDebugStatus'
+
+    def get(self) -> BuildBundleAppClipDomainDebugStatusLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BuildBundleAppClipDomainDebugStatusLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BuildBundleAppClipDomainDebugStatusLinkageResponse.parse_obj(json)
 
 class AppClipDomainDebugStatusOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/appClipDomainDebugStatus'
@@ -51,13 +79,42 @@ class AppClipDomainDebugStatusOfBuildBundleEndpoint(IDEndpoint):
     def get(self) -> AppClipDomainStatusResponse:
         '''Get the resource.
 
-        :returns: Related resource
+        :returns: Single AppClipDomainStatus
         :rtype: AppClipDomainStatusResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
         return AppClipDomainStatusResponse.parse_obj(json)
+
+class BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint(IDEndpoint):
+    path = '/v1/buildBundles/{id}/relationships/betaAppClipInvocations'
+
+    def limit(self, number: int=None) -> BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> BuildBundleBetaAppClipInvocationsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: BuildBundleBetaAppClipInvocationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BuildBundleBetaAppClipInvocationsLinkagesResponse.parse_obj(json)
 
 class BetaAppClipInvocationsOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/betaAppClipInvocations'
@@ -115,13 +172,42 @@ class BetaAppClipInvocationsOfBuildBundleEndpoint(IDEndpoint):
     def get(self) -> BetaAppClipInvocationsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of BetaAppClipInvocations
         :rtype: BetaAppClipInvocationsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
         return BetaAppClipInvocationsResponse.parse_obj(json)
+
+class BuildBundleFileSizesLinkagesOfBuildBundleEndpoint(IDEndpoint):
+    path = '/v1/buildBundles/{id}/relationships/buildBundleFileSizes'
+
+    def limit(self, number: int=None) -> BuildBundleFileSizesLinkagesOfBuildBundleEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.BuildBundleFileSizesLinkagesOfBuildBundleEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> BuildBundleBuildBundleFileSizesLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: BuildBundleBuildBundleFileSizesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BuildBundleBuildBundleFileSizesLinkagesResponse.parse_obj(json)
 
 class BuildBundleFileSizesOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/buildBundleFileSizes'
@@ -156,7 +242,7 @@ class BuildBundleFileSizesOfBuildBundleEndpoint(IDEndpoint):
     def get(self) -> BuildBundleFileSizesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of BuildBundleFileSizes
         :rtype: BuildBundleFileSizesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
@@ -182,4 +268,20 @@ class BuildBundleEndpoint(IDEndpoint):
     @endpoint('/v1/buildBundles/{id}/buildBundleFileSizes')
     def build_bundle_file_sizes(self) -> BuildBundleFileSizesOfBuildBundleEndpoint:
         return BuildBundleFileSizesOfBuildBundleEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/buildBundles/{id}/relationships/appClipDomainCacheStatus')
+    def app_clip_domain_cache_status_linkages(self) -> AppClipDomainCacheStatusLinkagesOfBuildBundleEndpoint:
+        return AppClipDomainCacheStatusLinkagesOfBuildBundleEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/buildBundles/{id}/relationships/appClipDomainDebugStatus')
+    def app_clip_domain_debug_status_linkages(self) -> AppClipDomainDebugStatusLinkagesOfBuildBundleEndpoint:
+        return AppClipDomainDebugStatusLinkagesOfBuildBundleEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/buildBundles/{id}/relationships/betaAppClipInvocations')
+    def beta_app_clip_invocations_linkages(self) -> BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint:
+        return BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/buildBundles/{id}/relationships/buildBundleFileSizes')
+    def build_bundle_file_sizes_linkages(self) -> BuildBundleFileSizesLinkagesOfBuildBundleEndpoint:
+        return BuildBundleFileSizesLinkagesOfBuildBundleEndpoint(self.id, self.session)
         

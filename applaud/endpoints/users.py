@@ -29,14 +29,14 @@ class UsersEndpoint(Endpoint):
     class Include(StringEnum):
         VISIBLE_APPS = 'visibleApps'
 
-    def filter(self, *, roles: Union[UserRole, list[UserRole]]=None, username: Union[str, list[str]]=None, visible_apps: Union[str, list[str]]=None) -> UsersEndpoint:
+    def filter(self, *, username: Union[str, list[str]]=None, roles: Union[UserRole, list[UserRole]]=None, visible_apps: Union[str, list[str]]=None) -> UsersEndpoint:
         '''Attributes, relationships, and IDs by which to filter.
-
-        :param roles: filter by attribute 'roles'
-        :type roles: Union[UserRole, list[UserRole]] = None
 
         :param username: filter by attribute 'username'
         :type username: Union[str, list[str]] = None
+
+        :param roles: filter by attribute 'roles'
+        :type roles: Union[UserRole, list[UserRole]] = None
 
         :param visible_apps: filter by id(s) of related 'visibleApps'
         :type visible_apps: Union[str, list[str]] = None
@@ -44,9 +44,9 @@ class UsersEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.UsersEndpoint
         '''
-        if roles: self._set_filter('roles', roles if type(roles) is list else [roles])
-        
         if username: self._set_filter('username', username if type(username) is list else [username])
+        
+        if roles: self._set_filter('roles', roles if type(roles) is list else [roles])
         
         if visible_apps: self._set_filter('visibleApps', visible_apps if type(visible_apps) is list else [visible_apps])
         
@@ -61,14 +61,14 @@ class UsersEndpoint(Endpoint):
         if relationship: self._set_includes(relationship if type(relationship) is list else [relationship])
         return self
         
-    def sort(self, *, last_name: SortOrder=None, username: SortOrder=None) -> UsersEndpoint:
+    def sort(self, *, username: SortOrder=None, last_name: SortOrder=None) -> UsersEndpoint:
         '''Attributes by which to sort.
 
         :returns: self
         :rtype: applaud.endpoints.UsersEndpoint
         '''
-        if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
         if username: self.sort_expressions.append('username' if username == SortOrder.ASC else '-username')
+        if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
         return self
         
     def limit(self, number: int=None, *, visible_apps: int=None) -> UsersEndpoint:
@@ -278,14 +278,14 @@ class VisibleAppsOfUserEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> AppsResponse:
+    def get(self) -> AppsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: AppsResponse
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppsResponse.parse_obj(json)
+        return AppsWithoutIncludesResponse.parse_obj(json)
 

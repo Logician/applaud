@@ -102,6 +102,10 @@ class BetaBuildLocalizationEndpoint(IDEndpoint):
     def build(self) -> BuildOfBetaBuildLocalizationEndpoint:
         return BuildOfBetaBuildLocalizationEndpoint(self.id, self.session)
         
+    @endpoint('/v1/betaBuildLocalizations/{id}/relationships/build')
+    def build_linkage(self) -> BuildLinkageOfBetaBuildLocalizationEndpoint:
+        return BuildLinkageOfBetaBuildLocalizationEndpoint(self.id, self.session)
+        
     def fields(self, *, beta_build_localization: Union[BetaBuildLocalizationField, list[BetaBuildLocalizationField]]=None, build: Union[BuildField, list[BuildField]]=None) -> BetaBuildLocalizationEndpoint:
         '''Fields to return for included related types.
 
@@ -161,6 +165,20 @@ class BetaBuildLocalizationEndpoint(IDEndpoint):
         '''
         super()._perform_delete()
 
+class BuildLinkageOfBetaBuildLocalizationEndpoint(IDEndpoint):
+    path = '/v1/betaBuildLocalizations/{id}/relationships/build'
+
+    def get(self) -> BetaBuildLocalizationBuildLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BetaBuildLocalizationBuildLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BetaBuildLocalizationBuildLinkageResponse.parse_obj(json)
+
 class BuildOfBetaBuildLocalizationEndpoint(IDEndpoint):
     path = '/v1/betaBuildLocalizations/{id}/build'
 
@@ -176,14 +194,14 @@ class BuildOfBetaBuildLocalizationEndpoint(IDEndpoint):
         if build: self._set_fields('builds',build if type(build) is list else [build])
         return self
         
-    def get(self) -> BuildResponse:
+    def get(self) -> BuildWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: BuildResponse
+        :returns: Single Build with get
+        :rtype: BuildWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return BuildResponse.parse_obj(json)
+        return BuildWithoutIncludesResponse.parse_obj(json)
 

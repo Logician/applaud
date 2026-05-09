@@ -84,6 +84,10 @@ class BetaLicenseAgreementEndpoint(IDEndpoint):
     def app(self) -> AppOfBetaLicenseAgreementEndpoint:
         return AppOfBetaLicenseAgreementEndpoint(self.id, self.session)
         
+    @endpoint('/v1/betaLicenseAgreements/{id}/relationships/app')
+    def app_linkage(self) -> AppLinkageOfBetaLicenseAgreementEndpoint:
+        return AppLinkageOfBetaLicenseAgreementEndpoint(self.id, self.session)
+        
     def fields(self, *, beta_license_agreement: Union[BetaLicenseAgreementField, list[BetaLicenseAgreementField]]=None, app: Union[AppField, list[AppField]]=None) -> BetaLicenseAgreementEndpoint:
         '''Fields to return for included related types.
 
@@ -136,6 +140,20 @@ class BetaLicenseAgreementEndpoint(IDEndpoint):
         json = super()._perform_patch(request)
         return BetaLicenseAgreementResponse.parse_obj(json)
 
+class AppLinkageOfBetaLicenseAgreementEndpoint(IDEndpoint):
+    path = '/v1/betaLicenseAgreements/{id}/relationships/app'
+
+    def get(self) -> BetaLicenseAgreementAppLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: BetaLicenseAgreementAppLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return BetaLicenseAgreementAppLinkageResponse.parse_obj(json)
+
 class AppOfBetaLicenseAgreementEndpoint(IDEndpoint):
     path = '/v1/betaLicenseAgreements/{id}/app'
 
@@ -151,14 +169,14 @@ class AppOfBetaLicenseAgreementEndpoint(IDEndpoint):
         if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
-    def get(self) -> AppResponse:
+    def get(self) -> AppWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: AppResponse
+        :returns: Single App with get
+        :rtype: AppWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppResponse.parse_obj(json)
+        return AppWithoutIncludesResponse.parse_obj(json)
 

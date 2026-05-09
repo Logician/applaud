@@ -78,6 +78,10 @@ class CiMacOsVersionEndpoint(IDEndpoint):
     def xcode_versions(self) -> XcodeVersionsOfCiMacOsVersionEndpoint:
         return XcodeVersionsOfCiMacOsVersionEndpoint(self.id, self.session)
         
+    @endpoint('/v1/ciMacOsVersions/{id}/relationships/xcodeVersions')
+    def xcode_versions_linkages(self) -> XcodeVersionsLinkagesOfCiMacOsVersionEndpoint:
+        return XcodeVersionsLinkagesOfCiMacOsVersionEndpoint(self.id, self.session)
+        
     def fields(self, *, ci_mac_os_version: Union[CiMacOsVersionField, list[CiMacOsVersionField]]=None, ci_xcode_version: Union[CiXcodeVersionField, list[CiXcodeVersionField]]=None) -> CiMacOsVersionEndpoint:
         '''Fields to return for included related types.
 
@@ -131,6 +135,35 @@ class CiMacOsVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiMacOsVersionResponse.parse_obj(json)
+
+class XcodeVersionsLinkagesOfCiMacOsVersionEndpoint(IDEndpoint):
+    path = '/v1/ciMacOsVersions/{id}/relationships/xcodeVersions'
+
+    def limit(self, number: int=None) -> XcodeVersionsLinkagesOfCiMacOsVersionEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.XcodeVersionsLinkagesOfCiMacOsVersionEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> CiMacOsVersionXcodeVersionsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: CiMacOsVersionXcodeVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return CiMacOsVersionXcodeVersionsLinkagesResponse.parse_obj(json)
 
 class XcodeVersionsOfCiMacOsVersionEndpoint(IDEndpoint):
     path = '/v1/ciMacOsVersions/{id}/xcodeVersions'
@@ -188,7 +221,7 @@ class XcodeVersionsOfCiMacOsVersionEndpoint(IDEndpoint):
     def get(self) -> CiXcodeVersionsResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
+        :returns: List of CiXcodeVersions
         :rtype: CiXcodeVersionsResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.

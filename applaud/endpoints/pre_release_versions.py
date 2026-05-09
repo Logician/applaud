@@ -10,32 +10,39 @@ from ..schemas.enums import *
 class PreReleaseVersionsEndpoint(Endpoint):
     path = '/v1/preReleaseVersions'
 
-    def fields(self, *, pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]]=None, app: Union[AppField, list[AppField]]=None, build: Union[BuildField, list[BuildField]]=None) -> PreReleaseVersionsEndpoint:
+    class Builds_buildAudienceType(StringEnum):
+        INTERNAL_ONLY = 'INTERNAL_ONLY'
+        APP_STORE_ELIGIBLE = 'APP_STORE_ELIGIBLE'
+
+    def fields(self, *, pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]]=None, build: Union[BuildField, list[BuildField]]=None, app: Union[AppField, list[AppField]]=None) -> PreReleaseVersionsEndpoint:
         '''Fields to return for included related types.
 
         :param pre_release_version: the fields to include for returned resources of type preReleaseVersions
         :type pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]] = None
 
-        :param app: the fields to include for returned resources of type apps
-        :type app: Union[AppField, list[AppField]] = None
-
         :param build: the fields to include for returned resources of type builds
         :type build: Union[BuildField, list[BuildField]] = None
+
+        :param app: the fields to include for returned resources of type apps
+        :type app: Union[AppField, list[AppField]] = None
 
         :returns: self
         :rtype: applaud.endpoints.PreReleaseVersionsEndpoint
         '''
         if pre_release_version: self._set_fields('preReleaseVersions',pre_release_version if type(pre_release_version) is list else [pre_release_version])
-        if app: self._set_fields('apps',app if type(app) is list else [app])
         if build: self._set_fields('builds',build if type(build) is list else [build])
+        if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
     class Include(StringEnum):
-        APP = 'app'
         BUILDS = 'builds'
+        APP = 'app'
 
-    def filter(self, *, builds_expired: Union[str, list[str]]=None, builds_processing_state: Union[BuildProcessingState, list[BuildProcessingState]]=None, builds_version: Union[str, list[str]]=None, platform: Union[Platform, list[Platform]]=None, version: Union[str, list[str]]=None, app: Union[str, list[str]]=None, builds: Union[str, list[str]]=None) -> PreReleaseVersionsEndpoint:
+    def filter(self, *, builds_build_audience_type: Union[Builds_buildAudienceType, list[Builds_buildAudienceType]]=None, builds_expired: Union[str, list[str]]=None, builds_processing_state: Union[BuildProcessingState, list[BuildProcessingState]]=None, builds_version: Union[str, list[str]]=None, platform: Union[Platform, list[Platform]]=None, version: Union[str, list[str]]=None, app: Union[str, list[str]]=None, builds: Union[str, list[str]]=None) -> PreReleaseVersionsEndpoint:
         '''Attributes, relationships, and IDs by which to filter.
+
+        :param builds_build_audience_type: filter by attribute 'builds.buildAudienceType'
+        :type builds_build_audience_type: Union[Builds_buildAudienceType, list[Builds_buildAudienceType]] = None
 
         :param builds_expired: filter by attribute 'builds.expired'
         :type builds_expired: Union[str, list[str]] = None
@@ -61,6 +68,8 @@ class PreReleaseVersionsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.PreReleaseVersionsEndpoint
         '''
+        if builds_build_audience_type: self._set_filter('builds.buildAudienceType', builds_build_audience_type if type(builds_build_audience_type) is list else [builds_build_audience_type])
+        
         if builds_expired: self._set_filter('builds.expired', builds_expired if type(builds_expired) is list else [builds_expired])
         
         if builds_processing_state: self._set_filter('builds.processingState', builds_processing_state if type(builds_processing_state) is list else [builds_processing_state])
@@ -139,29 +148,37 @@ class PreReleaseVersionEndpoint(IDEndpoint):
     def builds(self) -> BuildsOfPreReleaseVersionEndpoint:
         return BuildsOfPreReleaseVersionEndpoint(self.id, self.session)
         
-    def fields(self, *, pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]]=None, app: Union[AppField, list[AppField]]=None, build: Union[BuildField, list[BuildField]]=None) -> PreReleaseVersionEndpoint:
+    @endpoint('/v1/preReleaseVersions/{id}/relationships/app')
+    def app_linkage(self) -> AppLinkageOfPreReleaseVersionEndpoint:
+        return AppLinkageOfPreReleaseVersionEndpoint(self.id, self.session)
+        
+    @endpoint('/v1/preReleaseVersions/{id}/relationships/builds')
+    def builds_linkages(self) -> BuildsLinkagesOfPreReleaseVersionEndpoint:
+        return BuildsLinkagesOfPreReleaseVersionEndpoint(self.id, self.session)
+        
+    def fields(self, *, pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]]=None, build: Union[BuildField, list[BuildField]]=None, app: Union[AppField, list[AppField]]=None) -> PreReleaseVersionEndpoint:
         '''Fields to return for included related types.
 
         :param pre_release_version: the fields to include for returned resources of type preReleaseVersions
         :type pre_release_version: Union[PreReleaseVersionField, list[PreReleaseVersionField]] = None
 
-        :param app: the fields to include for returned resources of type apps
-        :type app: Union[AppField, list[AppField]] = None
-
         :param build: the fields to include for returned resources of type builds
         :type build: Union[BuildField, list[BuildField]] = None
+
+        :param app: the fields to include for returned resources of type apps
+        :type app: Union[AppField, list[AppField]] = None
 
         :returns: self
         :rtype: applaud.endpoints.PreReleaseVersionEndpoint
         '''
         if pre_release_version: self._set_fields('preReleaseVersions',pre_release_version if type(pre_release_version) is list else [pre_release_version])
-        if app: self._set_fields('apps',app if type(app) is list else [app])
         if build: self._set_fields('builds',build if type(build) is list else [build])
+        if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
     class Include(StringEnum):
-        APP = 'app'
         BUILDS = 'builds'
+        APP = 'app'
 
     def include(self, relationship: Union[Include, list[Include]]) -> PreReleaseVersionEndpoint:
         '''Relationship data to include in the response.
@@ -198,6 +215,20 @@ class PreReleaseVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return PrereleaseVersionResponse.parse_obj(json)
 
+class AppLinkageOfPreReleaseVersionEndpoint(IDEndpoint):
+    path = '/v1/preReleaseVersions/{id}/relationships/app'
+
+    def get(self) -> PrereleaseVersionAppLinkageResponse:
+        '''Get the resource.
+
+        :returns: Related linkage
+        :rtype: PrereleaseVersionAppLinkageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return PrereleaseVersionAppLinkageResponse.parse_obj(json)
+
 class AppOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/app'
 
@@ -213,16 +244,45 @@ class AppOfPreReleaseVersionEndpoint(IDEndpoint):
         if app: self._set_fields('apps',app if type(app) is list else [app])
         return self
         
-    def get(self) -> AppResponse:
+    def get(self) -> AppWithoutIncludesResponse:
         '''Get the resource.
 
-        :returns: Related resource
-        :rtype: AppResponse
+        :returns: Single App with get
+        :rtype: AppWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return AppResponse.parse_obj(json)
+        return AppWithoutIncludesResponse.parse_obj(json)
+
+class BuildsLinkagesOfPreReleaseVersionEndpoint(IDEndpoint):
+    path = '/v1/preReleaseVersions/{id}/relationships/builds'
+
+    def limit(self, number: int=None) -> BuildsLinkagesOfPreReleaseVersionEndpoint:
+        '''Number of resources to return.
+
+        :param number: maximum resources per page. The maximum limit is 200
+        :type number: int = None
+
+        :returns: self
+        :rtype: applaud.endpoints.BuildsLinkagesOfPreReleaseVersionEndpoint
+        '''
+        if number and number > 200:
+            raise ValueError(f'The maximum limit of number is 200')
+        if number: self._set_limit(number)
+        
+        return self
+
+    def get(self) -> PrereleaseVersionBuildsLinkagesResponse:
+        '''Get one or more resources.
+
+        :returns: List of related linkages
+        :rtype: PrereleaseVersionBuildsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        return PrereleaseVersionBuildsLinkagesResponse.parse_obj(json)
 
 class BuildsOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/builds'
@@ -254,14 +314,14 @@ class BuildsOfPreReleaseVersionEndpoint(IDEndpoint):
         
         return self
 
-    def get(self) -> BuildsResponse:
+    def get(self) -> BuildsWithoutIncludesResponse:
         '''Get one or more resources.
 
-        :returns: List of related resources
-        :rtype: BuildsResponse
+        :returns: List of Builds with get
+        :rtype: BuildsWithoutIncludesResponse
         :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         json = super()._perform_get()
-        return BuildsResponse.parse_obj(json)
+        return BuildsWithoutIncludesResponse.parse_obj(json)
 
