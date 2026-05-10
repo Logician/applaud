@@ -6,7 +6,7 @@
 
 ## Features
 
-- [x] Support App Store Connect API latest version 1.6
+- [x] Support App Store Connect API latest version 4.3
 - [x] Support `filter`, `fields`, `include`, `limit`, `sort`, `exists` and other query parameters
 - [x] All endpoints / paths are implemented, including, but not limited to: App Information, TestFlight, Users and Roles, Sales and Finances
 - [x] Pythonic, all `camelCase` schema fields are represented as `snake_case` class attributes
