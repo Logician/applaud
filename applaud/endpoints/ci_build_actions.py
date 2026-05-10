@@ -80,7 +80,6 @@ class CiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiBuildActionResponse.parse_obj(json)
-
 class ArtifactsLinkagesOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/relationships/artifacts'
 
@@ -109,6 +108,24 @@ class ArtifactsLinkagesOfCiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiBuildActionArtifactsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiBuildActionArtifactsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiBuildActionArtifactsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildActionArtifactsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildActionArtifactsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ArtifactsOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/artifacts'
@@ -151,6 +168,24 @@ class ArtifactsOfCiBuildActionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiArtifactsResponse.parse_obj(json)
 
+    def get_all(self) -> CiArtifactsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiArtifacts
+        :rtype: CiArtifactsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiArtifactsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiArtifactsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildRunLinkageOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/relationships/buildRun'
 
@@ -164,7 +199,6 @@ class BuildRunLinkageOfCiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiBuildActionBuildRunLinkageResponse.parse_obj(json)
-
 class BuildRunOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/buildRun'
 
@@ -243,6 +277,24 @@ class BuildRunOfCiBuildActionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiBuildRunResponse.parse_obj(json)
 
+    def get_all(self) -> CiBuildRunResponse:
+        '''
+        Get all resources.
+
+        :returns: Single CiBuildRun
+        :rtype: CiBuildRunResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildRunResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildRunResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class IssuesLinkagesOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/relationships/issues'
 
@@ -271,6 +323,24 @@ class IssuesLinkagesOfCiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiBuildActionIssuesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiBuildActionIssuesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiBuildActionIssuesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildActionIssuesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildActionIssuesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class IssuesOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/issues'
@@ -313,6 +383,24 @@ class IssuesOfCiBuildActionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiIssuesResponse.parse_obj(json)
 
+    def get_all(self) -> CiIssuesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiIssues
+        :rtype: CiIssuesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiIssuesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiIssuesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class TestResultsLinkagesOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/relationships/testResults'
 
@@ -341,6 +429,24 @@ class TestResultsLinkagesOfCiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiBuildActionTestResultsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiBuildActionTestResultsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiBuildActionTestResultsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildActionTestResultsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildActionTestResultsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class TestResultsOfCiBuildActionEndpoint(IDEndpoint):
     path = '/v1/ciBuildActions/{id}/testResults'
@@ -382,4 +488,22 @@ class TestResultsOfCiBuildActionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiTestResultsResponse.parse_obj(json)
+
+    def get_all(self) -> CiTestResultsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiTestResults
+        :rtype: CiTestResultsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiTestResultsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiTestResultsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

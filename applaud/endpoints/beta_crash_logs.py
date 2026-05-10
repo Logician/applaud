@@ -32,4 +32,3 @@ class BetaCrashLogEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaCrashLogResponse.parse_obj(json)
-

@@ -104,6 +104,24 @@ class UsersEndpoint(Endpoint):
         json = super()._perform_get()
         return UsersResponse.parse_obj(json)
 
+    def get_all(self) -> UsersResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Users
+        :rtype: UsersResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UsersResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UsersResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class UserEndpoint(IDEndpoint):
     path = '/v1/users/{id}'
 
@@ -169,6 +187,24 @@ class UserEndpoint(IDEndpoint):
         json = super()._perform_get()
         return UserResponse.parse_obj(json)
 
+    def get_all(self) -> UserResponse:
+        '''
+        Get all resources.
+
+        :returns: Single User
+        :rtype: UserResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UserResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UserResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: UserUpdateRequest) -> UserResponse:
         '''Modify the resource.
 
@@ -217,6 +253,24 @@ class VisibleAppsLinkagesOfUserEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return UserVisibleAppsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> UserVisibleAppsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: UserVisibleAppsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UserVisibleAppsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UserVisibleAppsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: UserVisibleAppsLinkagesRequest):
         '''Create one or more related linkages.
@@ -288,4 +342,22 @@ class VisibleAppsOfUserEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppsWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> AppsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

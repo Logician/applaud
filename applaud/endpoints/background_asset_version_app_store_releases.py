@@ -44,4 +44,3 @@ class BackgroundAssetVersionAppStoreReleaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionAppStoreReleaseResponse.parse_obj(json)
-

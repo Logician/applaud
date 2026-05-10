@@ -90,6 +90,24 @@ class AppStoreVersionExperimentTreatmentEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreVersionExperimentTreatmentResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionExperimentTreatmentResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersionExperimentTreatment
+        :rtype: AppStoreVersionExperimentTreatmentResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentTreatmentResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentTreatmentResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppStoreVersionExperimentTreatmentUpdateRequest) -> AppStoreVersionExperimentTreatmentResponse:
         '''Modify the resource.
 
@@ -138,6 +156,24 @@ class AppStoreVersionExperimentTreatmentLocalizationsLinkagesOfAppStoreVersionEx
         '''
         json = super()._perform_get()
         return AppStoreVersionExperimentTreatmentAppStoreVersionExperimentTreatmentLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionExperimentTreatmentAppStoreVersionExperimentTreatmentLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionExperimentTreatmentAppStoreVersionExperimentTreatmentLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentTreatmentAppStoreVersionExperimentTreatmentLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentTreatmentAppStoreVersionExperimentTreatmentLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppStoreVersionExperimentTreatmentLocalizationsOfAppStoreVersionExperimentTreatmentEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionExperimentTreatments/{id}/appStoreVersionExperimentTreatmentLocalizations'
@@ -232,4 +268,22 @@ class AppStoreVersionExperimentTreatmentLocalizationsOfAppStoreVersionExperiment
         '''
         json = super()._perform_get()
         return AppStoreVersionExperimentTreatmentLocalizationsResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionExperimentTreatmentLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppStoreVersionExperimentTreatmentLocalizations
+        :rtype: AppStoreVersionExperimentTreatmentLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentTreatmentLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentTreatmentLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

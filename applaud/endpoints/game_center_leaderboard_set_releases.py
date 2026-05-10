@@ -63,7 +63,6 @@ class GameCenterLeaderboardSetReleaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetReleaseResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 

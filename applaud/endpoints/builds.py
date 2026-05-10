@@ -238,6 +238,24 @@ class BuildsEndpoint(Endpoint):
         json = super()._perform_get()
         return BuildsResponse.parse_obj(json)
 
+    def get_all(self) -> BuildsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Builds
+        :rtype: BuildsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}'
 
@@ -458,6 +476,24 @@ class BuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BuildResponse.parse_obj(json)
 
+    def get_all(self) -> BuildResponse:
+        '''
+        Get all resources.
+
+        :returns: Single Build
+        :rtype: BuildResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: BuildUpdateRequest) -> BuildResponse:
         '''Modify the resource.
 
@@ -484,7 +520,6 @@ class AppLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildAppLinkageResponse.parse_obj(json)
-
 class AppOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/app'
 
@@ -510,7 +545,6 @@ class AppOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-
 class AppEncryptionDeclarationLinkageOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/appEncryptionDeclaration'
 
@@ -524,7 +558,6 @@ class AppEncryptionDeclarationLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildAppEncryptionDeclarationLinkageResponse.parse_obj(json)
-
     def update(self, request: BuildAppEncryptionDeclarationLinkageRequest):
         '''Modify the resource.
 
@@ -560,7 +593,6 @@ class AppEncryptionDeclarationOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEncryptionDeclarationWithoutIncludesResponse.parse_obj(json)
-
 class AppStoreVersionLinkageOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/appStoreVersion'
 
@@ -574,7 +606,6 @@ class AppStoreVersionLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildAppStoreVersionLinkageResponse.parse_obj(json)
-
 class AppStoreVersionOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/appStoreVersion'
 
@@ -697,6 +728,24 @@ class AppStoreVersionOfBuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreVersionResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersion
+        :rtype: AppStoreVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaAppReviewSubmissionLinkageOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/betaAppReviewSubmission'
 
@@ -710,7 +759,6 @@ class BetaAppReviewSubmissionLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBetaAppReviewSubmissionLinkageResponse.parse_obj(json)
-
 class BetaAppReviewSubmissionOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/betaAppReviewSubmission'
 
@@ -736,7 +784,6 @@ class BetaAppReviewSubmissionOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaAppReviewSubmissionWithoutIncludesResponse.parse_obj(json)
-
 class BetaBuildLocalizationsLinkagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/betaBuildLocalizations'
 
@@ -765,6 +812,24 @@ class BetaBuildLocalizationsLinkagesOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBetaBuildLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildBetaBuildLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildBetaBuildLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildBetaBuildLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildBetaBuildLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BetaBuildLocalizationsOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/betaBuildLocalizations'
@@ -807,6 +872,24 @@ class BetaBuildLocalizationsOfBuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaBuildLocalizationsWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BetaBuildLocalizationsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaBuildLocalizations with get
+        :rtype: BetaBuildLocalizationsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaBuildLocalizationsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaBuildLocalizationsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaGroupsLinkagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/betaGroups'
 
@@ -843,7 +926,6 @@ class BuildBetaDetailLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBuildBetaDetailLinkageResponse.parse_obj(json)
-
 class BuildBetaDetailOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/buildBetaDetail'
 
@@ -885,7 +967,6 @@ class BuildBetaDetailOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBetaDetailResponse.parse_obj(json)
-
 class DiagnosticSignaturesLinkagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/diagnosticSignatures'
 
@@ -914,6 +995,24 @@ class DiagnosticSignaturesLinkagesOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildDiagnosticSignaturesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildDiagnosticSignaturesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildDiagnosticSignaturesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildDiagnosticSignaturesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildDiagnosticSignaturesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class DiagnosticSignaturesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/diagnosticSignatures'
@@ -969,6 +1068,24 @@ class DiagnosticSignaturesOfBuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return DiagnosticSignaturesResponse.parse_obj(json)
 
+    def get_all(self) -> DiagnosticSignaturesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of DiagnosticSignatures
+        :rtype: DiagnosticSignaturesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = DiagnosticSignaturesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = DiagnosticSignaturesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class IconsLinkagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/icons'
 
@@ -997,6 +1114,24 @@ class IconsLinkagesOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildIconsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildIconsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildIconsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildIconsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildIconsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class IconsOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/icons'
@@ -1039,6 +1174,24 @@ class IconsOfBuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BuildIconsWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BuildIconsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BuildIcons with get
+        :rtype: BuildIconsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildIconsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildIconsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class IndividualTestersLinkagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/individualTesters'
 
@@ -1067,6 +1220,24 @@ class IndividualTestersLinkagesOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildIndividualTestersLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildIndividualTestersLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildIndividualTestersLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildIndividualTestersLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildIndividualTestersLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: BuildIndividualTestersLinkagesRequest):
         '''Create one or more related linkages.
@@ -1129,6 +1300,24 @@ class IndividualTestersOfBuildEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaTestersWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BetaTestersWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaTesters with get
+        :rtype: BetaTestersWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTestersWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTestersWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PerfPowerMetricsOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/perfPowerMetrics'
 
@@ -1165,7 +1354,6 @@ class PerfPowerMetricsOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return XcodeMetricsResponse.parse_obj(json)
-
 class PreReleaseVersionLinkageOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/relationships/preReleaseVersion'
 
@@ -1179,7 +1367,6 @@ class PreReleaseVersionLinkageOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildPreReleaseVersionLinkageResponse.parse_obj(json)
-
 class PreReleaseVersionOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/preReleaseVersion'
 
@@ -1205,7 +1392,6 @@ class PreReleaseVersionOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PrereleaseVersionWithoutIncludesResponse.parse_obj(json)
-
 class BetaBuildUsagesOfBuildEndpoint(IDEndpoint):
     path = '/v1/builds/{id}/metrics/betaBuildUsages'
 
@@ -1234,4 +1420,22 @@ class BetaBuildUsagesOfBuildEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaBuildUsagesV1MetricResponse.parse_obj(json)
+
+    def get_all(self) -> BetaBuildUsagesV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: BetaBuildUsagesV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaBuildUsagesV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaBuildUsagesV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

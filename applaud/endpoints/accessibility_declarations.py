@@ -48,7 +48,6 @@ class AccessibilityDeclarationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AccessibilityDeclarationResponse.parse_obj(json)
-
     def update(self, request: AccessibilityDeclarationUpdateRequest) -> AccessibilityDeclarationResponse:
         '''Modify the resource.
 

@@ -56,7 +56,6 @@ class CustomerReviewEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CustomerReviewResponse.parse_obj(json)
-
 class ResponseLinkageOfCustomerReviewEndpoint(IDEndpoint):
     path = '/v1/customerReviews/{id}/relationships/response'
 
@@ -70,7 +69,6 @@ class ResponseLinkageOfCustomerReviewEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CustomerReviewResponseLinkageResponse.parse_obj(json)
-
 class ResponseOfCustomerReviewEndpoint(IDEndpoint):
     path = '/v1/customerReviews/{id}/response'
 
@@ -112,4 +110,3 @@ class ResponseOfCustomerReviewEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CustomerReviewResponseV1Response.parse_obj(json)
-

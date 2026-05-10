@@ -32,4 +32,3 @@ class CiIssueEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiIssueResponse.parse_obj(json)
-

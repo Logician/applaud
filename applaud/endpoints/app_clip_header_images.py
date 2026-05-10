@@ -60,7 +60,6 @@ class AppClipHeaderImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipHeaderImageResponse.parse_obj(json)
-
     def update(self, request: AppClipHeaderImageUpdateRequest) -> AppClipHeaderImageResponse:
         '''Modify the resource.
 

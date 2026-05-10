@@ -71,6 +71,24 @@ class CiXcodeVersionsEndpoint(Endpoint):
         json = super()._perform_get()
         return CiXcodeVersionsResponse.parse_obj(json)
 
+    def get_all(self) -> CiXcodeVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiXcodeVersions
+        :rtype: CiXcodeVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiXcodeVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiXcodeVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class CiXcodeVersionEndpoint(IDEndpoint):
     path = '/v1/ciXcodeVersions/{id}'
 
@@ -136,6 +154,24 @@ class CiXcodeVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiXcodeVersionResponse.parse_obj(json)
 
+    def get_all(self) -> CiXcodeVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single CiXcodeVersion
+        :rtype: CiXcodeVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiXcodeVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiXcodeVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class MacOsVersionsLinkagesOfCiXcodeVersionEndpoint(IDEndpoint):
     path = '/v1/ciXcodeVersions/{id}/relationships/macOsVersions'
 
@@ -164,6 +200,24 @@ class MacOsVersionsLinkagesOfCiXcodeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiXcodeVersionMacOsVersionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiXcodeVersionMacOsVersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiXcodeVersionMacOsVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiXcodeVersionMacOsVersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiXcodeVersionMacOsVersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class MacOsVersionsOfCiXcodeVersionEndpoint(IDEndpoint):
     path = '/v1/ciXcodeVersions/{id}/macOsVersions'
@@ -228,4 +282,22 @@ class MacOsVersionsOfCiXcodeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiMacOsVersionsResponse.parse_obj(json)
+
+    def get_all(self) -> CiMacOsVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiMacOsVersions
+        :rtype: CiMacOsVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiMacOsVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiMacOsVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

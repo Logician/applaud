@@ -48,7 +48,6 @@ class BuildUploadFileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildUploadFileResponse.parse_obj(json)
-
     def update(self, request: BuildUploadFileUpdateRequest) -> BuildUploadFileResponse:
         '''Modify the resource.
 

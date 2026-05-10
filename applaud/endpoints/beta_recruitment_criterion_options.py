@@ -48,3 +48,21 @@ class BetaRecruitmentCriterionOptionsEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaRecruitmentCriterionOptionsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaRecruitmentCriterionOptionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaRecruitmentCriterionOptions
+        :rtype: BetaRecruitmentCriterionOptionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaRecruitmentCriterionOptionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaRecruitmentCriterionOptionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+

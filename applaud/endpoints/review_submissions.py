@@ -113,6 +113,24 @@ class ReviewSubmissionsEndpoint(Endpoint):
         json = super()._perform_get()
         return ReviewSubmissionsResponse.parse_obj(json)
 
+    def get_all(self) -> ReviewSubmissionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ReviewSubmissions
+        :rtype: ReviewSubmissionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ReviewSubmissionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ReviewSubmissionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: ReviewSubmissionCreateRequest) -> ReviewSubmissionResponse:
         '''Create the resource.
 
@@ -195,6 +213,24 @@ class ReviewSubmissionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return ReviewSubmissionResponse.parse_obj(json)
 
+    def get_all(self) -> ReviewSubmissionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single ReviewSubmission
+        :rtype: ReviewSubmissionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ReviewSubmissionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ReviewSubmissionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: ReviewSubmissionUpdateRequest) -> ReviewSubmissionResponse:
         '''Modify the resource.
 
@@ -236,6 +272,24 @@ class ItemsLinkagesOfReviewSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ReviewSubmissionItemsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> ReviewSubmissionItemsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: ReviewSubmissionItemsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ReviewSubmissionItemsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ReviewSubmissionItemsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ItemsOfReviewSubmissionEndpoint(IDEndpoint):
     path = '/v1/reviewSubmissions/{id}/items'
@@ -339,4 +393,22 @@ class ItemsOfReviewSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ReviewSubmissionItemsResponse.parse_obj(json)
+
+    def get_all(self) -> ReviewSubmissionItemsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ReviewSubmissionItems
+        :rtype: ReviewSubmissionItemsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ReviewSubmissionItemsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ReviewSubmissionItemsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

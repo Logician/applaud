@@ -128,6 +128,24 @@ class ProfilesEndpoint(Endpoint):
         json = super()._perform_get()
         return ProfilesResponse.parse_obj(json)
 
+    def get_all(self) -> ProfilesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Profiles
+        :rtype: ProfilesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ProfilesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ProfilesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: ProfileCreateRequest) -> ProfileResponse:
         '''Create the resource.
 
@@ -239,6 +257,24 @@ class ProfileEndpoint(IDEndpoint):
         json = super()._perform_get()
         return ProfileResponse.parse_obj(json)
 
+    def get_all(self) -> ProfileResponse:
+        '''
+        Get all resources.
+
+        :returns: Single Profile
+        :rtype: ProfileResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ProfileResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ProfileResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -259,7 +295,6 @@ class BundleIdLinkageOfProfileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ProfileBundleIdLinkageResponse.parse_obj(json)
-
 class BundleIdOfProfileEndpoint(IDEndpoint):
     path = '/v1/profiles/{id}/bundleId'
 
@@ -285,7 +320,6 @@ class BundleIdOfProfileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BundleIdWithoutIncludesResponse.parse_obj(json)
-
 class CertificatesLinkagesOfProfileEndpoint(IDEndpoint):
     path = '/v1/profiles/{id}/relationships/certificates'
 
@@ -314,6 +348,24 @@ class CertificatesLinkagesOfProfileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ProfileCertificatesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> ProfileCertificatesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: ProfileCertificatesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ProfileCertificatesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ProfileCertificatesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class CertificatesOfProfileEndpoint(IDEndpoint):
     path = '/v1/profiles/{id}/certificates'
@@ -356,6 +408,24 @@ class CertificatesOfProfileEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CertificatesWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> CertificatesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Certificates with get
+        :rtype: CertificatesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CertificatesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CertificatesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class DevicesLinkagesOfProfileEndpoint(IDEndpoint):
     path = '/v1/profiles/{id}/relationships/devices'
 
@@ -384,6 +454,24 @@ class DevicesLinkagesOfProfileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ProfileDevicesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> ProfileDevicesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: ProfileDevicesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ProfileDevicesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ProfileDevicesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class DevicesOfProfileEndpoint(IDEndpoint):
     path = '/v1/profiles/{id}/devices'
@@ -425,4 +513,22 @@ class DevicesOfProfileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return DevicesWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> DevicesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Devices with get
+        :rtype: DevicesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = DevicesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = DevicesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

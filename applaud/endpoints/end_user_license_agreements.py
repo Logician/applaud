@@ -89,6 +89,24 @@ class EndUserLicenseAgreementEndpoint(IDEndpoint):
         json = super()._perform_get()
         return EndUserLicenseAgreementResponse.parse_obj(json)
 
+    def get_all(self) -> EndUserLicenseAgreementResponse:
+        '''
+        Get all resources.
+
+        :returns: Single EndUserLicenseAgreement
+        :rtype: EndUserLicenseAgreementResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = EndUserLicenseAgreementResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = EndUserLicenseAgreementResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: EndUserLicenseAgreementUpdateRequest) -> EndUserLicenseAgreementResponse:
         '''Modify the resource.
 
@@ -138,6 +156,24 @@ class TerritoriesLinkagesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
         json = super()._perform_get()
         return EndUserLicenseAgreementTerritoriesLinkagesResponse.parse_obj(json)
 
+    def get_all(self) -> EndUserLicenseAgreementTerritoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: EndUserLicenseAgreementTerritoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = EndUserLicenseAgreementTerritoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = EndUserLicenseAgreementTerritoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class TerritoriesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
     path = '/v1/endUserLicenseAgreements/{id}/territories'
 
@@ -178,4 +214,22 @@ class TerritoriesOfEndUserLicenseAgreementEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return TerritoriesWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> TerritoriesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Territories with get
+        :rtype: TerritoriesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = TerritoriesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = TerritoriesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

@@ -75,7 +75,6 @@ class GameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetLocalizationResponse.parse_obj(json)
-
     @deprecated
     def update(self, request: GameCenterLeaderboardSetLocalizationUpdateRequest) -> GameCenterLeaderboardSetLocalizationResponse:
         '''Modify the resource.
@@ -163,7 +162,6 @@ class GameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetLocalizationV2Response.parse_obj(json)
-
     def update(self, request: GameCenterLeaderboardSetLocalizationV2UpdateRequest) -> GameCenterLeaderboardSetLocalizationV2Response:
         '''Modify the resource.
 
@@ -198,7 +196,6 @@ class GameCenterLeaderboardSetImageLinkageOfGameCenterLeaderboardSetLocalization
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetLocalizationGameCenterLeaderboardSetImageLinkageResponse.parse_obj(json)
-
 class GameCenterLeaderboardSetImageOfGameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterLeaderboardSetLocalizations/{id}/gameCenterLeaderboardSetImage'
 
@@ -241,7 +238,6 @@ class GameCenterLeaderboardSetImageOfGameCenterLeaderboardSetLocalizationEndpoin
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetImageResponse.parse_obj(json)
-
 class ImageLinkageOfGameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
     path = '/v2/gameCenterLeaderboardSetLocalizations/{id}/relationships/image'
 
@@ -255,7 +251,6 @@ class ImageLinkageOfGameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetLocalizationV2ImageLinkageResponse.parse_obj(json)
-
 class ImageOfGameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
     path = '/v2/gameCenterLeaderboardSetLocalizations/{id}/image'
 
@@ -297,4 +292,3 @@ class ImageOfGameCenterLeaderboardSetLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetImageV2Response.parse_obj(json)
-

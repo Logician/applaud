@@ -44,4 +44,3 @@ class InAppPurchaseContentEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseContentResponse.parse_obj(json)
-

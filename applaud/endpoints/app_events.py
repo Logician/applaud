@@ -88,6 +88,24 @@ class AppEventEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppEventResponse.parse_obj(json)
 
+    def get_all(self) -> AppEventResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppEvent
+        :rtype: AppEventResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppEventUpdateRequest) -> AppEventResponse:
         '''Modify the resource.
 
@@ -136,6 +154,24 @@ class LocalizationsLinkagesOfAppEventEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppEventLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppEventLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class LocalizationsOfAppEventEndpoint(IDEndpoint):
     path = '/v1/appEvents/{id}/localizations'
@@ -217,4 +253,22 @@ class LocalizationsOfAppEventEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventLocalizationsResponse.parse_obj(json)
+
+    def get_all(self) -> AppEventLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppEventLocalizations
+        :rtype: AppEventLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

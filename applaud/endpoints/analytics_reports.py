@@ -40,7 +40,6 @@ class AnalyticsReportEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportResponse.parse_obj(json)
-
 class InstancesLinkagesOfAnalyticsReportEndpoint(IDEndpoint):
     path = '/v1/analyticsReports/{id}/relationships/instances'
 
@@ -69,6 +68,24 @@ class InstancesLinkagesOfAnalyticsReportEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportInstancesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportInstancesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AnalyticsReportInstancesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportInstancesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportInstancesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class InstancesOfAnalyticsReportEndpoint(IDEndpoint):
     path = '/v1/analyticsReports/{id}/instances'
@@ -133,4 +150,22 @@ class InstancesOfAnalyticsReportEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportInstancesResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportInstancesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AnalyticsReportInstances
+        :rtype: AnalyticsReportInstancesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportInstancesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportInstancesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

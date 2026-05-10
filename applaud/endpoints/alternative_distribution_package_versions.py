@@ -93,6 +93,24 @@ class AlternativeDistributionPackageVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AlternativeDistributionPackageVersionResponse.parse_obj(json)
 
+    def get_all(self) -> AlternativeDistributionPackageVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AlternativeDistributionPackageVersion
+        :rtype: AlternativeDistributionPackageVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionPackageVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionPackageVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class DeltasLinkagesOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
     path = '/v1/alternativeDistributionPackageVersions/{id}/relationships/deltas'
 
@@ -121,6 +139,24 @@ class DeltasLinkagesOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AlternativeDistributionPackageVersionDeltasLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AlternativeDistributionPackageVersionDeltasLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AlternativeDistributionPackageVersionDeltasLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionPackageVersionDeltasLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionPackageVersionDeltasLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class DeltasOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
     path = '/v1/alternativeDistributionPackageVersions/{id}/deltas'
@@ -163,6 +199,24 @@ class DeltasOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AlternativeDistributionPackageDeltasResponse.parse_obj(json)
 
+    def get_all(self) -> AlternativeDistributionPackageDeltasResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AlternativeDistributionPackageDeltas
+        :rtype: AlternativeDistributionPackageDeltasResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionPackageDeltasResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionPackageDeltasResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class VariantsLinkagesOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
     path = '/v1/alternativeDistributionPackageVersions/{id}/relationships/variants'
 
@@ -191,6 +245,24 @@ class VariantsLinkagesOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint
         '''
         json = super()._perform_get()
         return AlternativeDistributionPackageVersionVariantsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AlternativeDistributionPackageVersionVariantsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AlternativeDistributionPackageVersionVariantsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionPackageVersionVariantsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionPackageVersionVariantsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class VariantsOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
     path = '/v1/alternativeDistributionPackageVersions/{id}/variants'
@@ -232,4 +304,22 @@ class VariantsOfAlternativeDistributionPackageVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AlternativeDistributionPackageVariantsResponse.parse_obj(json)
+
+    def get_all(self) -> AlternativeDistributionPackageVariantsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AlternativeDistributionPackageVariants
+        :rtype: AlternativeDistributionPackageVariantsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionPackageVariantsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionPackageVariantsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

@@ -88,6 +88,24 @@ class SubscriptionAvailabilityEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionAvailabilityResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionAvailabilityResponse:
+        '''
+        Get all resources.
+
+        :returns: Single SubscriptionAvailability
+        :rtype: SubscriptionAvailabilityResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionAvailabilityResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionAvailabilityResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AvailableTerritoriesLinkagesOfSubscriptionAvailabilityEndpoint(IDEndpoint):
     path = '/v1/subscriptionAvailabilities/{id}/relationships/availableTerritories'
 
@@ -116,6 +134,24 @@ class AvailableTerritoriesLinkagesOfSubscriptionAvailabilityEndpoint(IDEndpoint)
         '''
         json = super()._perform_get()
         return SubscriptionAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionAvailabilityAvailableTerritoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionAvailabilityAvailableTerritoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AvailableTerritoriesOfSubscriptionAvailabilityEndpoint(IDEndpoint):
     path = '/v1/subscriptionAvailabilities/{id}/availableTerritories'
@@ -157,4 +193,22 @@ class AvailableTerritoriesOfSubscriptionAvailabilityEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return TerritoriesResponse.parse_obj(json)
+
+    def get_all(self) -> TerritoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Territories
+        :rtype: TerritoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = TerritoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = TerritoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

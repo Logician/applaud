@@ -105,6 +105,24 @@ class PassTypeIdsEndpoint(Endpoint):
         json = super()._perform_get()
         return PassTypeIdsResponse.parse_obj(json)
 
+    def get_all(self) -> PassTypeIdsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of PassTypeIds
+        :rtype: PassTypeIdsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PassTypeIdsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PassTypeIdsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: PassTypeIdCreateRequest) -> PassTypeIdResponse:
         '''Create the resource.
 
@@ -183,6 +201,24 @@ class PassTypeIdEndpoint(IDEndpoint):
         json = super()._perform_get()
         return PassTypeIdResponse.parse_obj(json)
 
+    def get_all(self) -> PassTypeIdResponse:
+        '''
+        Get all resources.
+
+        :returns: Single PassTypeId
+        :rtype: PassTypeIdResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PassTypeIdResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PassTypeIdResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: PassTypeIdUpdateRequest) -> PassTypeIdResponse:
         '''Modify the resource.
 
@@ -231,6 +267,24 @@ class CertificatesLinkagesOfPassTypeIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PassTypeIdCertificatesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> PassTypeIdCertificatesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: PassTypeIdCertificatesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PassTypeIdCertificatesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PassTypeIdCertificatesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class CertificatesOfPassTypeIdEndpoint(IDEndpoint):
     path = '/v1/passTypeIds/{id}/certificates'
@@ -348,4 +402,22 @@ class CertificatesOfPassTypeIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CertificatesResponse.parse_obj(json)
+
+    def get_all(self) -> CertificatesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Certificates
+        :rtype: CertificatesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CertificatesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CertificatesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

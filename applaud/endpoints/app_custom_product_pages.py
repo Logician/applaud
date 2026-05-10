@@ -89,6 +89,24 @@ class AppCustomProductPageEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppCustomProductPageResponse.parse_obj(json)
 
+    def get_all(self) -> AppCustomProductPageResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppCustomProductPage
+        :rtype: AppCustomProductPageResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppCustomProductPageUpdateRequest) -> AppCustomProductPageResponse:
         '''Modify the resource.
 
@@ -137,6 +155,24 @@ class AppCustomProductPageVersionsLinkagesOfAppCustomProductPageEndpoint(IDEndpo
         '''
         json = super()._perform_get()
         return AppCustomProductPageAppCustomProductPageVersionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCustomProductPageAppCustomProductPageVersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppCustomProductPageAppCustomProductPageVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageAppCustomProductPageVersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageAppCustomProductPageVersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppCustomProductPageVersionsOfAppCustomProductPageEndpoint(IDEndpoint):
     path = '/v1/appCustomProductPages/{id}/appCustomProductPageVersions'
@@ -229,4 +265,22 @@ class AppCustomProductPageVersionsOfAppCustomProductPageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppCustomProductPageVersionsResponse.parse_obj(json)
+
+    def get_all(self) -> AppCustomProductPageVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppCustomProductPageVersions
+        :rtype: AppCustomProductPageVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

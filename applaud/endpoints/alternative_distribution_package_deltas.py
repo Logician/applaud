@@ -32,4 +32,3 @@ class AlternativeDistributionPackageDeltaEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AlternativeDistributionPackageDeltaResponse.parse_obj(json)
-

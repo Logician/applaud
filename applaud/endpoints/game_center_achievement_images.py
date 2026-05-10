@@ -62,7 +62,6 @@ class GameCenterAchievementImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementImageResponse.parse_obj(json)
-
     @deprecated
     def update(self, request: GameCenterAchievementImageUpdateRequest) -> GameCenterAchievementImageResponse:
         '''Modify the resource.
@@ -137,7 +136,6 @@ class GameCenterAchievementImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementImageV2Response.parse_obj(json)
-
     def update(self, request: GameCenterAchievementImageV2UpdateRequest) -> GameCenterAchievementImageV2Response:
         '''Modify the resource.
 

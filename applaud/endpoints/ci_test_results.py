@@ -32,4 +32,3 @@ class CiTestResultEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiTestResultResponse.parse_obj(json)
-

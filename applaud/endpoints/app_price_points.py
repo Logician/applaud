@@ -53,7 +53,6 @@ class AppPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPricePointV3Response.parse_obj(json)
-
 class EqualizationsLinkagesOfAppPricePointEndpoint(IDEndpoint):
     path = '/v3/appPricePoints/{id}/relationships/equalizations'
 
@@ -82,6 +81,24 @@ class EqualizationsLinkagesOfAppPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPricePointV3EqualizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppPricePointV3EqualizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppPricePointV3EqualizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPricePointV3EqualizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPricePointV3EqualizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class EqualizationsOfAppPricePointEndpoint(IDEndpoint):
     path = '/v3/appPricePoints/{id}/equalizations'
@@ -157,4 +174,22 @@ class EqualizationsOfAppPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPricePointsV3Response.parse_obj(json)
+
+    def get_all(self) -> AppPricePointsV3Response:
+        '''
+        Get all resources.
+
+        :returns: List of AppPricePoints
+        :rtype: AppPricePointsV3Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPricePointsV3Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPricePointsV3Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

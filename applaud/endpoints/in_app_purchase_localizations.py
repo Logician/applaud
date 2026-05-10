@@ -60,7 +60,6 @@ class InAppPurchaseLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseLocalizationResponse.parse_obj(json)
-
     def update(self, request: InAppPurchaseLocalizationUpdateRequest) -> InAppPurchaseLocalizationResponse:
         '''Modify the resource.
 

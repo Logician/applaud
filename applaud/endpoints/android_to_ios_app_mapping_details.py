@@ -48,7 +48,6 @@ class AndroidToIosAppMappingDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AndroidToIosAppMappingDetailResponse.parse_obj(json)
-
     def update(self, request: AndroidToIosAppMappingDetailUpdateRequest) -> AndroidToIosAppMappingDetailResponse:
         '''Modify the resource.
 

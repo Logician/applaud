@@ -60,7 +60,6 @@ class AppStoreReviewAttachmentEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppStoreReviewAttachmentResponse.parse_obj(json)
-
     def update(self, request: AppStoreReviewAttachmentUpdateRequest) -> AppStoreReviewAttachmentResponse:
         '''Modify the resource.
 

@@ -48,6 +48,24 @@ class ScmProvidersEndpoint(Endpoint):
         json = super()._perform_get()
         return ScmProvidersResponse.parse_obj(json)
 
+    def get_all(self) -> ScmProvidersResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ScmProviders
+        :rtype: ScmProvidersResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ScmProvidersResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ScmProvidersResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ScmProviderEndpoint(IDEndpoint):
     path = '/v1/scmProviders/{id}'
 
@@ -81,7 +99,6 @@ class ScmProviderEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmProviderResponse.parse_obj(json)
-
 class RepositoriesLinkagesOfScmProviderEndpoint(IDEndpoint):
     path = '/v1/scmProviders/{id}/relationships/repositories'
 
@@ -110,6 +127,24 @@ class RepositoriesLinkagesOfScmProviderEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmProviderRepositoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> ScmProviderRepositoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: ScmProviderRepositoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ScmProviderRepositoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ScmProviderRepositoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class RepositoriesOfScmProviderEndpoint(IDEndpoint):
     path = '/v1/scmProviders/{id}/repositories'
@@ -185,4 +220,22 @@ class RepositoriesOfScmProviderEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmRepositoriesResponse.parse_obj(json)
+
+    def get_all(self) -> ScmRepositoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ScmRepositories
+        :rtype: ScmRepositoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ScmRepositoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ScmRepositoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

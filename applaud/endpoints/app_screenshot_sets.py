@@ -91,6 +91,24 @@ class AppScreenshotSetEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppScreenshotSetResponse.parse_obj(json)
 
+    def get_all(self) -> AppScreenshotSetResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppScreenshotSet
+        :rtype: AppScreenshotSetResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppScreenshotSetResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppScreenshotSetResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -126,6 +144,24 @@ class AppScreenshotsLinkagesOfAppScreenshotSetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppScreenshotSetAppScreenshotsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppScreenshotSetAppScreenshotsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppScreenshotSetAppScreenshotsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppScreenshotSetAppScreenshotsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppScreenshotSetAppScreenshotsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def update(self, request: AppScreenshotSetAppScreenshotsLinkagesRequest):
         '''Modify one or more related linkages.
@@ -193,4 +229,22 @@ class AppScreenshotsOfAppScreenshotSetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppScreenshotsResponse.parse_obj(json)
+
+    def get_all(self) -> AppScreenshotsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppScreenshots
+        :rtype: AppScreenshotsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppScreenshotsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppScreenshotsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

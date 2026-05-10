@@ -100,6 +100,24 @@ class AppEncryptionDeclarationsEndpoint(Endpoint):
         json = super()._perform_get()
         return AppEncryptionDeclarationsResponse.parse_obj(json)
 
+    def get_all(self) -> AppEncryptionDeclarationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppEncryptionDeclarations
+        :rtype: AppEncryptionDeclarationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEncryptionDeclarationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEncryptionDeclarationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: AppEncryptionDeclarationCreateRequest) -> AppEncryptionDeclarationResponse:
         '''Create the resource.
 
@@ -196,6 +214,24 @@ class AppEncryptionDeclarationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppEncryptionDeclarationResponse.parse_obj(json)
 
+    def get_all(self) -> AppEncryptionDeclarationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppEncryptionDeclaration
+        :rtype: AppEncryptionDeclarationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEncryptionDeclarationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEncryptionDeclarationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppLinkageOfAppEncryptionDeclarationEndpoint(IDEndpoint):
     path = '/v1/appEncryptionDeclarations/{id}/relationships/app'
 
@@ -210,7 +246,6 @@ class AppLinkageOfAppEncryptionDeclarationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEncryptionDeclarationAppLinkageResponse.parse_obj(json)
-
 class AppOfAppEncryptionDeclarationEndpoint(IDEndpoint):
     path = '/v1/appEncryptionDeclarations/{id}/app'
 
@@ -237,7 +272,6 @@ class AppOfAppEncryptionDeclarationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-
 class AppEncryptionDeclarationDocumentLinkageOfAppEncryptionDeclarationEndpoint(IDEndpoint):
     path = '/v1/appEncryptionDeclarations/{id}/relationships/appEncryptionDeclarationDocument'
 
@@ -251,7 +285,6 @@ class AppEncryptionDeclarationDocumentLinkageOfAppEncryptionDeclarationEndpoint(
         '''
         json = super()._perform_get()
         return AppEncryptionDeclarationAppEncryptionDeclarationDocumentLinkageResponse.parse_obj(json)
-
 class AppEncryptionDeclarationDocumentOfAppEncryptionDeclarationEndpoint(IDEndpoint):
     path = '/v1/appEncryptionDeclarations/{id}/appEncryptionDeclarationDocument'
 
@@ -277,7 +310,6 @@ class AppEncryptionDeclarationDocumentOfAppEncryptionDeclarationEndpoint(IDEndpo
         '''
         json = super()._perform_get()
         return AppEncryptionDeclarationDocumentResponse.parse_obj(json)
-
 class BuildsLinkagesOfAppEncryptionDeclarationEndpoint(IDEndpoint):
     path = '/v1/appEncryptionDeclarations/{id}/relationships/builds'
 

@@ -52,7 +52,6 @@ class SubscriptionPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionPricePointResponse.parse_obj(json)
-
 class EqualizationsLinkagesOfSubscriptionPricePointEndpoint(IDEndpoint):
     path = '/v1/subscriptionPricePoints/{id}/relationships/equalizations'
 
@@ -81,6 +80,24 @@ class EqualizationsLinkagesOfSubscriptionPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionPricePointEqualizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionPricePointEqualizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionPricePointEqualizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionPricePointEqualizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionPricePointEqualizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class EqualizationsOfSubscriptionPricePointEndpoint(IDEndpoint):
     path = '/v1/subscriptionPricePoints/{id}/equalizations'
@@ -156,4 +173,22 @@ class EqualizationsOfSubscriptionPricePointEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionPricePointsResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionPricePointsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionPricePoints
+        :rtype: SubscriptionPricePointsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionPricePointsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionPricePointsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

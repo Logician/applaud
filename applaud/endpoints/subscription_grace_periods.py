@@ -32,7 +32,6 @@ class SubscriptionGracePeriodEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionGracePeriodResponse.parse_obj(json)
-
     def update(self, request: SubscriptionGracePeriodUpdateRequest) -> SubscriptionGracePeriodResponse:
         '''Modify the resource.
 

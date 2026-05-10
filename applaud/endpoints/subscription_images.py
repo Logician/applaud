@@ -60,7 +60,6 @@ class SubscriptionImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionImageResponse.parse_obj(json)
-
     def update(self, request: SubscriptionImageUpdateRequest) -> SubscriptionImageResponse:
         '''Modify the resource.
 

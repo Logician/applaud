@@ -1,5 +1,6 @@
 from enum import Enum, auto
 from typing import Any, Union, Optional, TypeVar
+from urllib.parse import urlparse, parse_qsl
 import requests
 from ..schemas.responses import JSONResponse, ErrorResponse, GzipResponse, GzipStreamResponse
 from ..schemas.requests import ApplaudRequest
@@ -97,6 +98,20 @@ class Endpoint:
             kwargs['params'].update(self._query_params)
         else:
             kwargs['params'] = self._query_params
+
+        response = self.session.get(self.endpoint_path, **kwargs)
+        return self.__parse_response(response)
+
+    def _perform_get_next(self, **kwargs) -> Any:
+        '''Perform a GET request to the specified endpoint specifically for next page.'''
+        if 'next' in kwargs:
+            parsed = urlparse(kwargs['next'])
+            del kwargs['next']
+            params = dict(parse_qsl(parsed.query))
+            if 'params' in kwargs:
+                kwargs['params'].update(params)
+            else:
+                kwargs['params'] = params
 
         response = self.session.get(self.endpoint_path, **kwargs)
         return self.__parse_response(response)

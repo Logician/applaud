@@ -71,7 +71,6 @@ class BackgroundAssetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetResponse.parse_obj(json)
-
     def update(self, request: BackgroundAssetUpdateRequest) -> BackgroundAssetResponse:
         '''Modify the resource.
 
@@ -113,6 +112,24 @@ class VersionsLinkagesOfBackgroundAssetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BackgroundAssetVersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BackgroundAssetVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BackgroundAssetVersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BackgroundAssetVersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class VersionsOfBackgroundAssetEndpoint(IDEndpoint):
     path = '/v1/backgroundAssets/{id}/versions'
@@ -274,4 +291,22 @@ class VersionsOfBackgroundAssetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionsResponse.parse_obj(json)
+
+    def get_all(self) -> BackgroundAssetVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BackgroundAssetVersions
+        :rtype: BackgroundAssetVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BackgroundAssetVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BackgroundAssetVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

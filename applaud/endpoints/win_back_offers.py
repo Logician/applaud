@@ -88,6 +88,24 @@ class WinBackOfferEndpoint(IDEndpoint):
         json = super()._perform_get()
         return WinBackOfferResponse.parse_obj(json)
 
+    def get_all(self) -> WinBackOfferResponse:
+        '''
+        Get all resources.
+
+        :returns: Single WinBackOffer
+        :rtype: WinBackOfferResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = WinBackOfferResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = WinBackOfferResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: WinBackOfferUpdateRequest) -> WinBackOfferResponse:
         '''Modify the resource.
 
@@ -136,6 +154,24 @@ class PricesLinkagesOfWinBackOfferEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return WinBackOfferPricesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> WinBackOfferPricesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: WinBackOfferPricesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = WinBackOfferPricesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = WinBackOfferPricesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class PricesOfWinBackOfferEndpoint(IDEndpoint):
     path = '/v1/winBackOffers/{id}/prices'
@@ -211,4 +247,22 @@ class PricesOfWinBackOfferEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return WinBackOfferPricesResponse.parse_obj(json)
+
+    def get_all(self) -> WinBackOfferPricesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of WinBackOfferPrices
+        :rtype: WinBackOfferPricesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = WinBackOfferPricesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = WinBackOfferPricesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

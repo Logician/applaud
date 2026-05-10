@@ -60,7 +60,6 @@ class SubscriptionAppStoreReviewScreenshotEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionAppStoreReviewScreenshotResponse.parse_obj(json)
-
     def update(self, request: SubscriptionAppStoreReviewScreenshotUpdateRequest) -> SubscriptionAppStoreReviewScreenshotResponse:
         '''Modify the resource.
 

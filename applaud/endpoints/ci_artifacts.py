@@ -32,4 +32,3 @@ class CiArtifactEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiArtifactResponse.parse_obj(json)
-

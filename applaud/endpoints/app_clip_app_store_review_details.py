@@ -60,7 +60,6 @@ class AppClipAppStoreReviewDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipAppStoreReviewDetailResponse.parse_obj(json)
-
     def update(self, request: AppClipAppStoreReviewDetailUpdateRequest) -> AppClipAppStoreReviewDetailResponse:
         '''Modify the resource.
 

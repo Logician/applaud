@@ -48,7 +48,6 @@ class GameCenterChallengeImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeImageResponse.parse_obj(json)
-
     def update(self, request: GameCenterChallengeImageUpdateRequest) -> GameCenterChallengeImageResponse:
         '''Modify the resource.
 

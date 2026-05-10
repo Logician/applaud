@@ -91,6 +91,24 @@ class AppPreviewSetEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppPreviewSetResponse.parse_obj(json)
 
+    def get_all(self) -> AppPreviewSetResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppPreviewSet
+        :rtype: AppPreviewSetResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPreviewSetResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPreviewSetResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -126,6 +144,24 @@ class AppPreviewsLinkagesOfAppPreviewSetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPreviewSetAppPreviewsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppPreviewSetAppPreviewsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppPreviewSetAppPreviewsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPreviewSetAppPreviewsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPreviewSetAppPreviewsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def update(self, request: AppPreviewSetAppPreviewsLinkagesRequest):
         '''Modify one or more related linkages.
@@ -193,4 +229,22 @@ class AppPreviewsOfAppPreviewSetEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPreviewsResponse.parse_obj(json)
+
+    def get_all(self) -> AppPreviewsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppPreviews
+        :rtype: AppPreviewsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPreviewsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPreviewsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

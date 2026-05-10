@@ -110,6 +110,24 @@ class GameCenterChallengeVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterChallengeVersionResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterChallengeVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterChallengeVersion
+        :rtype: GameCenterChallengeVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterChallengeVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterChallengeVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class DefaultImageLinkageOfGameCenterChallengeVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterChallengeVersions/{id}/relationships/defaultImage'
 
@@ -123,7 +141,6 @@ class DefaultImageLinkageOfGameCenterChallengeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeVersionDefaultImageLinkageResponse.parse_obj(json)
-
 class DefaultImageOfGameCenterChallengeVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterChallengeVersions/{id}/defaultImage'
 
@@ -149,7 +166,6 @@ class DefaultImageOfGameCenterChallengeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeImageResponse.parse_obj(json)
-
 class LocalizationsLinkagesOfGameCenterChallengeVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterChallengeVersions/{id}/relationships/localizations'
 
@@ -178,6 +194,24 @@ class LocalizationsLinkagesOfGameCenterChallengeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeVersionLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterChallengeVersionLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterChallengeVersionLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterChallengeVersionLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterChallengeVersionLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class LocalizationsOfGameCenterChallengeVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterChallengeVersions/{id}/localizations'
@@ -240,4 +274,22 @@ class LocalizationsOfGameCenterChallengeVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeLocalizationsResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterChallengeLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterChallengeLocalizations
+        :rtype: GameCenterChallengeLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterChallengeLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterChallengeLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

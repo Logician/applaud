@@ -89,6 +89,24 @@ class SubscriptionPromotionalOfferEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionPromotionalOfferResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionPromotionalOfferResponse:
+        '''
+        Get all resources.
+
+        :returns: Single SubscriptionPromotionalOffer
+        :rtype: SubscriptionPromotionalOfferResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionPromotionalOfferResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionPromotionalOfferResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: SubscriptionPromotionalOfferUpdateRequest) -> SubscriptionPromotionalOfferResponse:
         '''Modify the resource.
 
@@ -137,6 +155,24 @@ class PricesLinkagesOfSubscriptionPromotionalOfferEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionPromotionalOfferPricesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionPromotionalOfferPricesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionPromotionalOfferPricesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionPromotionalOfferPricesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionPromotionalOfferPricesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class PricesOfSubscriptionPromotionalOfferEndpoint(IDEndpoint):
     path = '/v1/subscriptionPromotionalOffers/{id}/prices'
@@ -212,4 +248,22 @@ class PricesOfSubscriptionPromotionalOfferEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionPromotionalOfferPricesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionPromotionalOfferPricesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionPromotionalOfferPrices
+        :rtype: SubscriptionPromotionalOfferPricesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionPromotionalOfferPricesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionPromotionalOfferPricesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

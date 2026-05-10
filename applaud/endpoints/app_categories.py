@@ -93,6 +93,24 @@ class AppCategoriesEndpoint(Endpoint):
         json = super()._perform_get()
         return AppCategoriesResponse.parse_obj(json)
 
+    def get_all(self) -> AppCategoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppCategories
+        :rtype: AppCategoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCategoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCategoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}'
 
@@ -163,6 +181,24 @@ class AppCategoryEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppCategoryResponse.parse_obj(json)
 
+    def get_all(self) -> AppCategoryResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppCategory
+        :rtype: AppCategoryResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCategoryResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCategoryResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ParentLinkageOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/relationships/parent'
 
@@ -176,7 +212,6 @@ class ParentLinkageOfAppCategoryEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppCategoryParentLinkageResponse.parse_obj(json)
-
 class ParentOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/parent'
 
@@ -202,7 +237,6 @@ class ParentOfAppCategoryEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppCategoryWithoutIncludesResponse.parse_obj(json)
-
 class SubcategoriesLinkagesOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/relationships/subcategories'
 
@@ -231,6 +265,24 @@ class SubcategoriesLinkagesOfAppCategoryEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppCategorySubcategoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCategorySubcategoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppCategorySubcategoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCategorySubcategoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCategorySubcategoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class SubcategoriesOfAppCategoryEndpoint(IDEndpoint):
     path = '/v1/appCategories/{id}/subcategories'
@@ -272,4 +324,22 @@ class SubcategoriesOfAppCategoryEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppCategoriesWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCategoriesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppCategories with get
+        :rtype: AppCategoriesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCategoriesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCategoriesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

@@ -82,6 +82,24 @@ class BetaBuildLocalizationsEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaBuildLocalizationsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaBuildLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaBuildLocalizations
+        :rtype: BetaBuildLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaBuildLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaBuildLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: BetaBuildLocalizationCreateRequest) -> BetaBuildLocalizationResponse:
         '''Create the resource.
 
@@ -144,7 +162,6 @@ class BetaBuildLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaBuildLocalizationResponse.parse_obj(json)
-
     def update(self, request: BetaBuildLocalizationUpdateRequest) -> BetaBuildLocalizationResponse:
         '''Modify the resource.
 
@@ -178,7 +195,6 @@ class BuildLinkageOfBetaBuildLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaBuildLocalizationBuildLinkageResponse.parse_obj(json)
-
 class BuildOfBetaBuildLocalizationEndpoint(IDEndpoint):
     path = '/v1/betaBuildLocalizations/{id}/build'
 
@@ -204,4 +220,3 @@ class BuildOfBetaBuildLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildWithoutIncludesResponse.parse_obj(json)
-

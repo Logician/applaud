@@ -110,6 +110,24 @@ class GameCenterActivityVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterActivityVersionResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterActivityVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterActivityVersion
+        :rtype: GameCenterActivityVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterActivityVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterActivityVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: GameCenterActivityVersionUpdateRequest) -> GameCenterActivityVersionResponse:
         '''Modify the resource.
 
@@ -136,7 +154,6 @@ class DefaultImageLinkageOfGameCenterActivityVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityVersionDefaultImageLinkageResponse.parse_obj(json)
-
 class DefaultImageOfGameCenterActivityVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterActivityVersions/{id}/defaultImage'
 
@@ -162,7 +179,6 @@ class DefaultImageOfGameCenterActivityVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityImageResponse.parse_obj(json)
-
 class LocalizationsLinkagesOfGameCenterActivityVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterActivityVersions/{id}/relationships/localizations'
 
@@ -191,6 +207,24 @@ class LocalizationsLinkagesOfGameCenterActivityVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityVersionLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterActivityVersionLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterActivityVersionLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterActivityVersionLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterActivityVersionLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class LocalizationsOfGameCenterActivityVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterActivityVersions/{id}/localizations'
@@ -253,4 +287,22 @@ class LocalizationsOfGameCenterActivityVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityLocalizationsResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterActivityLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterActivityLocalizations
+        :rtype: GameCenterActivityLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterActivityLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterActivityLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

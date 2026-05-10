@@ -115,6 +115,24 @@ class AppClipDefaultExperienceEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppClipDefaultExperienceResponse.parse_obj(json)
 
+    def get_all(self) -> AppClipDefaultExperienceResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppClipDefaultExperience
+        :rtype: AppClipDefaultExperienceResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipDefaultExperienceResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipDefaultExperienceResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppClipDefaultExperienceUpdateRequest) -> AppClipDefaultExperienceResponse:
         '''Modify the resource.
 
@@ -148,7 +166,6 @@ class AppClipAppStoreReviewDetailLinkageOfAppClipDefaultExperienceEndpoint(IDEnd
         '''
         json = super()._perform_get()
         return AppClipDefaultExperienceAppClipAppStoreReviewDetailLinkageResponse.parse_obj(json)
-
 class AppClipAppStoreReviewDetailOfAppClipDefaultExperienceEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperiences/{id}/appClipAppStoreReviewDetail'
 
@@ -190,7 +207,6 @@ class AppClipAppStoreReviewDetailOfAppClipDefaultExperienceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipAppStoreReviewDetailResponse.parse_obj(json)
-
 class AppClipDefaultExperienceLocalizationsLinkagesOfAppClipDefaultExperienceEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperiences/{id}/relationships/appClipDefaultExperienceLocalizations'
 
@@ -219,6 +235,24 @@ class AppClipDefaultExperienceLocalizationsLinkagesOfAppClipDefaultExperienceEnd
         '''
         json = super()._perform_get()
         return AppClipDefaultExperienceAppClipDefaultExperienceLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppClipDefaultExperienceAppClipDefaultExperienceLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppClipDefaultExperienceAppClipDefaultExperienceLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipDefaultExperienceAppClipDefaultExperienceLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipDefaultExperienceAppClipDefaultExperienceLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppClipDefaultExperienceLocalizationsOfAppClipDefaultExperienceEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperiences/{id}/appClipDefaultExperienceLocalizations'
@@ -295,6 +329,24 @@ class AppClipDefaultExperienceLocalizationsOfAppClipDefaultExperienceEndpoint(ID
         json = super()._perform_get()
         return AppClipDefaultExperienceLocalizationsResponse.parse_obj(json)
 
+    def get_all(self) -> AppClipDefaultExperienceLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppClipDefaultExperienceLocalizations
+        :rtype: AppClipDefaultExperienceLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipDefaultExperienceLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipDefaultExperienceLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ReleaseWithAppStoreVersionLinkageOfAppClipDefaultExperienceEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperiences/{id}/relationships/releaseWithAppStoreVersion'
 
@@ -308,7 +360,6 @@ class ReleaseWithAppStoreVersionLinkageOfAppClipDefaultExperienceEndpoint(IDEndp
         '''
         json = super()._perform_get()
         return AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageResponse.parse_obj(json)
-
     def update(self, request: AppClipDefaultExperienceReleaseWithAppStoreVersionLinkageRequest):
         '''Modify the resource.
 
@@ -440,4 +491,22 @@ class ReleaseWithAppStoreVersionOfAppClipDefaultExperienceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppStoreVersionResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersion
+        :rtype: AppStoreVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

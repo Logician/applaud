@@ -61,7 +61,6 @@ class InAppPurchaseOfferCodeCustomCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseOfferCodeCustomCodeResponse.parse_obj(json)
-
     def update(self, request: InAppPurchaseOfferCodeCustomCodeUpdateRequest) -> InAppPurchaseOfferCodeCustomCodeResponse:
         '''Modify the resource.
 

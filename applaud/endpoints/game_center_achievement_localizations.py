@@ -73,7 +73,6 @@ class GameCenterAchievementLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationV2Response.parse_obj(json)
-
     def update(self, request: GameCenterAchievementLocalizationV2UpdateRequest) -> GameCenterAchievementLocalizationV2Response:
         '''Modify the resource.
 
@@ -174,7 +173,6 @@ class GameCenterAchievementLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationResponse.parse_obj(json)
-
     @deprecated
     def update(self, request: GameCenterAchievementLocalizationUpdateRequest) -> GameCenterAchievementLocalizationResponse:
         '''Modify the resource.
@@ -209,7 +207,6 @@ class ImageLinkageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationV2ImageLinkageResponse.parse_obj(json)
-
 class ImageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
     path = '/v2/gameCenterAchievementLocalizations/{id}/image'
 
@@ -251,7 +248,6 @@ class ImageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementImageV2Response.parse_obj(json)
-
 class GameCenterAchievementLinkageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterAchievementLocalizations/{id}/relationships/gameCenterAchievement'
 
@@ -266,7 +262,6 @@ class GameCenterAchievementLinkageOfGameCenterAchievementLocalizationEndpoint(ID
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationGameCenterAchievementLinkageResponse.parse_obj(json)
-
 class GameCenterAchievementOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievement'
 
@@ -353,6 +348,25 @@ class GameCenterAchievementOfGameCenterAchievementLocalizationEndpoint(IDEndpoin
         json = super()._perform_get()
         return GameCenterAchievementResponse.parse_obj(json)
 
+    @deprecated
+    def get_all(self) -> GameCenterAchievementResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterAchievement
+        :rtype: GameCenterAchievementResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAchievementResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAchievementResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class GameCenterAchievementImageLinkageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterAchievementLocalizations/{id}/relationships/gameCenterAchievementImage'
 
@@ -367,7 +381,6 @@ class GameCenterAchievementImageLinkageOfGameCenterAchievementLocalizationEndpoi
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationGameCenterAchievementImageLinkageResponse.parse_obj(json)
-
 class GameCenterAchievementImageOfGameCenterAchievementLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterAchievementLocalizations/{id}/gameCenterAchievementImage'
 
@@ -410,4 +423,3 @@ class GameCenterAchievementImageOfGameCenterAchievementLocalizationEndpoint(IDEn
         '''
         json = super()._perform_get()
         return GameCenterAchievementImageResponse.parse_obj(json)
-

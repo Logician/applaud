@@ -40,7 +40,6 @@ class AnalyticsReportInstanceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportInstanceResponse.parse_obj(json)
-
 class SegmentsLinkagesOfAnalyticsReportInstanceEndpoint(IDEndpoint):
     path = '/v1/analyticsReportInstances/{id}/relationships/segments'
 
@@ -69,6 +68,24 @@ class SegmentsLinkagesOfAnalyticsReportInstanceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportInstanceSegmentsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportInstanceSegmentsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AnalyticsReportInstanceSegmentsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportInstanceSegmentsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportInstanceSegmentsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class SegmentsOfAnalyticsReportInstanceEndpoint(IDEndpoint):
     path = '/v1/analyticsReportInstances/{id}/segments'
@@ -110,4 +127,22 @@ class SegmentsOfAnalyticsReportInstanceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportSegmentsResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportSegmentsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AnalyticsReportSegments
+        :rtype: AnalyticsReportSegmentsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportSegmentsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportSegmentsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

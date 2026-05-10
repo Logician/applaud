@@ -94,6 +94,24 @@ class DevicesEndpoint(Endpoint):
         json = super()._perform_get()
         return DevicesResponse.parse_obj(json)
 
+    def get_all(self) -> DevicesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Devices
+        :rtype: DevicesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = DevicesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = DevicesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: DeviceCreateRequest) -> DeviceResponse:
         '''Create the resource.
 
@@ -132,7 +150,6 @@ class DeviceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return DeviceResponse.parse_obj(json)
-
     def update(self, request: DeviceUpdateRequest) -> DeviceResponse:
         '''Modify the resource.
 

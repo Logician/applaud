@@ -61,7 +61,6 @@ class PromotedPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PromotedPurchaseResponse.parse_obj(json)
-
     def update(self, request: PromotedPurchaseUpdateRequest) -> PromotedPurchaseResponse:
         '''Modify the resource.
 

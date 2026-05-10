@@ -125,6 +125,24 @@ class AppStoreVersionLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreVersionLocalizationResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionLocalizationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersionLocalization
+        :rtype: AppStoreVersionLocalizationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionLocalizationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionLocalizationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppStoreVersionLocalizationUpdateRequest) -> AppStoreVersionLocalizationResponse:
         '''Modify the resource.
 
@@ -173,6 +191,24 @@ class AppPreviewSetsLinkagesOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppStoreVersionLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionLocalizationAppPreviewSetsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionLocalizationAppPreviewSetsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppPreviewSetsOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionLocalizations/{id}/appPreviewSets'
@@ -276,6 +312,24 @@ class AppPreviewSetsOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppPreviewSetsResponse.parse_obj(json)
 
+    def get_all(self) -> AppPreviewSetsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppPreviewSets
+        :rtype: AppPreviewSetsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPreviewSetsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPreviewSetsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppScreenshotSetsLinkagesOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionLocalizations/{id}/relationships/appScreenshotSets'
 
@@ -304,6 +358,24 @@ class AppScreenshotSetsLinkagesOfAppStoreVersionLocalizationEndpoint(IDEndpoint)
         '''
         json = super()._perform_get()
         return AppStoreVersionLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionLocalizationAppScreenshotSetsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionLocalizationAppScreenshotSetsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppScreenshotSetsOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionLocalizations/{id}/appScreenshotSets'
@@ -407,6 +479,24 @@ class AppScreenshotSetsOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppScreenshotSetsResponse.parse_obj(json)
 
+    def get_all(self) -> AppScreenshotSetsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppScreenshotSets
+        :rtype: AppScreenshotSetsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppScreenshotSetsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppScreenshotSetsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class SearchKeywordsLinkagesOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionLocalizations/{id}/relationships/searchKeywords'
 
@@ -435,6 +525,24 @@ class SearchKeywordsLinkagesOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppStoreVersionLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionLocalizationSearchKeywordsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionLocalizationSearchKeywordsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: AppStoreVersionLocalizationSearchKeywordsLinkagesRequest):
         '''Create one or more related linkages.
@@ -514,4 +622,22 @@ class SearchKeywordsOfAppStoreVersionLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppKeywordsResponse.parse_obj(json)
+
+    def get_all(self) -> AppKeywordsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppKeywords
+        :rtype: AppKeywordsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppKeywordsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppKeywordsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

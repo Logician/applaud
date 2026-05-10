@@ -108,6 +108,24 @@ class SubscriptionGroupEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionGroupResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionGroupResponse:
+        '''
+        Get all resources.
+
+        :returns: Single SubscriptionGroup
+        :rtype: SubscriptionGroupResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionGroupResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionGroupResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: SubscriptionGroupUpdateRequest) -> SubscriptionGroupResponse:
         '''Modify the resource.
 
@@ -156,6 +174,24 @@ class SubscriptionGroupLocalizationsLinkagesOfSubscriptionGroupEndpoint(IDEndpoi
         '''
         json = super()._perform_get()
         return SubscriptionGroupSubscriptionGroupLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionGroupSubscriptionGroupLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionGroupSubscriptionGroupLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionGroupSubscriptionGroupLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionGroupSubscriptionGroupLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class SubscriptionGroupLocalizationsOfSubscriptionGroupEndpoint(IDEndpoint):
     path = '/v1/subscriptionGroups/{id}/subscriptionGroupLocalizations'
@@ -214,6 +250,24 @@ class SubscriptionGroupLocalizationsOfSubscriptionGroupEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionGroupLocalizationsResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionGroupLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionGroupLocalizations
+        :rtype: SubscriptionGroupLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionGroupLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionGroupLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class SubscriptionsLinkagesOfSubscriptionGroupEndpoint(IDEndpoint):
     path = '/v1/subscriptionGroups/{id}/relationships/subscriptions'
 
@@ -242,6 +296,24 @@ class SubscriptionsLinkagesOfSubscriptionGroupEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionGroupSubscriptionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionGroupSubscriptionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionGroupSubscriptionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionGroupSubscriptionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionGroupSubscriptionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class SubscriptionsOfSubscriptionGroupEndpoint(IDEndpoint):
     path = '/v1/subscriptionGroups/{id}/subscriptions'
@@ -442,4 +514,22 @@ class SubscriptionsOfSubscriptionGroupEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionsResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Subscriptions
+        :rtype: SubscriptionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

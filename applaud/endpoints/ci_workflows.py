@@ -83,7 +83,6 @@ class CiWorkflowEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiWorkflowResponse.parse_obj(json)
-
     def update(self, request: CiWorkflowUpdateRequest) -> CiWorkflowResponse:
         '''Modify the resource.
 
@@ -132,6 +131,24 @@ class BuildRunsLinkagesOfCiWorkflowEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiWorkflowBuildRunsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiWorkflowBuildRunsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiWorkflowBuildRunsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiWorkflowBuildRunsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiWorkflowBuildRunsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildRunsOfCiWorkflowEndpoint(IDEndpoint):
     path = '/v1/ciWorkflows/{id}/buildRuns'
@@ -240,6 +257,24 @@ class BuildRunsOfCiWorkflowEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiBuildRunsResponse.parse_obj(json)
 
+    def get_all(self) -> CiBuildRunsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiBuildRuns
+        :rtype: CiBuildRunsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildRunsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildRunsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class RepositoryLinkageOfCiWorkflowEndpoint(IDEndpoint):
     path = '/v1/ciWorkflows/{id}/relationships/repository'
 
@@ -253,7 +288,6 @@ class RepositoryLinkageOfCiWorkflowEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiWorkflowRepositoryLinkageResponse.parse_obj(json)
-
 class RepositoryOfCiWorkflowEndpoint(IDEndpoint):
     path = '/v1/ciWorkflows/{id}/repository'
 
@@ -300,4 +334,3 @@ class RepositoryOfCiWorkflowEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmRepositoryResponse.parse_obj(json)
-

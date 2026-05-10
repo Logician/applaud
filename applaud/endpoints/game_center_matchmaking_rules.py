@@ -96,6 +96,24 @@ class MatchmakingBooleanRuleResultsOfGameCenterMatchmakingRuleEndpoint(IDEndpoin
         json = super()._perform_get()
         return GameCenterMatchmakingBooleanRuleResultsV1MetricResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingBooleanRuleResultsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingBooleanRuleResultsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingBooleanRuleResultsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingBooleanRuleResultsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class MatchmakingNumberRuleResultsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingNumberRuleResults'
 
@@ -137,6 +155,24 @@ class MatchmakingNumberRuleResultsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint
         json = super()._perform_get()
         return GameCenterMatchmakingNumberRuleResultsV1MetricResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingNumberRuleResultsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingNumberRuleResultsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingNumberRuleResultsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingNumberRuleResultsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class MatchmakingRuleErrorsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingRules/{id}/metrics/matchmakingRuleErrors'
 
@@ -174,4 +210,22 @@ class MatchmakingRuleErrorsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterMatchmakingRuleErrorsV1MetricResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterMatchmakingRuleErrorsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingRuleErrorsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingRuleErrorsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingRuleErrorsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

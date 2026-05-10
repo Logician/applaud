@@ -44,4 +44,3 @@ class ScmPullRequestEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmPullRequestResponse.parse_obj(json)
-

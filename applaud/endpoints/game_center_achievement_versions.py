@@ -89,6 +89,24 @@ class GameCenterAchievementVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterAchievementVersionV2Response.parse_obj(json)
 
+    def get_all(self) -> GameCenterAchievementVersionV2Response:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterAchievementVersion
+        :rtype: GameCenterAchievementVersionV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAchievementVersionV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAchievementVersionV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class LocalizationsLinkagesOfGameCenterAchievementVersionEndpoint(IDEndpoint):
     path = '/v2/gameCenterAchievementVersions/{id}/relationships/localizations'
 
@@ -117,6 +135,24 @@ class LocalizationsLinkagesOfGameCenterAchievementVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementVersionV2LocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterAchievementVersionV2LocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterAchievementVersionV2LocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAchievementVersionV2LocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAchievementVersionV2LocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class LocalizationsOfGameCenterAchievementVersionEndpoint(IDEndpoint):
     path = '/v2/gameCenterAchievementVersions/{id}/localizations'
@@ -179,4 +215,22 @@ class LocalizationsOfGameCenterAchievementVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAchievementLocalizationsV2Response.parse_obj(json)
+
+    def get_all(self) -> GameCenterAchievementLocalizationsV2Response:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterAchievementLocalizations
+        :rtype: GameCenterAchievementLocalizationsV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAchievementLocalizationsV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAchievementLocalizationsV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

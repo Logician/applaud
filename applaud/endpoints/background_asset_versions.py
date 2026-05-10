@@ -73,7 +73,6 @@ class BackgroundAssetVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionResponse.parse_obj(json)
-
 class BackgroundAssetUploadFilesLinkagesOfBackgroundAssetVersionEndpoint(IDEndpoint):
     path = '/v1/backgroundAssetVersions/{id}/relationships/backgroundAssetUploadFiles'
 
@@ -102,6 +101,24 @@ class BackgroundAssetUploadFilesLinkagesOfBackgroundAssetVersionEndpoint(IDEndpo
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionBackgroundAssetUploadFilesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BackgroundAssetVersionBackgroundAssetUploadFilesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BackgroundAssetVersionBackgroundAssetUploadFilesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BackgroundAssetVersionBackgroundAssetUploadFilesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BackgroundAssetVersionBackgroundAssetUploadFilesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BackgroundAssetUploadFilesOfBackgroundAssetVersionEndpoint(IDEndpoint):
     path = '/v1/backgroundAssetVersions/{id}/backgroundAssetUploadFiles'
@@ -143,4 +160,22 @@ class BackgroundAssetUploadFilesOfBackgroundAssetVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetUploadFilesResponse.parse_obj(json)
+
+    def get_all(self) -> BackgroundAssetUploadFilesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BackgroundAssetUploadFiles
+        :rtype: BackgroundAssetUploadFilesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BackgroundAssetUploadFilesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BackgroundAssetUploadFilesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

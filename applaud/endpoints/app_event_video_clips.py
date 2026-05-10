@@ -60,7 +60,6 @@ class AppEventVideoClipEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventVideoClipResponse.parse_obj(json)
-
     def update(self, request: AppEventVideoClipUpdateRequest) -> AppEventVideoClipResponse:
         '''Modify the resource.
 

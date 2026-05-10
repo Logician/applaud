@@ -60,7 +60,6 @@ class SubscriptionLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionLocalizationResponse.parse_obj(json)
-
     def update(self, request: SubscriptionLocalizationUpdateRequest) -> SubscriptionLocalizationResponse:
         '''Modify the resource.
 

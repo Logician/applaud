@@ -95,6 +95,24 @@ class CiProductsEndpoint(Endpoint):
         json = super()._perform_get()
         return CiProductsResponse.parse_obj(json)
 
+    def get_all(self) -> CiProductsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiProducts
+        :rtype: CiProductsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class CiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}'
 
@@ -198,6 +216,24 @@ class CiProductEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiProductResponse.parse_obj(json)
 
+    def get_all(self) -> CiProductResponse:
+        '''
+        Get all resources.
+
+        :returns: Single CiProduct
+        :rtype: CiProductResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -233,6 +269,24 @@ class AdditionalRepositoriesLinkagesOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiProductAdditionalRepositoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiProductAdditionalRepositoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiProductAdditionalRepositoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductAdditionalRepositoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductAdditionalRepositoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AdditionalRepositoriesOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/additionalRepositories'
@@ -309,6 +363,24 @@ class AdditionalRepositoriesOfCiProductEndpoint(IDEndpoint):
         json = super()._perform_get()
         return ScmRepositoriesResponse.parse_obj(json)
 
+    def get_all(self) -> ScmRepositoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ScmRepositories
+        :rtype: ScmRepositoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ScmRepositoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ScmRepositoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppLinkageOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/relationships/app'
 
@@ -322,7 +394,6 @@ class AppLinkageOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiProductAppLinkageResponse.parse_obj(json)
-
 class AppOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/app'
 
@@ -615,6 +686,24 @@ class AppOfCiProductEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppResponse.parse_obj(json)
 
+    def get_all(self) -> AppResponse:
+        '''
+        Get all resources.
+
+        :returns: Single App
+        :rtype: AppResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildRunsLinkagesOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/relationships/buildRuns'
 
@@ -643,6 +732,24 @@ class BuildRunsLinkagesOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiProductBuildRunsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiProductBuildRunsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiProductBuildRunsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductBuildRunsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductBuildRunsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildRunsOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/buildRuns'
@@ -751,6 +858,24 @@ class BuildRunsOfCiProductEndpoint(IDEndpoint):
         json = super()._perform_get()
         return CiBuildRunsResponse.parse_obj(json)
 
+    def get_all(self) -> CiBuildRunsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiBuildRuns
+        :rtype: CiBuildRunsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiBuildRunsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiBuildRunsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PrimaryRepositoriesLinkagesOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/relationships/primaryRepositories'
 
@@ -779,6 +904,24 @@ class PrimaryRepositoriesLinkagesOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiProductPrimaryRepositoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiProductPrimaryRepositoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiProductPrimaryRepositoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductPrimaryRepositoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductPrimaryRepositoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class PrimaryRepositoriesOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/primaryRepositories'
@@ -855,6 +998,24 @@ class PrimaryRepositoriesOfCiProductEndpoint(IDEndpoint):
         json = super()._perform_get()
         return ScmRepositoriesResponse.parse_obj(json)
 
+    def get_all(self) -> ScmRepositoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of ScmRepositories
+        :rtype: ScmRepositoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ScmRepositoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ScmRepositoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class WorkflowsLinkagesOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/relationships/workflows'
 
@@ -883,6 +1044,24 @@ class WorkflowsLinkagesOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiProductWorkflowsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> CiProductWorkflowsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: CiProductWorkflowsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiProductWorkflowsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiProductWorkflowsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class WorkflowsOfCiProductEndpoint(IDEndpoint):
     path = '/v1/ciProducts/{id}/workflows'
@@ -955,4 +1134,22 @@ class WorkflowsOfCiProductEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CiWorkflowsResponse.parse_obj(json)
+
+    def get_all(self) -> CiWorkflowsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of CiWorkflows
+        :rtype: CiWorkflowsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CiWorkflowsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CiWorkflowsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

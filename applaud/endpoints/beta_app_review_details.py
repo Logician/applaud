@@ -77,6 +77,24 @@ class BetaAppReviewDetailsEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaAppReviewDetailsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaAppReviewDetailsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaAppReviewDetails
+        :rtype: BetaAppReviewDetailsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaAppReviewDetailsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaAppReviewDetailsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaAppReviewDetailEndpoint(IDEndpoint):
     path = '/v1/betaAppReviewDetails/{id}'
 
@@ -126,7 +144,6 @@ class BetaAppReviewDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaAppReviewDetailResponse.parse_obj(json)
-
     def update(self, request: BetaAppReviewDetailUpdateRequest) -> BetaAppReviewDetailResponse:
         '''Modify the resource.
 
@@ -153,7 +170,6 @@ class AppLinkageOfBetaAppReviewDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaAppReviewDetailAppLinkageResponse.parse_obj(json)
-
 class AppOfBetaAppReviewDetailEndpoint(IDEndpoint):
     path = '/v1/betaAppReviewDetails/{id}/app'
 
@@ -179,4 +195,3 @@ class AppOfBetaAppReviewDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-

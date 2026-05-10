@@ -88,6 +88,24 @@ class AppAvailabilityEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppAvailabilityV2Response.parse_obj(json)
 
+    def get_all(self) -> AppAvailabilityV2Response:
+        '''
+        Get all resources.
+
+        :returns: Single AppAvailability
+        :rtype: AppAvailabilityV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppAvailabilityV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppAvailabilityV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class TerritoryAvailabilitiesLinkagesOfAppAvailabilityEndpoint(IDEndpoint):
     path = '/v2/appAvailabilities/{id}/relationships/territoryAvailabilities'
 
@@ -116,6 +134,24 @@ class TerritoryAvailabilitiesLinkagesOfAppAvailabilityEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppAvailabilityV2TerritoryAvailabilitiesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppAvailabilityV2TerritoryAvailabilitiesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppAvailabilityV2TerritoryAvailabilitiesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppAvailabilityV2TerritoryAvailabilitiesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppAvailabilityV2TerritoryAvailabilitiesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class TerritoryAvailabilitiesOfAppAvailabilityEndpoint(IDEndpoint):
     path = '/v2/appAvailabilities/{id}/territoryAvailabilities'
@@ -173,4 +209,22 @@ class TerritoryAvailabilitiesOfAppAvailabilityEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return TerritoryAvailabilitiesResponse.parse_obj(json)
+
+    def get_all(self) -> TerritoryAvailabilitiesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of TerritoryAvailabilities
+        :rtype: TerritoryAvailabilitiesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = TerritoryAvailabilitiesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = TerritoryAvailabilitiesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

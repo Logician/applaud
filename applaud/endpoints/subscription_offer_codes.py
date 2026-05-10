@@ -129,6 +129,24 @@ class SubscriptionOfferCodeEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionOfferCodeResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionOfferCodeResponse:
+        '''
+        Get all resources.
+
+        :returns: Single SubscriptionOfferCode
+        :rtype: SubscriptionOfferCodeResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodeResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodeResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: SubscriptionOfferCodeUpdateRequest) -> SubscriptionOfferCodeResponse:
         '''Modify the resource.
 
@@ -170,6 +188,24 @@ class CustomCodesLinkagesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodeCustomCodesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionOfferCodeCustomCodesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionOfferCodeCustomCodesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodeCustomCodesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodeCustomCodesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class CustomCodesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
     path = '/v1/subscriptionOfferCodes/{id}/customCodes'
@@ -228,6 +264,24 @@ class CustomCodesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionOfferCodeCustomCodesResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionOfferCodeCustomCodesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionOfferCodeCustomCodes
+        :rtype: SubscriptionOfferCodeCustomCodesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodeCustomCodesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodeCustomCodesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class OneTimeUseCodesLinkagesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
     path = '/v1/subscriptionOfferCodes/{id}/relationships/oneTimeUseCodes'
 
@@ -256,6 +310,24 @@ class OneTimeUseCodesLinkagesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodeOneTimeUseCodesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionOfferCodeOneTimeUseCodesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionOfferCodeOneTimeUseCodesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodeOneTimeUseCodesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodeOneTimeUseCodesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class OneTimeUseCodesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
     path = '/v1/subscriptionOfferCodes/{id}/oneTimeUseCodes'
@@ -314,6 +386,24 @@ class OneTimeUseCodesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         json = super()._perform_get()
         return SubscriptionOfferCodeOneTimeUseCodesResponse.parse_obj(json)
 
+    def get_all(self) -> SubscriptionOfferCodeOneTimeUseCodesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionOfferCodeOneTimeUseCodes
+        :rtype: SubscriptionOfferCodeOneTimeUseCodesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodeOneTimeUseCodesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodeOneTimeUseCodesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PricesLinkagesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
     path = '/v1/subscriptionOfferCodes/{id}/relationships/prices'
 
@@ -342,6 +432,24 @@ class PricesLinkagesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodePricesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionOfferCodePricesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: SubscriptionOfferCodePricesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodePricesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodePricesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class PricesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
     path = '/v1/subscriptionOfferCodes/{id}/prices'
@@ -417,4 +525,22 @@ class PricesOfSubscriptionOfferCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodePricesResponse.parse_obj(json)
+
+    def get_all(self) -> SubscriptionOfferCodePricesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of SubscriptionOfferCodePrices
+        :rtype: SubscriptionOfferCodePricesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = SubscriptionOfferCodePricesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = SubscriptionOfferCodePricesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

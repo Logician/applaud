@@ -60,7 +60,6 @@ class AppPreviewEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPreviewResponse.parse_obj(json)
-
     def update(self, request: AppPreviewUpdateRequest) -> AppPreviewResponse:
         '''Modify the resource.
 

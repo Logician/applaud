@@ -60,6 +60,24 @@ class AlternativeDistributionKeysEndpoint(Endpoint):
         json = super()._perform_get()
         return AlternativeDistributionKeysResponse.parse_obj(json)
 
+    def get_all(self) -> AlternativeDistributionKeysResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AlternativeDistributionKeys
+        :rtype: AlternativeDistributionKeysResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AlternativeDistributionKeysResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AlternativeDistributionKeysResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: AlternativeDistributionKeyCreateRequest) -> AlternativeDistributionKeyResponse:
         '''Create the resource.
 
@@ -98,7 +116,6 @@ class AlternativeDistributionKeyEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AlternativeDistributionKeyResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 

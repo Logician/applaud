@@ -82,4 +82,3 @@ class SalesReportsEndpoint(Endpoint):
                  :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
         '''
         return super()._perform_get(stream=True)
-

@@ -104,6 +104,24 @@ class UserInvitationsEndpoint(Endpoint):
         json = super()._perform_get()
         return UserInvitationsResponse.parse_obj(json)
 
+    def get_all(self) -> UserInvitationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of UserInvitations
+        :rtype: UserInvitationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UserInvitationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UserInvitationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: UserInvitationCreateRequest) -> UserInvitationResponse:
         '''Create the resource.
 
@@ -182,6 +200,24 @@ class UserInvitationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return UserInvitationResponse.parse_obj(json)
 
+    def get_all(self) -> UserInvitationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single UserInvitation
+        :rtype: UserInvitationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UserInvitationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UserInvitationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -217,6 +253,24 @@ class VisibleAppsLinkagesOfUserInvitationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return UserInvitationVisibleAppsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> UserInvitationVisibleAppsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: UserInvitationVisibleAppsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = UserInvitationVisibleAppsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = UserInvitationVisibleAppsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class VisibleAppsOfUserInvitationEndpoint(IDEndpoint):
     path = '/v1/userInvitations/{id}/visibleApps'
@@ -258,4 +312,22 @@ class VisibleAppsOfUserInvitationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppsWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> AppsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

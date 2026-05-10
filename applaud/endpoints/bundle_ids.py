@@ -134,6 +134,24 @@ class BundleIdsEndpoint(Endpoint):
         json = super()._perform_get()
         return BundleIdsResponse.parse_obj(json)
 
+    def get_all(self) -> BundleIdsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BundleIds
+        :rtype: BundleIdsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BundleIdsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BundleIdsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: BundleIdCreateRequest) -> BundleIdResponse:
         '''Create the resource.
 
@@ -245,6 +263,24 @@ class BundleIdEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BundleIdResponse.parse_obj(json)
 
+    def get_all(self) -> BundleIdResponse:
+        '''
+        Get all resources.
+
+        :returns: Single BundleId
+        :rtype: BundleIdResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BundleIdResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BundleIdResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: BundleIdUpdateRequest) -> BundleIdResponse:
         '''Modify the resource.
 
@@ -278,7 +314,6 @@ class AppLinkageOfBundleIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BundleIdAppLinkageResponse.parse_obj(json)
-
 class AppOfBundleIdEndpoint(IDEndpoint):
     path = '/v1/bundleIds/{id}/app'
 
@@ -304,7 +339,6 @@ class AppOfBundleIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-
 class BundleIdCapabilitiesLinkagesOfBundleIdEndpoint(IDEndpoint):
     path = '/v1/bundleIds/{id}/relationships/bundleIdCapabilities'
 
@@ -333,6 +367,24 @@ class BundleIdCapabilitiesLinkagesOfBundleIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BundleIdBundleIdCapabilitiesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BundleIdBundleIdCapabilitiesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BundleIdBundleIdCapabilitiesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BundleIdBundleIdCapabilitiesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BundleIdBundleIdCapabilitiesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BundleIdCapabilitiesOfBundleIdEndpoint(IDEndpoint):
     path = '/v1/bundleIds/{id}/bundleIdCapabilities'
@@ -375,6 +427,24 @@ class BundleIdCapabilitiesOfBundleIdEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BundleIdCapabilitiesWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BundleIdCapabilitiesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BundleIdCapabilities with get
+        :rtype: BundleIdCapabilitiesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BundleIdCapabilitiesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BundleIdCapabilitiesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ProfilesLinkagesOfBundleIdEndpoint(IDEndpoint):
     path = '/v1/bundleIds/{id}/relationships/profiles'
 
@@ -403,6 +473,24 @@ class ProfilesLinkagesOfBundleIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BundleIdProfilesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BundleIdProfilesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BundleIdProfilesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BundleIdProfilesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BundleIdProfilesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ProfilesOfBundleIdEndpoint(IDEndpoint):
     path = '/v1/bundleIds/{id}/profiles'
@@ -444,4 +532,22 @@ class ProfilesOfBundleIdEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ProfilesWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> ProfilesWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Profiles with get
+        :rtype: ProfilesWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = ProfilesWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = ProfilesWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

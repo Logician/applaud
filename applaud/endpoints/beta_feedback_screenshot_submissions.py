@@ -45,7 +45,6 @@ class BetaFeedbackScreenshotSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaFeedbackScreenshotSubmissionResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 

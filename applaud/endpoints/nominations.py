@@ -149,6 +149,24 @@ class NominationsEndpoint(Endpoint):
         json = super()._perform_get()
         return NominationsResponse.parse_obj(json)
 
+    def get_all(self) -> NominationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Nominations
+        :rtype: NominationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = NominationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = NominationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: NominationCreateRequest) -> NominationResponse:
         '''Create the resource.
 
@@ -233,6 +251,24 @@ class NominationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return NominationResponse.parse_obj(json)
+
+    def get_all(self) -> NominationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single Nomination
+        :rtype: NominationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = NominationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = NominationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def update(self, request: NominationUpdateRequest) -> NominationResponse:
         '''Modify the resource.

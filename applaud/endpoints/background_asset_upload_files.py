@@ -48,7 +48,6 @@ class BackgroundAssetUploadFileEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetUploadFileResponse.parse_obj(json)
-
     def update(self, request: BackgroundAssetUploadFileUpdateRequest) -> BackgroundAssetUploadFileResponse:
         '''Modify the resource.
 

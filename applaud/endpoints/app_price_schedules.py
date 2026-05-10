@@ -118,6 +118,24 @@ class AppPriceScheduleEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppPriceScheduleResponse.parse_obj(json)
 
+    def get_all(self) -> AppPriceScheduleResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppPriceSchedule
+        :rtype: AppPriceScheduleResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPriceScheduleResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPriceScheduleResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AutomaticPricesLinkagesOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/relationships/automaticPrices'
 
@@ -146,6 +164,24 @@ class AutomaticPricesLinkagesOfAppPriceScheduleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPriceScheduleAutomaticPricesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppPriceScheduleAutomaticPricesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppPriceScheduleAutomaticPricesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPriceScheduleAutomaticPricesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPriceScheduleAutomaticPricesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AutomaticPricesOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/automaticPrices'
@@ -232,6 +268,24 @@ class AutomaticPricesOfAppPriceScheduleEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppPricesV2Response.parse_obj(json)
 
+    def get_all(self) -> AppPricesV2Response:
+        '''
+        Get all resources.
+
+        :returns: List of AppPrices
+        :rtype: AppPricesV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPricesV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPricesV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BaseTerritoryLinkageOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/relationships/baseTerritory'
 
@@ -245,7 +299,6 @@ class BaseTerritoryLinkageOfAppPriceScheduleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPriceScheduleBaseTerritoryLinkageResponse.parse_obj(json)
-
 class BaseTerritoryOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/baseTerritory'
 
@@ -271,7 +324,6 @@ class BaseTerritoryOfAppPriceScheduleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return TerritoryResponse.parse_obj(json)
-
 class ManualPricesLinkagesOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/relationships/manualPrices'
 
@@ -300,6 +352,24 @@ class ManualPricesLinkagesOfAppPriceScheduleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPriceScheduleManualPricesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppPriceScheduleManualPricesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppPriceScheduleManualPricesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPriceScheduleManualPricesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPriceScheduleManualPricesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ManualPricesOfAppPriceScheduleEndpoint(IDEndpoint):
     path = '/v1/appPriceSchedules/{id}/manualPrices'
@@ -385,4 +455,22 @@ class ManualPricesOfAppPriceScheduleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppPricesV2Response.parse_obj(json)
+
+    def get_all(self) -> AppPricesV2Response:
+        '''
+        Get all resources.
+
+        :returns: List of AppPrices
+        :rtype: AppPricesV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPricesV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPricesV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

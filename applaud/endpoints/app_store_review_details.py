@@ -89,6 +89,24 @@ class AppStoreReviewDetailEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreReviewDetailResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreReviewDetailResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreReviewDetail
+        :rtype: AppStoreReviewDetailResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreReviewDetailResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreReviewDetailResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppStoreReviewDetailUpdateRequest) -> AppStoreReviewDetailResponse:
         '''Modify the resource.
 
@@ -130,6 +148,24 @@ class AppStoreReviewAttachmentsLinkagesOfAppStoreReviewDetailEndpoint(IDEndpoint
         '''
         json = super()._perform_get()
         return AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreReviewDetailAppStoreReviewAttachmentsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint(IDEndpoint):
     path = '/v1/appStoreReviewDetails/{id}/appStoreReviewAttachments'
@@ -187,4 +223,22 @@ class AppStoreReviewAttachmentsOfAppStoreReviewDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppStoreReviewAttachmentsResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreReviewAttachmentsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppStoreReviewAttachments
+        :rtype: AppStoreReviewAttachmentsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreReviewAttachmentsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreReviewAttachmentsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

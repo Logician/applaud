@@ -62,7 +62,6 @@ class GameCenterActivityVersionReleaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityVersionReleaseResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 

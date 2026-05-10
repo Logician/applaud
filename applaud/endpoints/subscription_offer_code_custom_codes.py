@@ -60,7 +60,6 @@ class SubscriptionOfferCodeCustomCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodeCustomCodeResponse.parse_obj(json)
-
     def update(self, request: SubscriptionOfferCodeCustomCodeUpdateRequest) -> SubscriptionOfferCodeCustomCodeResponse:
         '''Modify the resource.
 

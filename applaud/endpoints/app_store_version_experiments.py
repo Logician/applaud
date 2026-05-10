@@ -98,6 +98,24 @@ class AppStoreVersionExperimentEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreVersionExperimentV2Response.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionExperimentV2Response:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersionExperiment
+        :rtype: AppStoreVersionExperimentV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppStoreVersionExperimentV2UpdateRequest) -> AppStoreVersionExperimentV2Response:
         '''Modify the resource.
 
@@ -203,6 +221,25 @@ class AppStoreVersionExperimentEndpoint(IDEndpoint):
         return AppStoreVersionExperimentResponse.parse_obj(json)
 
     @deprecated
+    def get_all(self) -> AppStoreVersionExperimentResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersionExperiment
+        :rtype: AppStoreVersionExperimentResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
+    @deprecated
     def update(self, request: AppStoreVersionExperimentUpdateRequest) -> AppStoreVersionExperimentResponse:
         '''Modify the resource.
 
@@ -251,6 +288,24 @@ class AppStoreVersionExperimentTreatmentsLinkagesOfAppStoreVersionExperimentEndp
         '''
         json = super()._perform_get()
         return AppStoreVersionExperimentV2AppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppStoreVersionExperimentV2AppStoreVersionExperimentTreatmentsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionExperimentV2AppStoreVersionExperimentTreatmentsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentV2AppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentV2AppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppStoreVersionExperimentTreatmentsOfAppStoreVersionExperimentEndpoint(IDEndpoint):
     path = '/v2/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments'
@@ -322,6 +377,24 @@ class AppStoreVersionExperimentTreatmentsOfAppStoreVersionExperimentEndpoint(IDE
         json = super()._perform_get()
         return AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionExperimentTreatmentsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppStoreVersionExperimentTreatments
+        :rtype: AppStoreVersionExperimentTreatmentsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppStoreVersionExperimentTreatmentsLinkagesOfAppStoreVersionExperimentEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionExperiments/{id}/relationships/appStoreVersionExperimentTreatments'
 
@@ -351,6 +424,25 @@ class AppStoreVersionExperimentTreatmentsLinkagesOfAppStoreVersionExperimentEndp
         '''
         json = super()._perform_get()
         return AppStoreVersionExperimentAppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+
+    @deprecated
+    def get_all(self) -> AppStoreVersionExperimentAppStoreVersionExperimentTreatmentsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppStoreVersionExperimentAppStoreVersionExperimentTreatmentsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentAppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentAppStoreVersionExperimentTreatmentsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppStoreVersionExperimentTreatmentsOfAppStoreVersionExperimentEndpoint(IDEndpoint):
     path = '/v1/appStoreVersionExperiments/{id}/appStoreVersionExperimentTreatments'
@@ -422,4 +514,23 @@ class AppStoreVersionExperimentTreatmentsOfAppStoreVersionExperimentEndpoint(IDE
         '''
         json = super()._perform_get()
         return AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
+
+    @deprecated
+    def get_all(self) -> AppStoreVersionExperimentTreatmentsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppStoreVersionExperimentTreatments
+        :rtype: AppStoreVersionExperimentTreatmentsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionExperimentTreatmentsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

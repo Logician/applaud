@@ -88,6 +88,24 @@ class AnalyticsReportRequestEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AnalyticsReportRequestResponse.parse_obj(json)
 
+    def get_all(self) -> AnalyticsReportRequestResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AnalyticsReportRequest
+        :rtype: AnalyticsReportRequestResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportRequestResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportRequestResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -123,6 +141,24 @@ class ReportsLinkagesOfAnalyticsReportRequestEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportRequestReportsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportRequestReportsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AnalyticsReportRequestReportsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportRequestReportsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportRequestReportsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ReportsOfAnalyticsReportRequestEndpoint(IDEndpoint):
     path = '/v1/analyticsReportRequests/{id}/reports'
@@ -189,4 +225,22 @@ class ReportsOfAnalyticsReportRequestEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportsResponse.parse_obj(json)
+
+    def get_all(self) -> AnalyticsReportsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AnalyticsReports
+        :rtype: AnalyticsReportsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AnalyticsReportsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AnalyticsReportsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

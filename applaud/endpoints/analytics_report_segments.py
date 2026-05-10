@@ -32,4 +32,3 @@ class AnalyticsReportSegmentEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AnalyticsReportSegmentResponse.parse_obj(json)
-

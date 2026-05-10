@@ -44,4 +44,3 @@ class ScmGitReferenceEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return ScmGitReferenceResponse.parse_obj(json)
-

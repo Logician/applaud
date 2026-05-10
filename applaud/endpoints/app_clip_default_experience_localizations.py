@@ -73,7 +73,6 @@ class AppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipDefaultExperienceLocalizationResponse.parse_obj(json)
-
     def update(self, request: AppClipDefaultExperienceLocalizationUpdateRequest) -> AppClipDefaultExperienceLocalizationResponse:
         '''Modify the resource.
 
@@ -107,7 +106,6 @@ class AppClipHeaderImageLinkageOfAppClipDefaultExperienceLocalizationEndpoint(ID
         '''
         json = super()._perform_get()
         return AppClipDefaultExperienceLocalizationAppClipHeaderImageLinkageResponse.parse_obj(json)
-
 class AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint(IDEndpoint):
     path = '/v1/appClipDefaultExperienceLocalizations/{id}/appClipHeaderImage'
 
@@ -149,4 +147,3 @@ class AppClipHeaderImageOfAppClipDefaultExperienceLocalizationEndpoint(IDEndpoin
         '''
         json = super()._perform_get()
         return AppClipHeaderImageResponse.parse_obj(json)
-

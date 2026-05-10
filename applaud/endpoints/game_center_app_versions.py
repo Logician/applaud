@@ -97,6 +97,24 @@ class GameCenterAppVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterAppVersionResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterAppVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterAppVersion
+        :rtype: GameCenterAppVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAppVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAppVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: GameCenterAppVersionUpdateRequest) -> GameCenterAppVersionResponse:
         '''Modify the resource.
 
@@ -123,7 +141,6 @@ class AppStoreVersionLinkageOfGameCenterAppVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAppVersionAppStoreVersionLinkageResponse.parse_obj(json)
-
 class AppStoreVersionOfGameCenterAppVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterAppVersions/{id}/appStoreVersion'
 
@@ -246,6 +263,24 @@ class AppStoreVersionOfGameCenterAppVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppStoreVersionResponse.parse_obj(json)
 
+    def get_all(self) -> AppStoreVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppStoreVersion
+        :rtype: AppStoreVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppStoreVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppStoreVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class CompatibilityVersionsLinkagesOfGameCenterAppVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterAppVersions/{id}/relationships/compatibilityVersions'
 
@@ -274,6 +309,24 @@ class CompatibilityVersionsLinkagesOfGameCenterAppVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAppVersionCompatibilityVersionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterAppVersionCompatibilityVersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterAppVersionCompatibilityVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAppVersionCompatibilityVersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAppVersionCompatibilityVersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: GameCenterAppVersionCompatibilityVersionsLinkagesRequest):
         '''Create one or more related linkages.
@@ -372,4 +425,22 @@ class CompatibilityVersionsOfGameCenterAppVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterAppVersionsResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterAppVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterAppVersions
+        :rtype: GameCenterAppVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterAppVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterAppVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

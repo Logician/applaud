@@ -61,6 +61,25 @@ class InAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseResponse.parse_obj(json)
 
+    @deprecated
+    def get_all(self) -> InAppPurchaseResponse:
+        '''
+        Get all resources.
+
+        :returns: Single InAppPurchase
+        :rtype: InAppPurchaseResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class InAppPurchasesEndpoint(Endpoint):
     path = '/v2/inAppPurchases'
 
@@ -267,6 +286,24 @@ class InAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseV2Response.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseV2Response:
+        '''
+        Get all resources.
+
+        :returns: Single InAppPurchase
+        :rtype: InAppPurchaseV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: InAppPurchaseV2UpdateRequest) -> InAppPurchaseV2Response:
         '''Modify the resource.
 
@@ -300,7 +337,6 @@ class AppStoreReviewScreenshotLinkageOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2AppStoreReviewScreenshotLinkageResponse.parse_obj(json)
-
 class AppStoreReviewScreenshotOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/appStoreReviewScreenshot'
 
@@ -342,7 +378,6 @@ class AppStoreReviewScreenshotOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseAppStoreReviewScreenshotResponse.parse_obj(json)
-
 class ContentLinkageOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/content'
 
@@ -356,7 +391,6 @@ class ContentLinkageOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2ContentLinkageResponse.parse_obj(json)
-
 class ContentOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/content'
 
@@ -398,7 +432,6 @@ class ContentOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseContentResponse.parse_obj(json)
-
 class IapPriceScheduleLinkageOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/iapPriceSchedule'
 
@@ -412,7 +445,6 @@ class IapPriceScheduleLinkageOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2IapPriceScheduleLinkageResponse.parse_obj(json)
-
 class IapPriceScheduleOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/iapPriceSchedule'
 
@@ -483,6 +515,24 @@ class IapPriceScheduleOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchasePriceScheduleResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchasePriceScheduleResponse:
+        '''
+        Get all resources.
+
+        :returns: Single InAppPurchasePriceSchedule
+        :rtype: InAppPurchasePriceScheduleResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchasePriceScheduleResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchasePriceScheduleResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ImagesLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/images'
 
@@ -511,6 +561,24 @@ class ImagesLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2ImagesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> InAppPurchaseV2ImagesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: InAppPurchaseV2ImagesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseV2ImagesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseV2ImagesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ImagesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/images'
@@ -569,6 +637,24 @@ class ImagesOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseImagesResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseImagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of InAppPurchaseImages
+        :rtype: InAppPurchaseImagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseImagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseImagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class InAppPurchaseAvailabilityLinkageOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/inAppPurchaseAvailability'
 
@@ -582,7 +668,6 @@ class InAppPurchaseAvailabilityLinkageOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2InAppPurchaseAvailabilityLinkageResponse.parse_obj(json)
-
 class InAppPurchaseAvailabilityOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/inAppPurchaseAvailability'
 
@@ -640,6 +725,24 @@ class InAppPurchaseAvailabilityOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseAvailabilityResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseAvailabilityResponse:
+        '''
+        Get all resources.
+
+        :returns: Single InAppPurchaseAvailability
+        :rtype: InAppPurchaseAvailabilityResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseAvailabilityResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseAvailabilityResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class InAppPurchaseLocalizationsLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/inAppPurchaseLocalizations'
 
@@ -668,6 +771,24 @@ class InAppPurchaseLocalizationsLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2InAppPurchaseLocalizationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> InAppPurchaseV2InAppPurchaseLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: InAppPurchaseV2InAppPurchaseLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseV2InAppPurchaseLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseV2InAppPurchaseLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class InAppPurchaseLocalizationsOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/inAppPurchaseLocalizations'
@@ -726,6 +847,24 @@ class InAppPurchaseLocalizationsOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseLocalizationsResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of InAppPurchaseLocalizations
+        :rtype: InAppPurchaseLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class OfferCodesLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/offerCodes'
 
@@ -754,6 +893,24 @@ class OfferCodesLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2OfferCodesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> InAppPurchaseV2OfferCodesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: InAppPurchaseV2OfferCodesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseV2OfferCodesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseV2OfferCodesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class OfferCodesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/offerCodes'
@@ -856,6 +1013,24 @@ class OfferCodesOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseOfferCodesResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseOfferCodesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of InAppPurchaseOfferCodes
+        :rtype: InAppPurchaseOfferCodesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseOfferCodesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseOfferCodesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PricePointsLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/pricePoints'
 
@@ -884,6 +1059,24 @@ class PricePointsLinkagesOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2PricePointsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> InAppPurchaseV2PricePointsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: InAppPurchaseV2PricePointsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseV2PricePointsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseV2PricePointsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class PricePointsOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/pricePoints'
@@ -955,6 +1148,24 @@ class PricePointsOfInAppPurchaseEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchasePricePointsResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchasePricePointsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of InAppPurchasePricePoints
+        :rtype: InAppPurchasePricePointsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchasePricePointsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchasePricePointsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PromotedPurchaseLinkageOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/relationships/promotedPurchase'
 
@@ -968,7 +1179,6 @@ class PromotedPurchaseLinkageOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseV2PromotedPurchaseLinkageResponse.parse_obj(json)
-
 class PromotedPurchaseOfInAppPurchaseEndpoint(IDEndpoint):
     path = '/v2/inAppPurchases/{id}/promotedPurchase'
 
@@ -1015,4 +1225,3 @@ class PromotedPurchaseOfInAppPurchaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PromotedPurchaseResponse.parse_obj(json)
-

@@ -60,7 +60,6 @@ class CustomerReviewResponseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CustomerReviewResponseV1Response.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 

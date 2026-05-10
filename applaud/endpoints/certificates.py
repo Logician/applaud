@@ -104,6 +104,24 @@ class CertificatesEndpoint(Endpoint):
         json = super()._perform_get()
         return CertificatesResponse.parse_obj(json)
 
+    def get_all(self) -> CertificatesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Certificates
+        :rtype: CertificatesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = CertificatesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = CertificatesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: CertificateCreateRequest) -> CertificateResponse:
         '''Create the resource.
 
@@ -166,7 +184,6 @@ class CertificateEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CertificateResponse.parse_obj(json)
-
     def update(self, request: CertificateUpdateRequest) -> CertificateResponse:
         '''Modify the resource.
 
@@ -200,7 +217,6 @@ class PassTypeIdLinkageOfCertificateEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CertificatePassTypeIdLinkageResponse.parse_obj(json)
-
 class PassTypeIdOfCertificateEndpoint(IDEndpoint):
     path = '/v1/certificates/{id}/passTypeId'
 
@@ -257,4 +273,22 @@ class PassTypeIdOfCertificateEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PassTypeIdResponse.parse_obj(json)
+
+    def get_all(self) -> PassTypeIdResponse:
+        '''
+        Get all resources.
+
+        :returns: Single PassTypeId
+        :rtype: PassTypeIdResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PassTypeIdResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PassTypeIdResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

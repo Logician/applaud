@@ -32,4 +32,3 @@ class AlternativeDistributionPackageVariantEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AlternativeDistributionPackageVariantResponse.parse_obj(json)
-

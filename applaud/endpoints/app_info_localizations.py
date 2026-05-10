@@ -60,7 +60,6 @@ class AppInfoLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppInfoLocalizationResponse.parse_obj(json)
-
     def update(self, request: AppInfoLocalizationUpdateRequest) -> AppInfoLocalizationResponse:
         '''Modify the resource.
 

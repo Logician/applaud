@@ -44,4 +44,3 @@ class BackgroundAssetVersionExternalBetaReleaseEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BackgroundAssetVersionExternalBetaReleaseResponse.parse_obj(json)
-

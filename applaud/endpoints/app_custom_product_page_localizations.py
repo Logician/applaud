@@ -125,6 +125,24 @@ class AppCustomProductPageLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppCustomProductPageLocalizationResponse.parse_obj(json)
 
+    def get_all(self) -> AppCustomProductPageLocalizationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppCustomProductPageLocalization
+        :rtype: AppCustomProductPageLocalizationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageLocalizationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageLocalizationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppCustomProductPageLocalizationUpdateRequest) -> AppCustomProductPageLocalizationResponse:
         '''Modify the resource.
 
@@ -173,6 +191,24 @@ class AppPreviewSetsLinkagesOfAppCustomProductPageLocalizationEndpoint(IDEndpoin
         '''
         json = super()._perform_get()
         return AppCustomProductPageLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCustomProductPageLocalizationAppPreviewSetsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppCustomProductPageLocalizationAppPreviewSetsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageLocalizationAppPreviewSetsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppPreviewSetsOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
     path = '/v1/appCustomProductPageLocalizations/{id}/appPreviewSets'
@@ -294,6 +330,24 @@ class AppPreviewSetsOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppPreviewSetsResponse.parse_obj(json)
 
+    def get_all(self) -> AppPreviewSetsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppPreviewSets
+        :rtype: AppPreviewSetsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppPreviewSetsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppPreviewSetsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppScreenshotSetsLinkagesOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
     path = '/v1/appCustomProductPageLocalizations/{id}/relationships/appScreenshotSets'
 
@@ -322,6 +376,24 @@ class AppScreenshotSetsLinkagesOfAppCustomProductPageLocalizationEndpoint(IDEndp
         '''
         json = super()._perform_get()
         return AppCustomProductPageLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCustomProductPageLocalizationAppScreenshotSetsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppCustomProductPageLocalizationAppScreenshotSetsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageLocalizationAppScreenshotSetsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppScreenshotSetsOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
     path = '/v1/appCustomProductPageLocalizations/{id}/appScreenshotSets'
@@ -460,6 +532,24 @@ class AppScreenshotSetsOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppScreenshotSetsResponse.parse_obj(json)
 
+    def get_all(self) -> AppScreenshotSetsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppScreenshotSets
+        :rtype: AppScreenshotSetsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppScreenshotSetsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppScreenshotSetsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class SearchKeywordsLinkagesOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
     path = '/v1/appCustomProductPageLocalizations/{id}/relationships/searchKeywords'
 
@@ -488,6 +578,24 @@ class SearchKeywordsLinkagesOfAppCustomProductPageLocalizationEndpoint(IDEndpoin
         '''
         json = super()._perform_get()
         return AppCustomProductPageLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppCustomProductPageLocalizationSearchKeywordsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppCustomProductPageLocalizationSearchKeywordsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppCustomProductPageLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppCustomProductPageLocalizationSearchKeywordsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: AppCustomProductPageLocalizationSearchKeywordsLinkagesRequest):
         '''Create one or more related linkages.
@@ -567,4 +675,22 @@ class SearchKeywordsOfAppCustomProductPageLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppKeywordsResponse.parse_obj(json)
+
+    def get_all(self) -> AppKeywordsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppKeywords
+        :rtype: AppKeywordsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppKeywordsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppKeywordsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

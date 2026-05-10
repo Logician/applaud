@@ -77,6 +77,24 @@ class BetaLicenseAgreementsEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaLicenseAgreementsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaLicenseAgreementsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaLicenseAgreements
+        :rtype: BetaLicenseAgreementsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaLicenseAgreementsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaLicenseAgreementsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaLicenseAgreementEndpoint(IDEndpoint):
     path = '/v1/betaLicenseAgreements/{id}'
 
@@ -126,7 +144,6 @@ class BetaLicenseAgreementEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaLicenseAgreementResponse.parse_obj(json)
-
     def update(self, request: BetaLicenseAgreementUpdateRequest) -> BetaLicenseAgreementResponse:
         '''Modify the resource.
 
@@ -153,7 +170,6 @@ class AppLinkageOfBetaLicenseAgreementEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaLicenseAgreementAppLinkageResponse.parse_obj(json)
-
 class AppOfBetaLicenseAgreementEndpoint(IDEndpoint):
     path = '/v1/betaLicenseAgreements/{id}/app'
 
@@ -179,4 +195,3 @@ class AppOfBetaLicenseAgreementEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-

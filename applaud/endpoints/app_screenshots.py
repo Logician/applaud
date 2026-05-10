@@ -60,7 +60,6 @@ class AppScreenshotEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppScreenshotResponse.parse_obj(json)
-
     def update(self, request: AppScreenshotUpdateRequest) -> AppScreenshotResponse:
         '''Modify the resource.
 

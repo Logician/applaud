@@ -82,6 +82,24 @@ class BuildBetaDetailsEndpoint(Endpoint):
         json = super()._perform_get()
         return BuildBetaDetailsResponse.parse_obj(json)
 
+    def get_all(self) -> BuildBetaDetailsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BuildBetaDetails
+        :rtype: BuildBetaDetailsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildBetaDetailsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildBetaDetailsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildBetaDetailEndpoint(IDEndpoint):
     path = '/v1/buildBetaDetails/{id}'
 
@@ -131,7 +149,6 @@ class BuildBetaDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBetaDetailResponse.parse_obj(json)
-
     def update(self, request: BuildBetaDetailUpdateRequest) -> BuildBetaDetailResponse:
         '''Modify the resource.
 
@@ -158,7 +175,6 @@ class BuildLinkageOfBuildBetaDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBetaDetailBuildLinkageResponse.parse_obj(json)
-
 class BuildOfBuildBetaDetailEndpoint(IDEndpoint):
     path = '/v1/buildBetaDetails/{id}/build'
 
@@ -298,4 +314,22 @@ class BuildOfBuildBetaDetailEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildResponse.parse_obj(json)
+
+    def get_all(self) -> BuildResponse:
+        '''
+        Get all resources.
+
+        :returns: Single Build
+        :rtype: BuildResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

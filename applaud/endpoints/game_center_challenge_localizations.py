@@ -73,7 +73,6 @@ class GameCenterChallengeLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeLocalizationResponse.parse_obj(json)
-
     def update(self, request: GameCenterChallengeLocalizationUpdateRequest) -> GameCenterChallengeLocalizationResponse:
         '''Modify the resource.
 
@@ -107,7 +106,6 @@ class ImageLinkageOfGameCenterChallengeLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeLocalizationImageLinkageResponse.parse_obj(json)
-
 class ImageOfGameCenterChallengeLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterChallengeLocalizations/{id}/image'
 
@@ -133,4 +131,3 @@ class ImageOfGameCenterChallengeLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterChallengeImageResponse.parse_obj(json)
-

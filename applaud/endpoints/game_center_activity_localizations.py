@@ -73,7 +73,6 @@ class GameCenterActivityLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityLocalizationResponse.parse_obj(json)
-
     def update(self, request: GameCenterActivityLocalizationUpdateRequest) -> GameCenterActivityLocalizationResponse:
         '''Modify the resource.
 
@@ -107,7 +106,6 @@ class ImageLinkageOfGameCenterActivityLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityLocalizationImageLinkageResponse.parse_obj(json)
-
 class ImageOfGameCenterActivityLocalizationEndpoint(IDEndpoint):
     path = '/v1/gameCenterActivityLocalizations/{id}/image'
 
@@ -133,4 +131,3 @@ class ImageOfGameCenterActivityLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterActivityImageResponse.parse_obj(json)
-

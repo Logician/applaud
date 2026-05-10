@@ -20,7 +20,6 @@ class AppClipDomainCacheStatusLinkagesOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBundleAppClipDomainCacheStatusLinkageResponse.parse_obj(json)
-
 class AppClipDomainCacheStatusOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/appClipDomainCacheStatus'
 
@@ -46,7 +45,6 @@ class AppClipDomainCacheStatusOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipDomainStatusResponse.parse_obj(json)
-
 class AppClipDomainDebugStatusLinkagesOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/relationships/appClipDomainDebugStatus'
 
@@ -60,7 +58,6 @@ class AppClipDomainDebugStatusLinkagesOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBundleAppClipDomainDebugStatusLinkageResponse.parse_obj(json)
-
 class AppClipDomainDebugStatusOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/appClipDomainDebugStatus'
 
@@ -86,7 +83,6 @@ class AppClipDomainDebugStatusOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipDomainStatusResponse.parse_obj(json)
-
 class BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/relationships/betaAppClipInvocations'
 
@@ -115,6 +111,24 @@ class BetaAppClipInvocationsLinkagesOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBundleBetaAppClipInvocationsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildBundleBetaAppClipInvocationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildBundleBetaAppClipInvocationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildBundleBetaAppClipInvocationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildBundleBetaAppClipInvocationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BetaAppClipInvocationsOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/betaAppClipInvocations'
@@ -180,6 +194,24 @@ class BetaAppClipInvocationsOfBuildBundleEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaAppClipInvocationsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaAppClipInvocationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaAppClipInvocations
+        :rtype: BetaAppClipInvocationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaAppClipInvocationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaAppClipInvocationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildBundleFileSizesLinkagesOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/relationships/buildBundleFileSizes'
 
@@ -208,6 +240,24 @@ class BuildBundleFileSizesLinkagesOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBundleBuildBundleFileSizesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildBundleBuildBundleFileSizesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildBundleBuildBundleFileSizesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildBundleBuildBundleFileSizesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildBundleBuildBundleFileSizesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildBundleFileSizesOfBuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}/buildBundleFileSizes'
@@ -249,6 +299,24 @@ class BuildBundleFileSizesOfBuildBundleEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildBundleFileSizesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildBundleFileSizesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BuildBundleFileSizes
+        :rtype: BuildBundleFileSizesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildBundleFileSizesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildBundleFileSizesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildBundleEndpoint(IDEndpoint):
     path = '/v1/buildBundles/{id}'

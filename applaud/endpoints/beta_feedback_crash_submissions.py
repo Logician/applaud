@@ -53,7 +53,6 @@ class BetaFeedbackCrashSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaFeedbackCrashSubmissionResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 
@@ -74,7 +73,6 @@ class CrashLogLinkageOfBetaFeedbackCrashSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaFeedbackCrashSubmissionCrashLogLinkageResponse.parse_obj(json)
-
 class CrashLogOfBetaFeedbackCrashSubmissionEndpoint(IDEndpoint):
     path = '/v1/betaFeedbackCrashSubmissions/{id}/crashLog'
 
@@ -100,4 +98,3 @@ class CrashLogOfBetaFeedbackCrashSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaCrashLogResponse.parse_obj(json)
-

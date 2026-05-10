@@ -156,6 +156,24 @@ class BetaTestersEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaTestersResponse.parse_obj(json)
 
+    def get_all(self) -> BetaTestersResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaTesters
+        :rtype: BetaTestersResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTestersResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTestersResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: BetaTesterCreateRequest) -> BetaTesterResponse:
         '''Create the resource.
 
@@ -278,6 +296,24 @@ class BetaTesterEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaTesterResponse.parse_obj(json)
 
+    def get_all(self) -> BetaTesterResponse:
+        '''
+        Get all resources.
+
+        :returns: Single BetaTester
+        :rtype: BetaTesterResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTesterResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTesterResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def delete(self):
         '''Delete the resource.
 
@@ -313,6 +349,24 @@ class AppsLinkagesOfBetaTesterEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaTesterAppsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BetaTesterAppsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BetaTesterAppsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTesterAppsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTesterAppsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def delete(self, request: BetaTesterAppsLinkagesRequest):
         '''Delete one or more related linkages.
@@ -365,6 +419,24 @@ class AppsOfBetaTesterEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppsWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> AppsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Apps with get
+        :rtype: AppsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaGroupsLinkagesOfBetaTesterEndpoint(IDEndpoint):
     path = '/v1/betaTesters/{id}/relationships/betaGroups'
 
@@ -393,6 +465,24 @@ class BetaGroupsLinkagesOfBetaTesterEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaTesterBetaGroupsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BetaTesterBetaGroupsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BetaTesterBetaGroupsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTesterBetaGroupsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTesterBetaGroupsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: BetaTesterBetaGroupsLinkagesRequest):
         '''Create one or more related linkages.
@@ -455,6 +545,24 @@ class BetaGroupsOfBetaTesterEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BetaGroupsWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BetaGroupsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaGroups with get
+        :rtype: BetaGroupsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaGroupsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaGroupsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BuildsLinkagesOfBetaTesterEndpoint(IDEndpoint):
     path = '/v1/betaTesters/{id}/relationships/builds'
 
@@ -483,6 +591,24 @@ class BuildsLinkagesOfBetaTesterEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaTesterBuildsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BetaTesterBuildsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BetaTesterBuildsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTesterBuildsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTesterBuildsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
     def create(self, request: BetaTesterBuildsLinkagesRequest):
         '''Create one or more related linkages.
@@ -545,6 +671,24 @@ class BuildsOfBetaTesterEndpoint(IDEndpoint):
         json = super()._perform_get()
         return BuildsWithoutIncludesResponse.parse_obj(json)
 
+    def get_all(self) -> BuildsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Builds with get
+        :rtype: BuildsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class BetaTesterUsagesOfBetaTesterEndpoint(IDEndpoint):
     path = '/v1/betaTesters/{id}/metrics/betaTesterUsages'
 
@@ -573,4 +717,22 @@ class BetaTesterUsagesOfBetaTesterEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaTesterUsagesV1MetricResponse.parse_obj(json)
+
+    def get_all(self) -> BetaTesterUsagesV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: BetaTesterUsagesV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaTesterUsagesV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaTesterUsagesV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

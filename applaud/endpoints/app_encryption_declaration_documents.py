@@ -48,7 +48,6 @@ class AppEncryptionDeclarationDocumentEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEncryptionDeclarationDocumentResponse.parse_obj(json)
-
     def update(self, request: AppEncryptionDeclarationDocumentUpdateRequest) -> AppEncryptionDeclarationDocumentResponse:
         '''Modify the resource.
 

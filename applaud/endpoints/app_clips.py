@@ -81,6 +81,24 @@ class AppClipEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppClipResponse.parse_obj(json)
 
+    def get_all(self) -> AppClipResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppClip
+        :rtype: AppClipResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppClipAdvancedExperiencesLinkagesOfAppClipEndpoint(IDEndpoint):
     path = '/v1/appClips/{id}/relationships/appClipAdvancedExperiences'
 
@@ -109,6 +127,24 @@ class AppClipAdvancedExperiencesLinkagesOfAppClipEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipAppClipAdvancedExperiencesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppClipAppClipAdvancedExperiencesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppClipAppClipAdvancedExperiencesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipAppClipAdvancedExperiencesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipAppClipAdvancedExperiencesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppClipAdvancedExperiencesOfAppClipEndpoint(IDEndpoint):
     path = '/v1/appClips/{id}/appClipAdvancedExperiences'
@@ -207,6 +243,24 @@ class AppClipAdvancedExperiencesOfAppClipEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppClipAdvancedExperiencesResponse.parse_obj(json)
 
+    def get_all(self) -> AppClipAdvancedExperiencesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppClipAdvancedExperiences
+        :rtype: AppClipAdvancedExperiencesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipAdvancedExperiencesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipAdvancedExperiencesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppClipDefaultExperiencesLinkagesOfAppClipEndpoint(IDEndpoint):
     path = '/v1/appClips/{id}/relationships/appClipDefaultExperiences'
 
@@ -235,6 +289,24 @@ class AppClipDefaultExperiencesLinkagesOfAppClipEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipAppClipDefaultExperiencesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppClipAppClipDefaultExperiencesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppClipAppClipDefaultExperiencesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipAppClipDefaultExperiencesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipAppClipDefaultExperiencesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppClipDefaultExperiencesOfAppClipEndpoint(IDEndpoint):
     path = '/v1/appClips/{id}/appClipDefaultExperiences'
@@ -326,4 +398,22 @@ class AppClipDefaultExperiencesOfAppClipEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipDefaultExperiencesResponse.parse_obj(json)
+
+    def get_all(self) -> AppClipDefaultExperiencesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppClipDefaultExperiences
+        :rtype: AppClipDefaultExperiencesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppClipDefaultExperiencesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppClipDefaultExperiencesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

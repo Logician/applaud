@@ -50,6 +50,25 @@ class MarketplaceWebhooksEndpoint(Endpoint):
         return MarketplaceWebhooksResponse.parse_obj(json)
 
     @deprecated
+    def get_all(self) -> MarketplaceWebhooksResponse:
+        '''
+        Get all resources.
+
+        :returns: List of MarketplaceWebhooks
+        :rtype: MarketplaceWebhooksResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = MarketplaceWebhooksResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = MarketplaceWebhooksResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
+    @deprecated
     def create(self, request: MarketplaceWebhookCreateRequest) -> MarketplaceWebhookResponse:
         '''Create the resource.
 

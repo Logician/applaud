@@ -48,7 +48,6 @@ class AppClipAdvancedExperienceImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppClipAdvancedExperienceImageResponse.parse_obj(json)
-
     def update(self, request: AppClipAdvancedExperienceImageUpdateRequest) -> AppClipAdvancedExperienceImageResponse:
         '''Modify the resource.
 

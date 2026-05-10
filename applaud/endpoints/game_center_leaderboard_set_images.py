@@ -62,7 +62,6 @@ class GameCenterLeaderboardSetImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetImageResponse.parse_obj(json)
-
     @deprecated
     def update(self, request: GameCenterLeaderboardSetImageUpdateRequest) -> GameCenterLeaderboardSetImageResponse:
         '''Modify the resource.
@@ -137,7 +136,6 @@ class GameCenterLeaderboardSetImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardSetImageV2Response.parse_obj(json)
-
     def update(self, request: GameCenterLeaderboardSetImageV2UpdateRequest) -> GameCenterLeaderboardSetImageV2Response:
         '''Modify the resource.
 

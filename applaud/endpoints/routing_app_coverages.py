@@ -60,7 +60,6 @@ class RoutingAppCoverageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return RoutingAppCoverageResponse.parse_obj(json)
-
     def update(self, request: RoutingAppCoverageUpdateRequest) -> RoutingAppCoverageResponse:
         '''Modify the resource.
 

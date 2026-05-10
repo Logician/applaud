@@ -137,6 +137,24 @@ class PreReleaseVersionsEndpoint(Endpoint):
         json = super()._perform_get()
         return PreReleaseVersionsResponse.parse_obj(json)
 
+    def get_all(self) -> PreReleaseVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of PreReleaseVersions
+        :rtype: PreReleaseVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PreReleaseVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PreReleaseVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class PreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}'
 
@@ -215,6 +233,24 @@ class PreReleaseVersionEndpoint(IDEndpoint):
         json = super()._perform_get()
         return PrereleaseVersionResponse.parse_obj(json)
 
+    def get_all(self) -> PrereleaseVersionResponse:
+        '''
+        Get all resources.
+
+        :returns: Single PrereleaseVersion
+        :rtype: PrereleaseVersionResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PrereleaseVersionResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PrereleaseVersionResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppLinkageOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/relationships/app'
 
@@ -228,7 +264,6 @@ class AppLinkageOfPreReleaseVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PrereleaseVersionAppLinkageResponse.parse_obj(json)
-
 class AppOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/app'
 
@@ -254,7 +289,6 @@ class AppOfPreReleaseVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppWithoutIncludesResponse.parse_obj(json)
-
 class BuildsLinkagesOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/relationships/builds'
 
@@ -283,6 +317,24 @@ class BuildsLinkagesOfPreReleaseVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return PrereleaseVersionBuildsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> PrereleaseVersionBuildsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: PrereleaseVersionBuildsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = PrereleaseVersionBuildsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = PrereleaseVersionBuildsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildsOfPreReleaseVersionEndpoint(IDEndpoint):
     path = '/v1/preReleaseVersions/{id}/builds'
@@ -324,4 +376,22 @@ class BuildsOfPreReleaseVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildsWithoutIncludesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildsWithoutIncludesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Builds with get
+        :rtype: BuildsWithoutIncludesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildsWithoutIncludesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildsWithoutIncludesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

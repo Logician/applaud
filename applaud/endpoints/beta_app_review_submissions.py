@@ -82,6 +82,24 @@ class BetaAppReviewSubmissionsEndpoint(Endpoint):
         json = super()._perform_get()
         return BetaAppReviewSubmissionsResponse.parse_obj(json)
 
+    def get_all(self) -> BetaAppReviewSubmissionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BetaAppReviewSubmissions
+        :rtype: BetaAppReviewSubmissionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BetaAppReviewSubmissionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BetaAppReviewSubmissionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: BetaAppReviewSubmissionCreateRequest) -> BetaAppReviewSubmissionResponse:
         '''Create the resource.
 
@@ -144,7 +162,6 @@ class BetaAppReviewSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaAppReviewSubmissionResponse.parse_obj(json)
-
 class BuildLinkageOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
     path = '/v1/betaAppReviewSubmissions/{id}/relationships/build'
 
@@ -158,7 +175,6 @@ class BuildLinkageOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BetaAppReviewSubmissionBuildLinkageResponse.parse_obj(json)
-
 class BuildOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
     path = '/v1/betaAppReviewSubmissions/{id}/build'
 
@@ -184,4 +200,3 @@ class BuildOfBetaAppReviewSubmissionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildWithoutIncludesResponse.parse_obj(json)
-

@@ -65,7 +65,6 @@ class InAppPurchaseOfferCodeOneTimeUseCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseOfferCodeOneTimeUseCodeResponse.parse_obj(json)
-
     def update(self, request: InAppPurchaseOfferCodeOneTimeUseCodeUpdateRequest) -> InAppPurchaseOfferCodeOneTimeUseCodeResponse:
         '''Modify the resource.
 
@@ -92,4 +91,3 @@ class ValuesOfInAppPurchaseOfferCodeOneTimeUseCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CsvStreamResponse.parse_obj(json)
-

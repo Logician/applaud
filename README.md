@@ -7,11 +7,11 @@
 ## Features
 
 - [x] Support App Store Connect API latest version 1.6
-- [x] Support `filter`, `fileds`, `include`, `limit`, `sort`, `exists` and other query parameters
-- [x] All endpoints / paths are implemented, include, but not limited to: App Information, TestFlight, Users and Roles, Sales and Finances
+- [x] Support `filter`, `fields`, `include`, `limit`, `sort`, `exists` and other query parameters
+- [x] All endpoints / paths are implemented, including, but not limited to: App Information, TestFlight, Users and Roles, Sales and Finances
 - [x] Pythonic, all `camelCase` schema fields are represented as `snake_case` class attributes
 - [x] Embrace [Python type hints](https://www.python.org/dev/peps/pep-0483/)
-- [x] Use [Python Requests](https://docs.python-requests.org/en/latest/) to hanlde HTTP sessions
+- [x] Use [Python Requests](https://docs.python-requests.org/en/latest/) to handle HTTP sessions
 - [x] [ErrorResponse](https://developer.apple.com/documentation/appstoreconnectapi/errorresponse) can be catched as exception
 
 ## Installation
@@ -214,6 +214,17 @@ exists[gameCenterEnabledVersions]  [string]
 The corresponding code in `Applaud`:
 ```python
 connection.apps().exists(game_center_enabled_versions=True).get()
+```
+
+#### `…Endpoint.get_all()`
+
+The `get_all()` operation automatically initiates follow up `GET` requests until all pages are done. This function should only be available for endpoints that support pagination, the generator patch was not thoroughly tested to guarantee this and currently adds this to all endpoints that support `limit()`.
+
+Please make sure to set an appropriate page size with the `limit()` function, which acts as a page size for this operation, so that the number of requests can be minimized. Due to the complexity of the generator it was not trivial to auto-detect the maximum limit to use, there also may be separate limits for related resources for example.
+
+Example:
+```python
+connection.devices().limit(200).get_all()
 ```
 
 #### `…Endpoint.create()`

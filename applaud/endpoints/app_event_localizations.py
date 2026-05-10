@@ -109,6 +109,24 @@ class AppEventLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppEventLocalizationResponse.parse_obj(json)
 
+    def get_all(self) -> AppEventLocalizationResponse:
+        '''
+        Get all resources.
+
+        :returns: Single AppEventLocalization
+        :rtype: AppEventLocalizationResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventLocalizationResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventLocalizationResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: AppEventLocalizationUpdateRequest) -> AppEventLocalizationResponse:
         '''Modify the resource.
 
@@ -157,6 +175,24 @@ class AppEventScreenshotsLinkagesOfAppEventLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventLocalizationAppEventScreenshotsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppEventLocalizationAppEventScreenshotsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppEventLocalizationAppEventScreenshotsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventLocalizationAppEventScreenshotsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventLocalizationAppEventScreenshotsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppEventScreenshotsOfAppEventLocalizationEndpoint(IDEndpoint):
     path = '/v1/appEventLocalizations/{id}/appEventScreenshots'
@@ -215,6 +251,24 @@ class AppEventScreenshotsOfAppEventLocalizationEndpoint(IDEndpoint):
         json = super()._perform_get()
         return AppEventScreenshotsResponse.parse_obj(json)
 
+    def get_all(self) -> AppEventScreenshotsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppEventScreenshots
+        :rtype: AppEventScreenshotsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventScreenshotsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventScreenshotsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AppEventVideoClipsLinkagesOfAppEventLocalizationEndpoint(IDEndpoint):
     path = '/v1/appEventLocalizations/{id}/relationships/appEventVideoClips'
 
@@ -243,6 +297,24 @@ class AppEventVideoClipsLinkagesOfAppEventLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventLocalizationAppEventVideoClipsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> AppEventLocalizationAppEventVideoClipsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: AppEventLocalizationAppEventVideoClipsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventLocalizationAppEventVideoClipsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventLocalizationAppEventVideoClipsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AppEventVideoClipsOfAppEventLocalizationEndpoint(IDEndpoint):
     path = '/v1/appEventLocalizations/{id}/appEventVideoClips'
@@ -300,4 +372,22 @@ class AppEventVideoClipsOfAppEventLocalizationEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return AppEventVideoClipsResponse.parse_obj(json)
+
+    def get_all(self) -> AppEventVideoClipsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of AppEventVideoClips
+        :rtype: AppEventVideoClipsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = AppEventVideoClipsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = AppEventVideoClipsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

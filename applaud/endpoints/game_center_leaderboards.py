@@ -140,6 +140,25 @@ class GameCenterLeaderboardEndpoint(IDEndpoint):
         return GameCenterLeaderboardResponse.parse_obj(json)
 
     @deprecated
+    def get_all(self) -> GameCenterLeaderboardResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterLeaderboard
+        :rtype: GameCenterLeaderboardResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
+    @deprecated
     def update(self, request: GameCenterLeaderboardUpdateRequest) -> GameCenterLeaderboardResponse:
         '''Modify the resource.
 
@@ -261,6 +280,24 @@ class GameCenterLeaderboardEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterLeaderboardV2Response.parse_obj(json)
 
+    def get_all(self) -> GameCenterLeaderboardV2Response:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterLeaderboard
+        :rtype: GameCenterLeaderboardV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def update(self, request: GameCenterLeaderboardV2UpdateRequest) -> GameCenterLeaderboardV2Response:
         '''Modify the resource.
 
@@ -323,7 +360,6 @@ class GroupLeaderboardLinkageOfGameCenterLeaderboardEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardGroupLeaderboardLinkageResponse.parse_obj(json)
-
     @deprecated
     def update(self, request: GameCenterLeaderboardGroupLeaderboardLinkageRequest):
         '''Modify the resource.
@@ -438,6 +474,25 @@ class GroupLeaderboardOfGameCenterLeaderboardEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterLeaderboardResponse.parse_obj(json)
 
+    @deprecated
+    def get_all(self) -> GameCenterLeaderboardResponse:
+        '''
+        Get all resources.
+
+        :returns: Single GameCenterLeaderboard
+        :rtype: GameCenterLeaderboardResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class LocalizationsLinkagesOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v1/gameCenterLeaderboards/{id}/relationships/localizations'
 
@@ -467,6 +522,25 @@ class LocalizationsLinkagesOfGameCenterLeaderboardEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardLocalizationsLinkagesResponse.parse_obj(json)
+
+    @deprecated
+    def get_all(self) -> GameCenterLeaderboardLocalizationsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterLeaderboardLocalizationsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardLocalizationsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardLocalizationsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class LocalizationsOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v1/gameCenterLeaderboards/{id}/localizations'
@@ -531,6 +605,25 @@ class LocalizationsOfGameCenterLeaderboardEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterLeaderboardLocalizationsResponse.parse_obj(json)
 
+    @deprecated
+    def get_all(self) -> GameCenterLeaderboardLocalizationsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterLeaderboardLocalizations
+        :rtype: GameCenterLeaderboardLocalizationsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardLocalizationsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardLocalizationsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ReleasesLinkagesOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v1/gameCenterLeaderboards/{id}/relationships/releases'
 
@@ -560,6 +653,25 @@ class ReleasesLinkagesOfGameCenterLeaderboardEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardReleasesLinkagesResponse.parse_obj(json)
+
+    @deprecated
+    def get_all(self) -> GameCenterLeaderboardReleasesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterLeaderboardReleasesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardReleasesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardReleasesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class ReleasesOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v1/gameCenterLeaderboards/{id}/releases'
@@ -642,6 +754,25 @@ class ReleasesOfGameCenterLeaderboardEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterLeaderboardReleasesResponse.parse_obj(json)
 
+    @deprecated
+    def get_all(self) -> GameCenterLeaderboardReleasesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterLeaderboardReleases
+        :rtype: GameCenterLeaderboardReleasesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardReleasesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardReleasesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ActivityLinkageOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v2/gameCenterLeaderboards/{id}/relationships/activity'
 
@@ -696,6 +827,24 @@ class VersionsLinkagesOfGameCenterLeaderboardEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardV2VersionsLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterLeaderboardV2VersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterLeaderboardV2VersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardV2VersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardV2VersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class VersionsOfGameCenterLeaderboardEndpoint(IDEndpoint):
     path = '/v2/gameCenterLeaderboards/{id}/versions'
@@ -765,4 +914,22 @@ class VersionsOfGameCenterLeaderboardEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterLeaderboardVersionsV2Response.parse_obj(json)
+
+    def get_all(self) -> GameCenterLeaderboardVersionsV2Response:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterLeaderboardVersions
+        :rtype: GameCenterLeaderboardVersionsV2Response
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterLeaderboardVersionsV2Response.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterLeaderboardVersionsV2Response.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

@@ -61,6 +61,24 @@ class GameCenterMatchmakingQueuesEndpoint(Endpoint):
         json = super()._perform_get()
         return GameCenterMatchmakingQueuesResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingQueuesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterMatchmakingQueues
+        :rtype: GameCenterMatchmakingQueuesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingQueuesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingQueuesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
     def create(self, request: GameCenterMatchmakingQueueCreateRequest) -> GameCenterMatchmakingQueueResponse:
         '''Create the resource.
 
@@ -132,7 +150,6 @@ class GameCenterMatchmakingQueueEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterMatchmakingQueueResponse.parse_obj(json)
-
     def update(self, request: GameCenterMatchmakingQueueUpdateRequest) -> GameCenterMatchmakingQueueResponse:
         '''Modify the resource.
 
@@ -194,6 +211,24 @@ class ExperimentMatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint(IDEndp
         json = super()._perform_get()
         return GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingQueueSizesV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingQueueSizesV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class ExperimentMatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingQueues/{id}/metrics/experimentMatchmakingRequests'
 
@@ -234,6 +269,24 @@ class ExperimentMatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoi
         '''
         json = super()._perform_get()
         return GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterMatchmakingQueueRequestsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingQueueRequestsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class MatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingQueueSizes'
@@ -276,6 +329,24 @@ class MatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingQueueSizesV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingQueueSizesV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingQueueSizesV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class MatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingRequests'
 
@@ -317,6 +388,24 @@ class MatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         json = super()._perform_get()
         return GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
 
+    def get_all(self) -> GameCenterMatchmakingQueueRequestsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingQueueRequestsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingQueueRequestsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class MatchmakingSessionsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
     path = '/v1/gameCenterMatchmakingQueues/{id}/metrics/matchmakingSessions'
 
@@ -357,4 +446,22 @@ class MatchmakingSessionsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterMatchmakingSessionsV1MetricResponse.parse_obj(json)
+
+    def get_all(self) -> GameCenterMatchmakingSessionsV1MetricResponse:
+        '''
+        Get all resources.
+
+        :returns: Metrics data response
+        :rtype: GameCenterMatchmakingSessionsV1MetricResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterMatchmakingSessionsV1MetricResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterMatchmakingSessionsV1MetricResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

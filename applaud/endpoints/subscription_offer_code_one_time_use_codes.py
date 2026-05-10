@@ -64,7 +64,6 @@ class SubscriptionOfferCodeOneTimeUseCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return SubscriptionOfferCodeOneTimeUseCodeResponse.parse_obj(json)
-
     def update(self, request: SubscriptionOfferCodeOneTimeUseCodeUpdateRequest) -> SubscriptionOfferCodeOneTimeUseCodeResponse:
         '''Modify the resource.
 
@@ -91,4 +90,3 @@ class ValuesOfSubscriptionOfferCodeOneTimeUseCodeEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return CsvStreamResponse.parse_obj(json)
-

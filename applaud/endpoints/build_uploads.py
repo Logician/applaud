@@ -71,7 +71,6 @@ class BuildUploadEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildUploadResponse.parse_obj(json)
-
     def delete(self):
         '''Delete the resource.
 
@@ -107,6 +106,24 @@ class BuildUploadFilesLinkagesOfBuildUploadEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildUploadBuildUploadFilesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildUploadBuildUploadFilesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: BuildUploadBuildUploadFilesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildUploadBuildUploadFilesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildUploadBuildUploadFilesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class BuildUploadFilesOfBuildUploadEndpoint(IDEndpoint):
     path = '/v1/buildUploads/{id}/buildUploadFiles'
@@ -148,4 +165,22 @@ class BuildUploadFilesOfBuildUploadEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return BuildUploadFilesResponse.parse_obj(json)
+
+    def get_all(self) -> BuildUploadFilesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of BuildUploadFiles
+        :rtype: BuildUploadFilesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = BuildUploadFilesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = BuildUploadFilesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 

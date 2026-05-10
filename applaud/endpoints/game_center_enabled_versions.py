@@ -38,6 +38,25 @@ class CompatibleVersionsLinkagesOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         return GameCenterEnabledVersionCompatibleVersionsLinkagesResponse.parse_obj(json)
 
     @deprecated
+    def get_all(self) -> GameCenterEnabledVersionCompatibleVersionsLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: GameCenterEnabledVersionCompatibleVersionsLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterEnabledVersionCompatibleVersionsLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterEnabledVersionCompatibleVersionsLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
+    @deprecated
     def create(self, request: GameCenterEnabledVersionCompatibleVersionsLinkagesRequest):
         '''Create one or more related linkages.
 
@@ -172,6 +191,25 @@ class CompatibleVersionsOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return GameCenterEnabledVersionsResponse.parse_obj(json)
+
+    @deprecated
+    def get_all(self) -> GameCenterEnabledVersionsResponse:
+        '''
+        Get all resources.
+
+        :returns: List of GameCenterEnabledVersions
+        :rtype: GameCenterEnabledVersionsResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = GameCenterEnabledVersionsResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = GameCenterEnabledVersionsResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class GameCenterEnabledVersionEndpoint(IDEndpoint):
     path = '/v1/gameCenterEnabledVersions/{id}'

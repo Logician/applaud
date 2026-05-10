@@ -60,7 +60,6 @@ class InAppPurchaseImageEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return InAppPurchaseImageResponse.parse_obj(json)
-
     def update(self, request: InAppPurchaseImageUpdateRequest) -> InAppPurchaseImageResponse:
         '''Modify the resource.
 

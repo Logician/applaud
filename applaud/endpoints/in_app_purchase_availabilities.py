@@ -88,6 +88,24 @@ class InAppPurchaseAvailabilityEndpoint(IDEndpoint):
         json = super()._perform_get()
         return InAppPurchaseAvailabilityResponse.parse_obj(json)
 
+    def get_all(self) -> InAppPurchaseAvailabilityResponse:
+        '''
+        Get all resources.
+
+        :returns: Single InAppPurchaseAvailability
+        :rtype: InAppPurchaseAvailabilityResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseAvailabilityResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseAvailabilityResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
+
 class AvailableTerritoriesLinkagesOfInAppPurchaseAvailabilityEndpoint(IDEndpoint):
     path = '/v1/inAppPurchaseAvailabilities/{id}/relationships/availableTerritories'
 
@@ -116,6 +134,24 @@ class AvailableTerritoriesLinkagesOfInAppPurchaseAvailabilityEndpoint(IDEndpoint
         '''
         json = super()._perform_get()
         return InAppPurchaseAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+
+    def get_all(self) -> InAppPurchaseAvailabilityAvailableTerritoriesLinkagesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of related linkages
+        :rtype: InAppPurchaseAvailabilityAvailableTerritoriesLinkagesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = InAppPurchaseAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = InAppPurchaseAvailabilityAvailableTerritoriesLinkagesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
 class AvailableTerritoriesOfInAppPurchaseAvailabilityEndpoint(IDEndpoint):
     path = '/v1/inAppPurchaseAvailabilities/{id}/availableTerritories'
@@ -157,4 +193,22 @@ class AvailableTerritoriesOfInAppPurchaseAvailabilityEndpoint(IDEndpoint):
         '''
         json = super()._perform_get()
         return TerritoriesResponse.parse_obj(json)
+
+    def get_all(self) -> TerritoriesResponse:
+        '''
+        Get all resources.
+
+        :returns: List of Territories
+        :rtype: TerritoriesResponse
+        :raises: :py:class:`applaud.schemas.responses.ErrorResponse`: if a error reponse returned.
+                 :py:class:`requests.RequestException`: if a connection or a HTTP error occurred.
+        '''
+        json = super()._perform_get()
+        response = TerritoriesResponse.parse_obj(json)
+        while response.links.next != None:
+            json = super()._perform_get_next(next = response.links.next)
+            response2 = TerritoriesResponse.parse_obj(json)
+            response.data.extend(response2.data)
+            response.links = response2.links
+        return response
 
