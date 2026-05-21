@@ -155,7 +155,10 @@ class CompatibleVersionsOfGameCenterEnabledVersionEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.CompatibleVersionsOfGameCenterEnabledVersionEndpoint
         '''
-        if version_string: self.sort_expressions.append('versionString' if version_string == SortOrder.ASC else '-versionString')
+        sort_expressions = []
+        if version_string: sort_expressions.append('versionString' if version_string == SortOrder.ASC else '-versionString')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, compatible_versions: int=None) -> CompatibleVersionsOfGameCenterEnabledVersionEndpoint:

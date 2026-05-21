@@ -1564,8 +1564,11 @@ class CustomerReviewsOfAppStoreVersionEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.CustomerReviewsOfAppStoreVersionEndpoint
         '''
-        if rating: self.sort_expressions.append('rating' if rating == SortOrder.ASC else '-rating')
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        sort_expressions = []
+        if rating: sort_expressions.append('rating' if rating == SortOrder.ASC else '-rating')
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> CustomerReviewsOfAppStoreVersionEndpoint:

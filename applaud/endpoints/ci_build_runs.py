@@ -465,9 +465,12 @@ class BuildsOfCiBuildRunEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BuildsOfCiBuildRunEndpoint
         '''
-        if version: self.sort_expressions.append('version' if version == SortOrder.ASC else '-version')
-        if uploaded_date: self.sort_expressions.append('uploadedDate' if uploaded_date == SortOrder.ASC else '-uploadedDate')
-        if pre_release_version: self.sort_expressions.append('preReleaseVersion' if pre_release_version == SortOrder.ASC else '-preReleaseVersion')
+        sort_expressions = []
+        if version: sort_expressions.append('version' if version == SortOrder.ASC else '-version')
+        if uploaded_date: sort_expressions.append('uploadedDate' if uploaded_date == SortOrder.ASC else '-uploadedDate')
+        if pre_release_version: sort_expressions.append('preReleaseVersion' if pre_release_version == SortOrder.ASC else '-preReleaseVersion')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, individual_testers: int=None, beta_groups: int=None, beta_build_localizations: int=None, icons: int=None, build_bundles: int=None) -> BuildsOfCiBuildRunEndpoint:

@@ -67,8 +67,11 @@ class UsersEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.UsersEndpoint
         '''
-        if username: self.sort_expressions.append('username' if username == SortOrder.ASC else '-username')
-        if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        sort_expressions = []
+        if username: sort_expressions.append('username' if username == SortOrder.ASC else '-username')
+        if last_name: sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, visible_apps: int=None) -> UsersEndpoint:

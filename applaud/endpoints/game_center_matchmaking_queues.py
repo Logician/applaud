@@ -179,10 +179,13 @@ class ExperimentMatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint(IDEndp
         :returns: self
         :rtype: applaud.endpoints.ExperimentMatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_number_of_request: self.sort_expressions.append('averageNumberOfRequests' if average_number_of_request == SortOrder.ASC else '-averageNumberOfRequests')
-        if p50_number_of_request: self.sort_expressions.append('p50NumberOfRequests' if p50_number_of_request == SortOrder.ASC else '-p50NumberOfRequests')
-        if p95_number_of_request: self.sort_expressions.append('p95NumberOfRequests' if p95_number_of_request == SortOrder.ASC else '-p95NumberOfRequests')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_number_of_request: sort_expressions.append('averageNumberOfRequests' if average_number_of_request == SortOrder.ASC else '-averageNumberOfRequests')
+        if p50_number_of_request: sort_expressions.append('p50NumberOfRequests' if p50_number_of_request == SortOrder.ASC else '-p50NumberOfRequests')
+        if p95_number_of_request: sort_expressions.append('p95NumberOfRequests' if p95_number_of_request == SortOrder.ASC else '-p95NumberOfRequests')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> ExperimentMatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint:
@@ -238,10 +241,13 @@ class ExperimentMatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoi
         :returns: self
         :rtype: applaud.endpoints.ExperimentMatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_seconds_in_queue: self.sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
-        if p50_seconds_in_queue: self.sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
-        if p95_seconds_in_queue: self.sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_seconds_in_queue: sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
+        if p50_seconds_in_queue: sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
+        if p95_seconds_in_queue: sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> ExperimentMatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint:
@@ -297,10 +303,13 @@ class MatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.MatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_number_of_request: self.sort_expressions.append('averageNumberOfRequests' if average_number_of_request == SortOrder.ASC else '-averageNumberOfRequests')
-        if p50_number_of_request: self.sort_expressions.append('p50NumberOfRequests' if p50_number_of_request == SortOrder.ASC else '-p50NumberOfRequests')
-        if p95_number_of_request: self.sort_expressions.append('p95NumberOfRequests' if p95_number_of_request == SortOrder.ASC else '-p95NumberOfRequests')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_number_of_request: sort_expressions.append('averageNumberOfRequests' if average_number_of_request == SortOrder.ASC else '-averageNumberOfRequests')
+        if p50_number_of_request: sort_expressions.append('p50NumberOfRequests' if p50_number_of_request == SortOrder.ASC else '-p50NumberOfRequests')
+        if p95_number_of_request: sort_expressions.append('p95NumberOfRequests' if p95_number_of_request == SortOrder.ASC else '-p95NumberOfRequests')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingQueueSizesOfGameCenterMatchmakingQueueEndpoint:
@@ -356,10 +365,13 @@ class MatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.MatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_seconds_in_queue: self.sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
-        if p50_seconds_in_queue: self.sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
-        if p95_seconds_in_queue: self.sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_seconds_in_queue: sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
+        if p50_seconds_in_queue: sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
+        if p95_seconds_in_queue: sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingRequestsOfGameCenterMatchmakingQueueEndpoint:
@@ -415,10 +427,13 @@ class MatchmakingSessionsOfGameCenterMatchmakingQueueEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.MatchmakingSessionsOfGameCenterMatchmakingQueueEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_player_count: self.sort_expressions.append('averagePlayerCount' if average_player_count == SortOrder.ASC else '-averagePlayerCount')
-        if p50_player_count: self.sort_expressions.append('p50PlayerCount' if p50_player_count == SortOrder.ASC else '-p50PlayerCount')
-        if p95_player_count: self.sort_expressions.append('p95PlayerCount' if p95_player_count == SortOrder.ASC else '-p95PlayerCount')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_player_count: sort_expressions.append('averagePlayerCount' if average_player_count == SortOrder.ASC else '-averagePlayerCount')
+        if p50_player_count: sort_expressions.append('p50PlayerCount' if p50_player_count == SortOrder.ASC else '-p50PlayerCount')
+        if p95_player_count: sort_expressions.append('p95PlayerCount' if p95_player_count == SortOrder.ASC else '-p95PlayerCount')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingSessionsOfGameCenterMatchmakingQueueEndpoint:

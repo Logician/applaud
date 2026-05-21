@@ -67,9 +67,12 @@ class PassTypeIdsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.PassTypeIdsEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if identifier: self.sort_expressions.append('identifier' if identifier == SortOrder.ASC else '-identifier')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if identifier: sort_expressions.append('identifier' if identifier == SortOrder.ASC else '-identifier')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, certificates: int=None) -> PassTypeIdsEndpoint:
@@ -371,10 +374,13 @@ class CertificatesOfPassTypeIdEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.CertificatesOfPassTypeIdEndpoint
         '''
-        if display_name: self.sort_expressions.append('displayName' if display_name == SortOrder.ASC else '-displayName')
-        if certificate_type: self.sort_expressions.append('certificateType' if certificate_type == SortOrder.ASC else '-certificateType')
-        if serial_number: self.sort_expressions.append('serialNumber' if serial_number == SortOrder.ASC else '-serialNumber')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if display_name: sort_expressions.append('displayName' if display_name == SortOrder.ASC else '-displayName')
+        if certificate_type: sort_expressions.append('certificateType' if certificate_type == SortOrder.ASC else '-certificateType')
+        if serial_number: sort_expressions.append('serialNumber' if serial_number == SortOrder.ASC else '-serialNumber')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> CertificatesOfPassTypeIdEndpoint:

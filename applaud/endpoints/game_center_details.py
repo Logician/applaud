@@ -2942,10 +2942,13 @@ class ClassicMatchmakingRequestsOfGameCenterDetailEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.ClassicMatchmakingRequestsOfGameCenterDetailEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_seconds_in_queue: self.sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
-        if p50_seconds_in_queue: self.sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
-        if p95_seconds_in_queue: self.sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_seconds_in_queue: sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
+        if p50_seconds_in_queue: sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
+        if p95_seconds_in_queue: sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> ClassicMatchmakingRequestsOfGameCenterDetailEndpoint:
@@ -3001,10 +3004,13 @@ class RuleBasedMatchmakingRequestsOfGameCenterDetailEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.RuleBasedMatchmakingRequestsOfGameCenterDetailEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_seconds_in_queue: self.sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
-        if p50_seconds_in_queue: self.sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
-        if p95_seconds_in_queue: self.sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_seconds_in_queue: sort_expressions.append('averageSecondsInQueue' if average_seconds_in_queue == SortOrder.ASC else '-averageSecondsInQueue')
+        if p50_seconds_in_queue: sort_expressions.append('p50SecondsInQueue' if p50_seconds_in_queue == SortOrder.ASC else '-p50SecondsInQueue')
+        if p95_seconds_in_queue: sort_expressions.append('p95SecondsInQueue' if p95_seconds_in_queue == SortOrder.ASC else '-p95SecondsInQueue')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> RuleBasedMatchmakingRequestsOfGameCenterDetailEndpoint:

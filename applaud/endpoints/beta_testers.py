@@ -102,11 +102,14 @@ class BetaTestersEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.BetaTestersEndpoint
         '''
-        if first_name: self.sort_expressions.append('firstName' if first_name == SortOrder.ASC else '-firstName')
-        if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
-        if email: self.sort_expressions.append('email' if email == SortOrder.ASC else '-email')
-        if invite_type: self.sort_expressions.append('inviteType' if invite_type == SortOrder.ASC else '-inviteType')
-        if state: self.sort_expressions.append('state' if state == SortOrder.ASC else '-state')
+        sort_expressions = []
+        if first_name: sort_expressions.append('firstName' if first_name == SortOrder.ASC else '-firstName')
+        if last_name: sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        if email: sort_expressions.append('email' if email == SortOrder.ASC else '-email')
+        if invite_type: sort_expressions.append('inviteType' if invite_type == SortOrder.ASC else '-inviteType')
+        if state: sort_expressions.append('state' if state == SortOrder.ASC else '-state')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, apps: int=None, beta_groups: int=None, builds: int=None) -> BetaTestersEndpoint:

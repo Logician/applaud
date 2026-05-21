@@ -87,11 +87,14 @@ class BundleIdsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.BundleIdsEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if platform: self.sort_expressions.append('platform' if platform == SortOrder.ASC else '-platform')
-        if identifier: self.sort_expressions.append('identifier' if identifier == SortOrder.ASC else '-identifier')
-        if seed_id: self.sort_expressions.append('seedId' if seed_id == SortOrder.ASC else '-seedId')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if platform: sort_expressions.append('platform' if platform == SortOrder.ASC else '-platform')
+        if identifier: sort_expressions.append('identifier' if identifier == SortOrder.ASC else '-identifier')
+        if seed_id: sort_expressions.append('seedId' if seed_id == SortOrder.ASC else '-seedId')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, bundle_id_capabilities: int=None, profiles: int=None) -> BundleIdsEndpoint:

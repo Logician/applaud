@@ -67,8 +67,11 @@ class UserInvitationsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.UserInvitationsEndpoint
         '''
-        if email: self.sort_expressions.append('email' if email == SortOrder.ASC else '-email')
-        if last_name: self.sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        sort_expressions = []
+        if email: sort_expressions.append('email' if email == SortOrder.ASC else '-email')
+        if last_name: sort_expressions.append('lastName' if last_name == SortOrder.ASC else '-lastName')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, visible_apps: int=None) -> UserInvitationsEndpoint:

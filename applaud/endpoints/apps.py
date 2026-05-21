@@ -241,9 +241,12 @@ class AppsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.AppsEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if bundle_id: self.sort_expressions.append('bundleId' if bundle_id == SortOrder.ASC else '-bundleId')
-        if sku: self.sort_expressions.append('sku' if sku == SortOrder.ASC else '-sku')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if bundle_id: sort_expressions.append('bundleId' if bundle_id == SortOrder.ASC else '-bundleId')
+        if sku: sort_expressions.append('sku' if sku == SortOrder.ASC else '-sku')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, android_to_ios_app_mapping_details: int=None, app_clips: int=None, app_custom_product_pages: int=None, app_encryption_declarations: int=None, app_events: int=None, app_infos: int=None, app_store_version_experiments_v2: int=None, app_store_versions: int=None, beta_app_localizations: int=None, beta_groups: int=None, builds: int=None, game_center_enabled_versions: int=None, in_app_purchases: int=None, in_app_purchases_v2: int=None, pre_release_versions: int=None, promoted_purchases: int=None, review_submissions: int=None, subscription_groups: int=None) -> AppsEndpoint:
@@ -3101,7 +3104,10 @@ class AppTagsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.AppTagsOfAppEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, territories: int=None) -> AppTagsOfAppEndpoint:
@@ -3275,8 +3281,11 @@ class BackgroundAssetsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BackgroundAssetsOfAppEndpoint
         '''
-        if asset_pack_identifier: self.sort_expressions.append('assetPackIdentifier' if asset_pack_identifier == SortOrder.ASC else '-assetPackIdentifier')
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        sort_expressions = []
+        if asset_pack_identifier: sort_expressions.append('assetPackIdentifier' if asset_pack_identifier == SortOrder.ASC else '-assetPackIdentifier')
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> BackgroundAssetsOfAppEndpoint:
@@ -3611,7 +3620,10 @@ class BetaFeedbackCrashSubmissionsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BetaFeedbackCrashSubmissionsOfAppEndpoint
         '''
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        sort_expressions = []
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> BetaFeedbackCrashSubmissionsOfAppEndpoint:
@@ -3802,7 +3814,10 @@ class BetaFeedbackScreenshotSubmissionsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BetaFeedbackScreenshotSubmissionsOfAppEndpoint
         '''
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        sort_expressions = []
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> BetaFeedbackScreenshotSubmissionsOfAppEndpoint:
@@ -4131,8 +4146,11 @@ class BuildUploadsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BuildUploadsOfAppEndpoint
         '''
-        if cf_bundle_version: self.sort_expressions.append('cfBundleVersion' if cf_bundle_version == SortOrder.ASC else '-cfBundleVersion')
-        if uploaded_date: self.sort_expressions.append('uploadedDate' if uploaded_date == SortOrder.ASC else '-uploadedDate')
+        sort_expressions = []
+        if cf_bundle_version: sort_expressions.append('cfBundleVersion' if cf_bundle_version == SortOrder.ASC else '-cfBundleVersion')
+        if uploaded_date: sort_expressions.append('uploadedDate' if uploaded_date == SortOrder.ASC else '-uploadedDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> BuildUploadsOfAppEndpoint:
@@ -4831,8 +4849,11 @@ class CustomerReviewsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.CustomerReviewsOfAppEndpoint
         '''
-        if rating: self.sort_expressions.append('rating' if rating == SortOrder.ASC else '-rating')
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        sort_expressions = []
+        if rating: sort_expressions.append('rating' if rating == SortOrder.ASC else '-rating')
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> CustomerReviewsOfAppEndpoint:
@@ -5285,7 +5306,10 @@ class GameCenterEnabledVersionsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.GameCenterEnabledVersionsOfAppEndpoint
         '''
-        if version_string: self.sort_expressions.append('versionString' if version_string == SortOrder.ASC else '-versionString')
+        sort_expressions = []
+        if version_string: sort_expressions.append('versionString' if version_string == SortOrder.ASC else '-versionString')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, compatible_versions: int=None) -> GameCenterEnabledVersionsOfAppEndpoint:
@@ -5445,9 +5469,12 @@ class InAppPurchasesOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.InAppPurchasesOfAppEndpoint
         '''
-        if reference_name: self.sort_expressions.append('referenceName' if reference_name == SortOrder.ASC else '-referenceName')
-        if product_id: self.sort_expressions.append('productId' if product_id == SortOrder.ASC else '-productId')
-        if in_app_purchase_type: self.sort_expressions.append('inAppPurchaseType' if in_app_purchase_type == SortOrder.ASC else '-inAppPurchaseType')
+        sort_expressions = []
+        if reference_name: sort_expressions.append('referenceName' if reference_name == SortOrder.ASC else '-referenceName')
+        if product_id: sort_expressions.append('productId' if product_id == SortOrder.ASC else '-productId')
+        if in_app_purchase_type: sort_expressions.append('inAppPurchaseType' if in_app_purchase_type == SortOrder.ASC else '-inAppPurchaseType')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, apps: int=None) -> InAppPurchasesOfAppEndpoint:
@@ -5669,8 +5696,11 @@ class InAppPurchasesV2OfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.InAppPurchasesV2OfAppEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if in_app_purchase_type: self.sort_expressions.append('inAppPurchaseType' if in_app_purchase_type == SortOrder.ASC else '-inAppPurchaseType')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if in_app_purchase_type: sort_expressions.append('inAppPurchaseType' if in_app_purchase_type == SortOrder.ASC else '-inAppPurchaseType')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, in_app_purchase_localizations: int=None, images: int=None, offer_codes: int=None) -> InAppPurchasesV2OfAppEndpoint:
@@ -6514,7 +6544,10 @@ class SubscriptionGroupsOfAppEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.SubscriptionGroupsOfAppEndpoint
         '''
-        if reference_name: self.sort_expressions.append('referenceName' if reference_name == SortOrder.ASC else '-referenceName')
+        sort_expressions = []
+        if reference_name: sort_expressions.append('referenceName' if reference_name == SortOrder.ASC else '-referenceName')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, subscriptions: int=None, subscription_group_localizations: int=None) -> SubscriptionGroupsOfAppEndpoint:

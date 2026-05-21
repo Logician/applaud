@@ -263,7 +263,10 @@ class VersionsOfBackgroundAssetEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.VersionsOfBackgroundAssetEndpoint
         '''
-        if version: self.sort_expressions.append('version' if version == SortOrder.ASC else '-version')
+        sort_expressions = []
+        if version: sort_expressions.append('version' if version == SortOrder.ASC else '-version')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> VersionsOfBackgroundAssetEndpoint:

@@ -437,7 +437,10 @@ class SubscriptionsOfSubscriptionGroupEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.SubscriptionsOfSubscriptionGroupEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, subscription_localizations: int=None, introductory_offers: int=None, promotional_offers: int=None, offer_codes: int=None, prices: int=None, win_back_offers: int=None, images: int=None) -> SubscriptionsOfSubscriptionGroupEndpoint:

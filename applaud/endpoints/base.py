@@ -73,6 +73,9 @@ class Endpoint:
         self._query_params['sort'] = ','.join(expressions)
 
     def __parse_response(self, response: requests.Response) -> Any:
+        if response.status_code == 204:
+            return None
+
         content_type = response.headers['Content-Type']
 
         if content_type == 'application/json' or content_type == 'application/vnd.api+json':

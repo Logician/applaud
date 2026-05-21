@@ -61,11 +61,14 @@ class DevicesEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.DevicesEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if platform: self.sort_expressions.append('platform' if platform == SortOrder.ASC else '-platform')
-        if udid: self.sort_expressions.append('udid' if udid == SortOrder.ASC else '-udid')
-        if statu: self.sort_expressions.append('status' if statu == SortOrder.ASC else '-status')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if platform: sort_expressions.append('platform' if platform == SortOrder.ASC else '-platform')
+        if udid: sort_expressions.append('udid' if udid == SortOrder.ASC else '-udid')
+        if statu: sort_expressions.append('status' if statu == SortOrder.ASC else '-status')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> DevicesEndpoint:

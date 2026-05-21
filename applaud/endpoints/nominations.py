@@ -95,11 +95,14 @@ class NominationsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.NominationsEndpoint
         '''
-        if last_modified_date: self.sort_expressions.append('lastModifiedDate' if last_modified_date == SortOrder.ASC else '-lastModifiedDate')
-        if publish_start_date: self.sort_expressions.append('publishStartDate' if publish_start_date == SortOrder.ASC else '-publishStartDate')
-        if publish_end_date: self.sort_expressions.append('publishEndDate' if publish_end_date == SortOrder.ASC else '-publishEndDate')
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if type: self.sort_expressions.append('type' if type == SortOrder.ASC else '-type')
+        sort_expressions = []
+        if last_modified_date: sort_expressions.append('lastModifiedDate' if last_modified_date == SortOrder.ASC else '-lastModifiedDate')
+        if publish_start_date: sort_expressions.append('publishStartDate' if publish_start_date == SortOrder.ASC else '-publishStartDate')
+        if publish_end_date: sort_expressions.append('publishEndDate' if publish_end_date == SortOrder.ASC else '-publishEndDate')
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if type: sort_expressions.append('type' if type == SortOrder.ASC else '-type')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, in_app_events: int=None, related_apps: int=None, supported_territories: int=None) -> NominationsEndpoint:

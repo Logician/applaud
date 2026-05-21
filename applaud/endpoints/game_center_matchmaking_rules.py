@@ -67,7 +67,10 @@ class MatchmakingBooleanRuleResultsOfGameCenterMatchmakingRuleEndpoint(IDEndpoin
         :returns: self
         :rtype: applaud.endpoints.MatchmakingBooleanRuleResultsOfGameCenterMatchmakingRuleEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingBooleanRuleResultsOfGameCenterMatchmakingRuleEndpoint:
@@ -123,10 +126,13 @@ class MatchmakingNumberRuleResultsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint
         :returns: self
         :rtype: applaud.endpoints.MatchmakingNumberRuleResultsOfGameCenterMatchmakingRuleEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
-        if average_result: self.sort_expressions.append('averageResult' if average_result == SortOrder.ASC else '-averageResult')
-        if p50_result: self.sort_expressions.append('p50Result' if p50_result == SortOrder.ASC else '-p50Result')
-        if p95_result: self.sort_expressions.append('p95Result' if p95_result == SortOrder.ASC else '-p95Result')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if average_result: sort_expressions.append('averageResult' if average_result == SortOrder.ASC else '-averageResult')
+        if p50_result: sort_expressions.append('p50Result' if p50_result == SortOrder.ASC else '-p50Result')
+        if p95_result: sort_expressions.append('p95Result' if p95_result == SortOrder.ASC else '-p95Result')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingNumberRuleResultsOfGameCenterMatchmakingRuleEndpoint:
@@ -182,7 +188,10 @@ class MatchmakingRuleErrorsOfGameCenterMatchmakingRuleEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.MatchmakingRuleErrorsOfGameCenterMatchmakingRuleEndpoint
         '''
-        if count: self.sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        sort_expressions = []
+        if count: sort_expressions.append('count' if count == SortOrder.ASC else '-count')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> MatchmakingRuleErrorsOfGameCenterMatchmakingRuleEndpoint:

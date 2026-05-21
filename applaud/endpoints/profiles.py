@@ -82,10 +82,13 @@ class ProfilesEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.ProfilesEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if profile_type: self.sort_expressions.append('profileType' if profile_type == SortOrder.ASC else '-profileType')
-        if profile_state: self.sort_expressions.append('profileState' if profile_state == SortOrder.ASC else '-profileState')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if profile_type: sort_expressions.append('profileType' if profile_type == SortOrder.ASC else '-profileType')
+        if profile_state: sort_expressions.append('profileState' if profile_state == SortOrder.ASC else '-profileState')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, certificates: int=None, devices: int=None) -> ProfilesEndpoint:

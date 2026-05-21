@@ -107,10 +107,13 @@ class BetaGroupsEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.BetaGroupsEndpoint
         '''
-        if name: self.sort_expressions.append('name' if name == SortOrder.ASC else '-name')
-        if created_date: self.sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
-        if public_link_enabled: self.sort_expressions.append('publicLinkEnabled' if public_link_enabled == SortOrder.ASC else '-publicLinkEnabled')
-        if public_link_limit: self.sort_expressions.append('publicLinkLimit' if public_link_limit == SortOrder.ASC else '-publicLinkLimit')
+        sort_expressions = []
+        if name: sort_expressions.append('name' if name == SortOrder.ASC else '-name')
+        if created_date: sort_expressions.append('createdDate' if created_date == SortOrder.ASC else '-createdDate')
+        if public_link_enabled: sort_expressions.append('publicLinkEnabled' if public_link_enabled == SortOrder.ASC else '-publicLinkEnabled')
+        if public_link_limit: sort_expressions.append('publicLinkLimit' if public_link_limit == SortOrder.ASC else '-publicLinkLimit')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, beta_testers: int=None, builds: int=None) -> BetaGroupsEndpoint:

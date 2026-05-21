@@ -221,7 +221,10 @@ class BuildRunsOfCiWorkflowEndpoint(IDEndpoint):
         :returns: self
         :rtype: applaud.endpoints.BuildRunsOfCiWorkflowEndpoint
         '''
-        if number: self.sort_expressions.append('number' if number == SortOrder.ASC else '-number')
+        sort_expressions = []
+        if number: sort_expressions.append('number' if number == SortOrder.ASC else '-number')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None, *, builds: int=None) -> BuildRunsOfCiWorkflowEndpoint:

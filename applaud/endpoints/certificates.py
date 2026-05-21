@@ -72,10 +72,13 @@ class CertificatesEndpoint(Endpoint):
         :returns: self
         :rtype: applaud.endpoints.CertificatesEndpoint
         '''
-        if display_name: self.sort_expressions.append('displayName' if display_name == SortOrder.ASC else '-displayName')
-        if certificate_type: self.sort_expressions.append('certificateType' if certificate_type == SortOrder.ASC else '-certificateType')
-        if serial_number: self.sort_expressions.append('serialNumber' if serial_number == SortOrder.ASC else '-serialNumber')
-        if id: self.sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        sort_expressions = []
+        if display_name: sort_expressions.append('displayName' if display_name == SortOrder.ASC else '-displayName')
+        if certificate_type: sort_expressions.append('certificateType' if certificate_type == SortOrder.ASC else '-certificateType')
+        if serial_number: sort_expressions.append('serialNumber' if serial_number == SortOrder.ASC else '-serialNumber')
+        if id: sort_expressions.append('id' if id == SortOrder.ASC else '-id')
+        if len(sort_expressions) > 0:
+            self._set_sort(sort_expressions)
         return self
         
     def limit(self, number: int=None) -> CertificatesEndpoint:
